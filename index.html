@@ -210,7 +210,7 @@ body.lite .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:var
 .ctabs button.shiny[aria-selected="true"]{box-shadow:inset 0 0 0 2.5px var(--acc)}
 .ctabs button.shiny{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)} .ctabs button.shiny > *{position:relative;z-index:1} .ctabs button.shiny small{color:#fff;opacity:.9} .ctabs button.shiny .bar{display:none}
 .ctabs button.shiny.light{color:#111;text-shadow:none} .ctabs button.shiny.light small{color:#111}
-.mtoast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;z-index:30;padding:14px 22px;border-radius:14px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);font-weight:600;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:all .3s;overflow:hidden;max-width:calc(100vw - 32px);text-align:center}
+.mtoast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;z-index:70;padding:14px 22px;border-radius:14px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);font-weight:600;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:all .3s;overflow:hidden;max-width:calc(100vw - 32px);text-align:center}
 .mtoast > *{position:relative;z-index:1}
 .mtoast small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:2px}
 .mtoast{transition:opacity .4s var(--ease),transform .5s cubic-bezier(.2,.9,.3,1.2)} .mtoast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -296,7 +296,7 @@ textarea{width:100%;min-height:80px;font:12px ui-monospace,SFMono-Regular,Consol
 .btn{border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:500}
 .btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .rowb{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(12px);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease);pointer-events:none;z-index:20}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(12px);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease);pointer-events:none;z-index:70;max-width:min(92vw,520px);text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .sync{font-size:12px;color:var(--ink3);margin-top:10px}
 .cam{position:relative;overflow:hidden;isolation:isolate}
@@ -355,7 +355,8 @@ textarea{width:100%;min-height:80px;font:12px ui-monospace,SFMono-Regular,Consol
   body.cloud.sb main{max-width:var(--w);margin-left:var(--l);margin-right:0}
   body.cloud.sb .dock .dk{max-width:var(--w);margin:0 0 0 var(--l)}
   body.cloud.sb .who .sqb{display:none}
-  body.cloud.sb .drawer{transform:none;box-shadow:var(--shadow);width:var(--sw);left:calc(var(--l) + var(--w) + var(--gap));right:auto;top:44px;bottom:auto;max-height:calc(100vh - 88px);border:1px solid var(--line);border-radius:16px;padding-top:0}
+  body.cloud.sb .drawer{transform:none;box-shadow:var(--shadow);width:var(--sw);left:calc(var(--l) + var(--w) + var(--gap));right:auto;top:44px;bottom:auto;min-height:320px;max-height:calc(100vh - 88px);border:1px solid var(--line);border-radius:16px;padding-top:0}
+  body.cloud.sb .drawer.chatting{height:calc(100vh - 88px)}
   body.cloud.sb .drawer .x.hide-sb{display:block} body.cloud.sb .drawer #drawerX,body.cloud.sb .drawer-bg{display:none!important}
   body.cloud.sb .chat{border-radius:16px}
   body.cloud:not(.sb) .sbtab{display:inline-flex}
@@ -365,7 +366,7 @@ body{transition:padding .45s var(--ease)} .dock{transition:transform .45s var(--
 .rail{display:none;position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:30;flex-direction:column;gap:4px;background:color-mix(in srgb,var(--card) 85%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:6px}
 .rail a{display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:10px;color:var(--ink2);text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease),width .35s var(--ease)} .rail a .ic{width:18px;text-align:center;font-size:15px;color:var(--ink3);transition:color var(--dur) var(--ease)} .rail a .lb{max-width:0;overflow:hidden;opacity:0;transition:max-width .35s var(--ease),opacity .25s var(--ease)}
 .rail:hover a .lb,.rail:focus-within a .lb{max-width:80px;opacity:1} .rail a:hover{background:var(--bg);color:var(--ink)} .rail a.on{color:var(--ink)} .rail a.on .ic{color:var(--acc)}
-@media (min-width:1100px){.rail{display:flex}}
+body.railok .rail{display:flex}
 body.lite .rail{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--card)}
 body.lite .drawer,body.lite .chat,body.lite .rq,body.lite .clog .m{animation:none}
 .squad-s{margin:14px 0 4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
@@ -380,7 +381,7 @@ body.lite .drawer,body.lite .chat,body.lite .rq,body.lite .clog .m{animation:non
 .sqempty{font-size:13px;color:var(--ink3);margin-top:8px}
 .dock .dview{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--acc);color:var(--acc-ink);padding:7px max(16px,env(safe-area-inset-right,0px)) 7px max(16px,env(safe-area-inset-left,0px));font-size:13px} .dock .dview > *{max-width:980px} .dock .dview button{font-size:12px;font-weight:700;background:var(--acc-ink);color:#fff;border-radius:999px;padding:6px 12px}
 .viewbar{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--acc);color:var(--acc-ink);padding:10px 14px;border-radius:12px;margin:10px 0 14px;font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.12)} .viewbar .btn.pri{background:var(--acc-ink);color:#fff;border-color:var(--acc-ink)}
-.sheet{position:fixed;inset:0;z-index:40;display:grid;place-items:end center} .sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:fadeIn .25s var(--ease) both}
+.sheet{position:fixed;inset:0;z-index:60;display:grid;place-items:end center} .sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:fadeIn .25s var(--ease) both}
 .sheet-c{position:relative;width:min(560px,100%);background:var(--card);border:1px solid var(--line);border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;animation:sheetUp .4s var(--ease) both;max-height:92vh;overflow:auto}
 @media (min-width:700px){.sheet{place-items:center}.sheet-c{border-radius:18px}}
 @keyframes sheetUp{from{transform:translateY(24px);opacity:0}} @keyframes fadeIn{from{opacity:0}}
@@ -1068,7 +1069,7 @@ $("#keyGo").onclick=async()=>{ const k=$("#keyIn").value.trim().toLowerCase(); i
 $("#squadBtn").onclick=openDrawer; $("#drawerX").onclick=closeDrawer; $("#drawerBg").onclick=closeDrawer; $("#sbHide").onclick=()=>setSB(false); $("#sbTab").onclick=()=>setSB(true);
 /* left rail: smooth-scroll to a section, open fold-outs, highlight where you are */
 $("#rail").addEventListener("click",e=>{ const a=e.target.closest("[data-go]"); if(!a) return; e.preventDefault(); const el=document.getElementById(a.dataset.go); if(!el) return; if(el.tagName==="DETAILS") el.open=true; const top=el.getBoundingClientRect().top+scrollY-(a.dataset.go==="ctabs"?70:24); window.scrollTo({top,behavior:"smooth"}); });
-try{ const ids=["setup","stats","ctabs","mastSect","howGrind","saving"]; const io=new IntersectionObserver(ens=>{ for(const en of ens){ if(en.isIntersecting){ document.querySelectorAll("#rail a").forEach(x=>x.classList.toggle("on",x.dataset.go===en.target.id)); } } },{rootMargin:"-30% 0px -60% 0px"}); ids.forEach(id=>{ const el=document.getElementById(id); el&&io.observe(el); }); }catch(e){}
+railCheck(); try{ const ids=["setup","stats","ctabs","mastSect","howGrind","saving"]; const io=new IntersectionObserver(ens=>{ for(const en of ens){ if(en.isIntersecting){ document.querySelectorAll("#rail a").forEach(x=>x.classList.toggle("on",x.dataset.go===en.target.id)); } } },{rootMargin:"-30% 0px -60% 0px"}); ids.forEach(id=>{ const el=document.getElementById(id); el&&io.observe(el); }); }catch(e){}
 $("#addFriend").onclick=()=>{ const r=$("#addRow"); r.hidden=!r.hidden; if(!r.hidden) $("#codeIn").focus(); };
 $("#codeGo").onclick=async()=>{ const c=$("#codeIn").value.trim().toUpperCase().replace(/^ORN-?/,"ORN-"); if(!c||!sb) return; $("#codeGo").disabled=true; const {data,error}=await sb.rpc("send_request",{p_code:c}); $("#codeGo").disabled=false; if(error){ toast((error.message||"").replace(/^.*?: /,"")||"Couldn't send"); return; } $("#codeIn").value=""; $("#addRow").hidden=true; toast(`Request sent to ${data.name}`); await loadFriends(); };
 $("#codeIn").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); $("#codeGo").click(); } });
@@ -1198,17 +1199,18 @@ function renderSquad(){ const host=$("#sqlist"); if(!host) return; $("#squadN").
 async function viewFriend(id){ const f=FRIENDS.find(x=>x.id===id); if(!f||!sb) return; const {data:row}=await sb.from("progress").select("state").eq("user_id",id).maybeSingle(); if(!row||!row.state){ toast(`${f.name} hasn't saved any progress yet`); return; }
   if(!VIEWING) MYS=JSON.parse(JSON.stringify(S)); VIEWING=f; S=Object.assign(blank(),row.state,{tab:"ALL",open:null}); VIEW={}; document.body.classList.add("viewing"); $("#viewbar").hidden=false; $("#viewName").textContent=f.name; $("#dview").hidden=false; $("#dviewName").textContent=f.name; render(); closeDrawer(); window.scrollTo({top:0,behavior:"smooth"}); }
 /* chat */
-async function openChat(id){ const f=FRIENDS.find(x=>x.id===id); if(!f||!sb) return; CHAT=f; $("#chatName").textContent=f.name; $("#chat").hidden=false; if(!MSGS[id]){ const {data}=await sb.from("messages").select("*").or(`and(sender.eq.${ME.id},recipient.eq.${id}),and(sender.eq.${id},recipient.eq.${ME.id})`).order("created_at",{ascending:true}).limit(300); MSGS[id]=data||[]; } renderChat(); markRead(id); setTimeout(()=>$("#cin").focus(),350); }
-function closeChat(){ CHAT=null; $("#chat").hidden=true; }
+async function openChat(id){ const f=FRIENDS.find(x=>x.id===id); if(!f||!sb) return; CHAT=f; $("#drawer").classList.add("chatting"); $("#chatName").textContent=f.name; $("#chat").hidden=false; if(!MSGS[id]){ const {data}=await sb.from("messages").select("*").or(`and(sender.eq.${ME.id},recipient.eq.${id}),and(sender.eq.${id},recipient.eq.${ME.id})`).order("created_at",{ascending:true}).limit(300); MSGS[id]=data||[]; } renderChat(); markRead(id); setTimeout(()=>$("#cin").focus(),350); }
+function closeChat(){ CHAT=null; $("#chat").hidden=true; $("#drawer").classList.remove("chatting"); }
 function addMsg(other,m){ const arr=(MSGS[other]=MSGS[other]||[]); if(arr.some(x=>x.id===m.id)) return false; arr.push(m); arr.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)); return true; }
 function markRead(id){ READ[id]=Date.now(); try{ localStorage.setItem("orion-read",JSON.stringify(READ)); }catch(e){} if(UNREAD[id]){ delete UNREAD[id]; renderSquad(); } }
 function renderChat(){ if(!CHAT) return; const log=$("#clog"); const ms=MSGS[CHAT.id]||[]; let last=""; const html=ms.map(m=>{ const d=new Date(m.created_at); const day=d.toLocaleDateString(undefined,{month:"short",day:"numeric"}); const sep=day!==last?`<span class="d">${day}</span>`:""; last=day; return sep+`<div class="m ${m.sender===ME.id?'me':''}" title="${d.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}">${esc(m.body)}</div>`; }).join(""); setHTML(log,html||`<p class="none">Say hi to ${esc(CHAT.name)}.</p>`); log.scrollTop=log.scrollHeight; }
 async function sendMsg(){ const inp=$("#cin"); const body=inp.value.trim(); if(!body||!CHAT||!sb) return; $("#cbar .send").disabled=true; const {data,error}=await sb.from("messages").insert({sender:ME.id,recipient:CHAT.id,body}).select().single(); $("#cbar .send").disabled=false; if(error){ toast((error.message||"").replace(/^.*?: /,"")||"Couldn't send"); return; } inp.value=""; if(data&&addMsg(CHAT.id,data)) renderChat(); }
 const WIDE=()=>innerWidth>=1240;
 let SB=true; try{ SB=localStorage.getItem("orion-sb")!=="0"; }catch(e){}
-function applySB(){ document.body.classList.toggle("sb",SB); const d=$("#drawer"); if(WIDE()&&document.body.classList.contains("cloud")){ if(SB){ d.hidden=false; d.classList.add("open"); $("#drawerBg").hidden=true; } else { d.classList.remove("open"); d.hidden=true; } } $("#sbTab").hidden=!(WIDE()&&!SB&&document.body.classList.contains("cloud")); }
+function applySB(){ document.body.classList.toggle("sb",SB); setTimeout(railCheck,0); const d=$("#drawer"); if(WIDE()&&document.body.classList.contains("cloud")){ if(SB){ d.hidden=false; d.classList.add("open"); $("#drawerBg").hidden=true; } else { d.classList.remove("open"); d.hidden=true; } } $("#sbTab").hidden=!(WIDE()&&!SB&&document.body.classList.contains("cloud")); }
 function setSB(v){ SB=v; try{ localStorage.setItem("orion-sb",v?"1":"0"); }catch(e){} applySB(); }
-window.addEventListener("resize",()=>{ clearTimeout(window._rsz); window._rsz=setTimeout(applySB,120); });
+function railCheck(){ try{ const l=$("main").getBoundingClientRect().left; document.body.classList.toggle("railok",l>=104&&innerWidth>=1000); }catch(e){} }
+window.addEventListener("resize",()=>{ clearTimeout(window._rsz); window._rsz=setTimeout(()=>{ applySB(); railCheck(); },120); });
 function openDrawer(){ if(WIDE()&&document.body.classList.contains("cloud")){ setSB(true); return; } const d=$("#drawer"); d.hidden=false; $("#drawerBg").hidden=false; requestAnimationFrame(()=>d.classList.add("open")); }
 function closeDrawer(){ const d=$("#drawer"); if(WIDE()&&document.body.classList.contains("cloud")) return; d.classList.remove("open"); $("#drawerBg").hidden=true; setTimeout(()=>{ if(!d.classList.contains("open")) d.hidden=true; },450); }
 function viewBack(){ if(!VIEWING) return; VIEWING=null; S=Object.assign(blank(),MYS); MYS=null; VIEW={}; document.body.classList.remove("viewing"); $("#viewbar").hidden=true; $("#dview").hidden=true; render(); }
