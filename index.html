@@ -350,12 +350,18 @@ textarea{width:100%;min-height:80px;font:12px ui-monospace,SFMono-Regular,Consol
 .cbar{display:flex;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)} .cbar input{flex:1;font:inherit;font-size:16px;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink)} .cbar .send{width:42px;height:42px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:18px;font-weight:700;text-align:center;transition:transform .18s var(--ease),opacity var(--dur) var(--ease)} .cbar .send:active{transform:scale(.92)} .cbar .send:disabled{opacity:.4}
 .hide-sb{display:none}
 @media (min-width:1240px){
-  body.cloud.sb{padding-right:380px} body.cloud.sb .dock{right:380px} body.cloud.sb .who .sqb{display:none}
-  body.cloud.sb .drawer{transform:none;box-shadow:none;width:380px} body.cloud.sb .drawer .x.hide-sb{display:block} body.cloud.sb .drawer #drawerX,body.cloud.sb .drawer-bg{display:none!important}
+  /* pinned squad: content + panel are centred together as one group */
+  body.cloud.sb{--sw:360px;--gap:28px;--w:min(980px,calc(100vw - var(--sw) - var(--gap) - 48px));--l:calc((100vw - var(--w) - var(--sw) - var(--gap))/2);padding-right:0}
+  body.cloud.sb main{max-width:var(--w);margin-left:var(--l);margin-right:0}
+  body.cloud.sb .dock .dk{max-width:var(--w);margin:0 0 0 var(--l)}
+  body.cloud.sb .who .sqb{display:none}
+  body.cloud.sb .drawer{transform:none;box-shadow:var(--shadow);width:var(--sw);left:calc(var(--l) + var(--w) + var(--gap));right:auto;top:44px;bottom:auto;max-height:calc(100vh - 88px);border:1px solid var(--line);border-radius:16px;padding-top:0}
+  body.cloud.sb .drawer .x.hide-sb{display:block} body.cloud.sb .drawer #drawerX,body.cloud.sb .drawer-bg{display:none!important}
+  body.cloud.sb .chat{border-radius:16px}
   body.cloud:not(.sb) .sbtab{display:inline-flex}
 }
 body{transition:padding .45s var(--ease)} .dock{transition:transform .45s var(--ease),opacity .4s var(--ease),right .45s var(--ease)}
-.sbtab{display:none;position:fixed;right:0;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;z-index:30;align-items:center;gap:8px;padding:14px 8px;background:var(--card);border:1px solid var(--line);border-right:0;border-radius:0 12px 12px 0;color:var(--ink2);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 4px 16px rgba(0,0,0,.08)} .sbtab .ic{color:var(--acc);font-size:14px;transform:rotate(180deg)} .sbtab .badge{position:static;transform:rotate(180deg)}
+.sbtab{display:none;position:fixed;right:0;top:44px;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;z-index:30;align-items:center;gap:8px;padding:14px 8px;background:var(--card);border:1px solid var(--line);border-right:0;border-radius:0 12px 12px 0;color:var(--ink2);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 4px 16px rgba(0,0,0,.08)} .sbtab .ic{color:var(--acc);font-size:14px;transform:rotate(180deg)} .sbtab .badge{position:static;transform:rotate(180deg)}
 .rail{display:none;position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:30;flex-direction:column;gap:4px;background:color-mix(in srgb,var(--card) 85%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:6px}
 .rail a{display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:10px;color:var(--ink2);text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease),width .35s var(--ease)} .rail a .ic{width:18px;text-align:center;font-size:15px;color:var(--ink3);transition:color var(--dur) var(--ease)} .rail a .lb{max-width:0;overflow:hidden;opacity:0;transition:max-width .35s var(--ease),opacity .25s var(--ease)}
 .rail:hover a .lb,.rail:focus-within a .lb{max-width:80px;opacity:1} .rail a:hover{background:var(--bg);color:var(--ink)} .rail a.on{color:var(--ink)} .rail a.on .ic{color:var(--acc)}
