@@ -204,3 +204,49 @@ do $$ begin
   if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and tablename = 'friends') then alter publication supabase_realtime add table public.friends; end if;
   if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and tablename = 'messages') then alter publication supabase_realtime add table public.messages; end if;
 end $$;
+
+-- ================= v3: vanishing messages, read receipts, Activision ID =================
+alter table public.profiles add column if not exists receipts boolean not null default true;
+alter table public.profiles add column if not exists activision text not null default '';
+alter table public.messages add column if not exists read_at timestamptz;   -- used for deletion, always set
+alter table public.messages add column if not exists seen_at timestamptz;   -- shown to the sender only if the reader allows receipts
+
+create or replace function public.profiles_guard() returns trigger language plpgsql as $$
+begin
+  new.name := trim(regexp_replace(coalesce(new.name,''), '\s+', ' ', 'g'));
+  if length(new.name) < 2 or length(new.name) > 24 then raise exception 'Name must be 2–24 characters'; end if;
+  if not public.is_clean(new.name) then raise exception 'Keep it clean — pick another name'; end if;
+  new.activision := trim(coalesce(new.activision,''));
+  if length(new.activision) > 32 then raise exception 'Activision ID is too long'; end if;
+  if new.activision <> '' and new.activision !~ '^[A-Za-z0-9 _.\-]{2,24}#[0-9]{4,10}$' then raise exception 'Activision ID looks like Name#1234567'; end if;
+  if not public.is_clean(new.activision) then raise exception 'Keep it clean'; end if;
+  return new;
+end $$;
+drop trigger if exists profiles_guard_t on public.profiles;
+create trigger profiles_guard_t before insert or update of name, activision on public.profiles for each row execute function public.profiles_guard();
+
+-- mark everything from one friend as read; receipts only if I allow them
+create or replace function public.mark_read(p_from uuid) returns void language plpgsql security definer set search_path = public as $$
+declare me uuid := auth.uid(); allow boolean;
+begin
+  if me is null then return; end if;
+  select receipts into allow from public.profiles where id = me;
+  update public.messages set read_at = now(), seen_at = case when allow then now() else null end
+   where recipient = me and sender = p_from and read_at is null;
+end $$;
+grant execute on function public.mark_read(uuid) to authenticated;
+
+-- messages vanish 24 h after being read (and after 30 days regardless)
+create or replace function public.purge_messages() returns void language sql security definer set search_path = public as $$
+  delete from public.messages where (read_at is not null and read_at < now() - interval '24 hours') or created_at < now() - interval '30 days';
+$$;
+grant execute on function public.purge_messages() to authenticated;
+do $$ begin
+  if exists (select 1 from pg_extension where extname = 'pg_cron') then
+    perform cron.schedule('orion-purge-messages', '*/30 * * * *', 'select public.purge_messages()');
+  end if;
+exception when others then null; end $$;
+
+-- ================= v3.1: make removals and vanished messages reach the other side instantly =================
+alter table public.friends  replica identity full;
+alter table public.messages replica identity full;
