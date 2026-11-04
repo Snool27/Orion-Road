@@ -729,7 +729,7 @@ body.lite .celebrate .cam::before{animation:none!important}
     <div class="rowb"><button class="btn pri" id="copy">Copy transfer code</button><button class="btn" id="refresh">Refresh</button></div>
     <textarea id="imp" aria-label="Import code" placeholder="Paste a transfer code from another device" style="margin-top:12px"></textarea>
     <div class="rowb"><button class="btn pri" id="impGo">Import</button><button class="btn" id="reset">Reset my progress</button><button class="btn" id="resetYes" hidden>Yes, wipe it</button></div>
-    <p class="sync" id="sync"></p>
+    <p class="sync" id="sync"></p><p class="sync" id="buildLine"></p>
   </div></details>
 </main>
 <div class="toast" id="toast" role="status"></div>
@@ -1121,7 +1121,7 @@ $("#chatBack").onclick=closeChat; $("#chatInfo").onclick=()=>{ $("#rules").hidde
 $("#avs").addEventListener("click",async e=>{ const b=e.target.closest("[data-av]"); if(!b||!sb||!ME) return; const v=b.dataset.av==="auto"?"":b.dataset.av; const {error}=await sb.from("profiles").update({avatar:v}).eq("id",ME.id); if(error){ toast("Couldn't save"); return; } ME.avatar=v; renderWho(); cloudPush(); });
 $("#sqch").onclick=()=>{ S.sqchips=S.sqchips===false?true:false; save(); renderWho(); render(); toast(S.sqchips===false?"Squad chips hidden on your guns":"Squad chips shown on your guns"); };
 $("#diag").onclick=async()=>{ const out=[]; const o=$("#diagOut"); o.hidden=false; o.value="checking…"; const t=(k,v)=>out.push(k+": "+v);
-  try{ t("site build","v3.2 "+(document.lastModified||"")); t("account",ME?ME.code+" ("+ME.id.slice(0,8)+"…)":"none"); t("realtime",chan?"subscribed":"no");
+  try{ t("site build",BUILD); t("account",ME?ME.code+" ("+ME.id.slice(0,8)+"…)":"none"); t("realtime",chan?"subscribed":"no");
     const fr=await sb.from("friends").select("user_id,friend_id,status,created_at").or(`user_id.eq.${ME.id},friend_id.eq.${ME.id}`); t("friends query",fr.error?"ERR "+fr.error.message:(fr.data||[]).map(x=>(x.user_id===ME.id?"me→":"→me ")+(x.user_id===ME.id?x.friend_id:x.user_id).slice(0,8)+" "+x.status).join(" | ")||"no rows");
     const pf=await sb.from("profiles").select("id,name,avatar,receipts,activision").eq("id",ME.id).maybeSingle(); t("profile cols",pf.error?"ERR "+pf.error.message:Object.keys(pf.data||{}).join(","));
     const ms=await sb.from("messages").select("id,read_at,seen_at").limit(1); t("messages cols",ms.error?"ERR "+ms.error.message:"ok (read_at/seen_at present)");
@@ -1174,6 +1174,7 @@ function resortFlip(host,before){ render();
 function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=JSON.stringify(Object.assign({},S,{open:null,tab:S.tab})); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Date.now(); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
 async function push(){ if(!doc) return; if(pushing){again=true;return;} pushing=true; try{ await doc.set(JSON.parse(JSON.stringify(S))); sync(true);}catch(e){ sync(false); } pushing=false; if(again){again=false;push();} }
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
+const BUILD="2026-11-04.1";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
@@ -1200,7 +1201,7 @@ async function cloudLoad(uid){
   else if(S.updated) cloudPush();
   CLOUD_OK=true; cloudStatus(true); renderWho(); await loadFriends(); subscribeFriends();
 }
-function cloudStatus(ok){ try{ $("#who").hidden=!ok; document.body.classList.toggle("cloud",ok); applySB(); sync(ok); }catch(e){} }
+function cloudStatus(ok){ try{ $("#buildLine").textContent="Build "+BUILD+(window.__swUpdated?" · updated just now":""); $("#who").hidden=!ok; document.body.classList.toggle("cloud",ok); applySB(); sync(ok); }catch(e){} }
 async function cloudPush(){ if(!sb||!ME||VIEWING) return; if(cloudBusy){cloudAgain=true;return;} cloudBusy=true; try{ const state=JSON.parse(JSON.stringify(Object.assign({},S,{open:null}))); await sb.from("progress").upsert({user_id:ME.id,state,summary:summaryOf(),updated_at:new Date().toISOString()}); }catch(e){} cloudBusy=false; if(cloudAgain){cloudAgain=false;cloudPush();} }
 const AV_CHOICES=["auto","cam-gold","cam-plat","cam-hb","cam-div","cam-pyro","cam-or","cam-he","cam-em","#d9a441","#2fa35e","#3b82f6","#e11d48","#8b5cf6","#f97316","#17181a"];
 const avStyle=(av,tex)=>{ const a=av||tex||""; if(!a) return {cls:"flat",style:"background:var(--ink)"}; if(a.startsWith("#")) return {cls:"flat",style:`background:${a}`}; return {cls:"cam "+a,style:""}; };
@@ -1307,7 +1308,10 @@ try{ if(window.claude?.hot?.ready){ window.claude.hot.ready(start); setTimeout((
 </script>
 
 <script>
-if("serviceWorker" in navigator){ window.addEventListener("load",()=>{ navigator.serviceWorker.register("./sw.js").catch(()=>{}); }); }
+/* keep installed copies fresh: check for a new build on every open and when the app comes back to the foreground; reload once when one arrives */
+if("serviceWorker" in navigator){ window.addEventListener("load",async()=>{ try{ const reg=await navigator.serviceWorker.register("./sw.js"); const check=()=>reg.update().catch(()=>{}); check(); setInterval(check,10*60*1000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden) check(); });
+  let reloaded=false; navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(reloaded) return; reloaded=true; sessionStorage.setItem("orion-updated","1"); location.reload(); }); }catch(e){} }); }
+if(sessionStorage.getItem("orion-updated")){ sessionStorage.removeItem("orion-updated"); window.__swUpdated=true; }
 </script>
 </body>
 </html>
