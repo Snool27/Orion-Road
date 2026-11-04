@@ -250,3 +250,28 @@ exception when others then null; end $$;
 -- ================= v3.1: make removals and vanished messages reach the other side instantly =================
 alter table public.friends  replica identity full;
 alter table public.messages replica identity full;
+
+-- ================= v3.2: stricter language filter (leetspeak / spaced letters), avatar choice =================
+alter table public.profiles add column if not exists avatar text not null default '';
+
+create or replace function public.norm_text(t text) returns text language sql immutable as $$
+  select regexp_replace(translate(lower(coalesce(t,'')), '013457@$!|()[]{}<>', 'oieastasil        '), '[^a-z]', '', 'g');
+$$;
+
+create or replace function public.is_clean(t text) returns boolean language plpgsql security definer set search_path = public stable as $$
+declare
+  n text := public.norm_text(t);                                                                     -- letters only, leetspeak fixed
+  sp text := regexp_replace(regexp_replace(translate(lower(coalesce(t,'')), '013457@$!|', 'oieastasil'), '[^a-z]+', ' ', 'g'), '^ | $', '', 'g'); -- words, leetspeak fixed
+  w text;
+begin
+  for w in select word from public.banned_words loop
+    if length(w) <= 4 then
+      -- short words: whole word (so "class" and "assassin" pass), or the whole thing spelled out with separators
+      if (' ' || sp || ' ') like ('% ' || w || ' %') or (' ' || sp || ' ') like ('% ' || w || 's %') or n = w or n = w || 's' then return false; end if;
+    else
+      if position(w in n) > 0 then return false; end if;
+    end if;
+  end loop;
+  return true;
+end $$;
+grant execute on function public.is_clean(text) to authenticated;
