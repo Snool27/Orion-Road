@@ -275,3 +275,6 @@ begin
   return true;
 end $$;
 grant execute on function public.is_clean(text) to authenticated;
+
+-- tell the API layer about new functions/columns right away
+notify pgrst, 'reload schema';

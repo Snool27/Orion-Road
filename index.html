@@ -1219,19 +1219,14 @@ try{ READ=JSON.parse(localStorage.getItem("orion-read")||"{}"); }catch(e){}
 async function refreshFriends(){ const before=new Set(FRIENDS.map(f=>f.id)); await loadFriends(); for(const id of before){ if(!FRIENDS.some(f=>f.id===id)){ dropFriend(id); toast("A friend removed you"); } } }
 setInterval(()=>{ if(sb&&ME&&!document.hidden) refreshFriends(); },30000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&sb&&ME) refreshFriends(); });
 async function loadFriends(){ if(!sb||!ME) return; const {data:links}=await sb.from("friends").select("user_id,friend_id,status").or(`user_id.eq.${ME.id},friend_id.eq.${ME.id}`); const L=links||[];
-  /* a friendship only counts when BOTH directions say accepted; anything half-deleted is cleaned up quietly */
-  const mine=L.filter(x=>x.user_id===ME.id&&x.status==="accepted").map(x=>x.friend_id);
-  const theirs=new Set(L.filter(x=>x.friend_id===ME.id&&x.status==="accepted").map(x=>x.user_id));
-  const acc=mine.filter(id=>theirs.has(id));
-  const orphans=mine.filter(id=>!theirs.has(id)).concat([...theirs].filter(id=>!mine.includes(id)));
-  for(const id of orphans){ try{ sb.rpc("remove_friend",{p_id:id}); }catch(e){} }
+  /* the server is the only thing that adds or removes links (send_request / respond_request / remove_friend); the page never deletes on its own */
+  const acc=L.filter(x=>x.user_id===ME.id&&x.status==="accepted").map(x=>x.friend_id);
   const inn=L.filter(x=>x.friend_id===ME.id&&x.status==="pending").map(x=>x.user_id);
   const out=L.filter(x=>x.user_id===ME.id&&x.status==="pending").map(x=>x.friend_id);
   const ids=[...new Set([...acc,...inn,...out])]; let profs=[],progs=[];
   if(ids.length){ const r=await Promise.all([sb.from("profiles").select("id,code,name,activision,receipts,avatar").in("id",ids),acc.length?sb.from("progress").select("user_id,summary,updated_at,state").in("user_id",acc):{data:[]}]); profs=r[0].data||[]; progs=r[1].data||[]; }
   const P=id=>profs.find(p=>p.id===id);
-  /* accounts whose profile can't be read any more (deleted) are dropped and the link removed */
-  const gone=ids.filter(id=>!P(id)); for(const id of gone){ try{ sb.rpc("remove_friend",{p_id:id}); }catch(e){} }
+  /* a link whose profile can't be read (deleted account, or database behind the site) is hidden, never deleted from here */
   FRIENDS=acc.map(P).filter(Boolean); REQ_IN=inn.map(P).filter(Boolean); REQ_OUT=out.map(P).filter(Boolean); FPROG={}; FSTATE={}; for(const p of progs){ FPROG[p.user_id]={summary:p.summary||{},updated_at:p.updated_at}; if(p.state) FSTATE[p.user_id]=p.state; }
   await loadUnread(); renderSquad(); render(); }
 let LASTM={};
