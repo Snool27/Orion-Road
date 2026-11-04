@@ -115,6 +115,7 @@ body.lite .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:var
 .cls-h .fil{display:flex;gap:6px;flex-wrap:wrap}
 .cls-h .hide{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px;padding:8px 0 0;border-top:1px dashed var(--line)} .cls-h .hide em{margin-right:2px} .cls-h .hide .seg{padding:4px 10px;font-size:12px;min-height:32px} .cls-h .hide .seg[aria-pressed="true"]{text-decoration:line-through;text-decoration-color:var(--ink3);color:var(--ink3);border-color:var(--ink3)} .cls-h .hide .seg[aria-pressed="true"] i{background:var(--ink3);border-color:var(--ink3)} .cls-h .hide .hn{color:var(--ink3);font-weight:400;margin-left:2px} .cls-h .hide .hcount{font-size:12px;color:var(--ink2);margin-left:4px;font-weight:500} .cls-h .hide .seg:disabled{opacity:.35}
 #guns .empty{color:var(--ink3);font-size:14px;padding:18px 4px}
+.ghead{display:flex;align-items:baseline;gap:10px;padding:14px 4px 6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ink2)} .ghead em{font-style:normal;color:var(--ink3);font-weight:600;letter-spacing:0} .ghead small{color:var(--ink3);font-size:11px;letter-spacing:.04em;text-transform:none;font-weight:500;margin-left:auto} .ghead:first-child{padding-top:4px}
 .bulk{display:inline-flex;align-items:center;gap:5px;margin-left:auto;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 5px 4px 12px;flex-wrap:wrap}
 .bulk em{font-style:normal;font-size:12px;font-weight:600;color:var(--ink2);margin-right:4px;letter-spacing:0;text-transform:none}
 .bulk button{border:0}
@@ -926,8 +927,9 @@ function render(){
       else if(S.filt==="done") ws=ws.filter(w=>lf(w)===0);
       if(!ws.length){ ws=WEAPONS.slice(); }
       ws=ws.filter(w=>!hiddenGun(w));
+      if(S.filt!=="close") ws.sort((a,b)=>ORDER.indexOf(a.cls)-ORDER.indexOf(b.cls)||WEAPONS.indexOf(a)-WEAPONS.indexOf(b));   /* grouped by class, same order as the tabs */
       VIEW={key,ids:ws.map(w=>w.id)}; }
-    for(const w of ws) put(gun(w,t,classGold(w.cls),true));
+    let lastCls=null; for(const w of ws){ if(S.filt!=="close"&&w.cls!==lastCls){ lastCls=w.cls; const hd=document.createElement("div"); hd.className="ghead"; hd.dataset.gun="h-"+w.cls; const n=ws.filter(x=>x.cls===w.cls).length; hd.innerHTML=`<span>${esc(CLS[w.cls][0])}</span><em class="num tw">${clsPct(w.cls)}%</em><small>${n} gun${n===1?"":"s"}</small>`; put(hd); } put(gun(w,t,classGold(w.cls),true)); }
   } else {
     const c=S.tab; const cg=classGold(c); const plats=cnt(w=>w.cls===c&&W(w.id).plat);
     setHTML($("#clsH"),`<div class="l1"><b>${CLS[c][0]}</b><span class="num tw">${clsPct(c)}%</span>${bulk(WEAPONS.filter(w=>w.cls===c),"class")}</div>${hideRow(WEAPONS.filter(w=>w.cls===c))}`);
@@ -1167,6 +1169,7 @@ function resortNow(){ if(Q||S.open) return; const host=$("#guns"); const before=
   const oldKey=VIEW.key; VIEW={}; const t0=totals(); const lf=w=>left(w).length;
   const SFm={"f-max":w=>W(w.id).mil>=8,"f-prest":w=>W(w.id).pr>0,"f-gold":w=>W(w.id).gold,"f-plat":w=>W(w.id).plat,"f-hb":w=>W(w.id).hb};
   const keep=w=> hiddenGun(w)?false : S.tab!=="ALL"?true : SFm[S.filt]?SFm[S.filt](w) : S.filt==="close"?lf(w)>0 : S.filt==="fresh"?done(W(w.id))===0 : S.filt==="done"?lf(w)===0 : true;
+  host.querySelectorAll(".ghead").forEach(el=>{ if(S.filt==="close") el.remove(); });
   const leaving=[...host.querySelectorAll(".gun")].filter(el=>{ const w=WEAPONS.find(x=>x.id===el.dataset.gun); return w&&!keep(w); });
   if(leaving.length){ leaving.forEach(el=>{ el.style.transition="opacity .45s ease,transform .45s ease,max-height .5s ease .1s,margin .5s ease .1s"; el.style.maxHeight=el.offsetHeight+"px"; requestAnimationFrame(()=>{ el.style.opacity="0"; el.style.transform="translateX(24px)"; el.style.maxHeight="0"; el.style.marginBottom="0"; }); }); const hidB=leaving.every(el=>hiddenGun(WEAPONS.find(x=>x.id===el.dataset.gun))); toast(leaving.length===1?`${WEAPONS.find(x=>x.id===leaving[0].dataset.gun).name} ${hidB?"hidden":"moved to its new list"}`:`${leaving.length} guns ${hidB?"hidden":"moved to their new lists"}`); setTimeout(()=>{ VIEW={}; resortFlip(host,before); },650); return; }
   resortFlip(host,before); }
