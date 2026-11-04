@@ -1,4 +1,4 @@
--- ===== Orion Road: RESET friends & chat, then full setup (v3.2) =====
+-- ===== Orion Road: RESET friends & chat, then full setup (v3.3) =====
 -- Wipes every friendship, request and message. Accounts, names, codes and progress are kept.
 truncate table public.friends;
 truncate table public.messages;
@@ -281,5 +281,27 @@ begin
 end $$;
 grant execute on function public.is_clean(text) to authenticated;
 
--- tell the API layer about the new functions/columns right away
+-- tell the API layer about new functions/columns right away
 notify pgrst, 'reload schema';
+
+-- ================= v3.3: conversations outlive friendships =================
+-- You can always read the name/avatar of anyone you've exchanged messages with, so old threads never turn into "unknown".
+drop policy if exists "profiles: chatted" on public.profiles;
+create policy "profiles: chatted" on public.profiles for select to authenticated
+  using (exists (select 1 from public.messages m where (m.sender = auth.uid() and m.recipient = profiles.id) or (m.recipient = auth.uid() and m.sender = profiles.id)));
+-- Either participant may delete a conversation.
+drop policy if exists "messages: delete mine" on public.messages;
+create policy "messages: delete mine" on public.messages for delete to authenticated using (sender = auth.uid() or recipient = auth.uid());
+create or replace function public.delete_conversation(p_other uuid) returns void language sql security definer set search_path = public as $$
+  delete from public.messages where (sender = auth.uid() and recipient = p_other) or (sender = p_other and recipient = auth.uid());
+$$;
+grant execute on function public.delete_conversation(uuid) to authenticated;
+-- Send a request straight from a thread (by id, no code needed).
+create or replace function public.send_request_id(p_id uuid) returns public.profiles language plpgsql security definer set search_path = public as $$
+declare c text;
+begin
+  select code into c from public.profiles where id = p_id;
+  if c is null then raise exception 'That player no longer exists'; end if;
+  return public.send_request(c);
+end $$;
+grant execute on function public.send_request_id(uuid) to authenticated;
