@@ -1106,7 +1106,7 @@ $("#squadBtn").onclick=openDrawer; $("#drawerX").onclick=closeDrawer; $("#drawer
 $("#rail").addEventListener("click",e=>{ const a=e.target.closest("[data-go]"); if(!a) return; e.preventDefault(); if(a.dataset.go==="you"){ $("#whoBtn").click(); return; } const el=document.getElementById(a.dataset.go); if(!el) return; if(el.tagName==="DETAILS") el.open=true; const top=el.getBoundingClientRect().top+scrollY-(a.dataset.go==="ctabs"?70:24); window.scrollTo({top,behavior:"smooth"}); });
 railCheck(); try{ const ids=["setup","ctabs","mastSect","saving"]; const io=new IntersectionObserver(ens=>{ for(const en of ens){ if(en.isIntersecting){ document.querySelectorAll("#rail a").forEach(x=>x.classList.toggle("on",x.dataset.go===en.target.id)); } } },{rootMargin:"-30% 0px -60% 0px"}); ids.forEach(id=>{ const el=document.getElementById(id); el&&io.observe(el); }); }catch(e){}
 $("#addFriend").onclick=()=>{ const r=$("#addRow"); r.hidden=!r.hidden; r.dataset.user=r.hidden?"":"1"; if(!r.hidden) $("#codeIn").focus(); };
-$("#codeGo").onclick=async()=>{ const c=$("#codeIn").value.trim().toUpperCase().replace(/^ORN-?/,"ORN-"); if(!c||!sb) return; $("#codeGo").disabled=true; const {data,error}=await sb.rpc("send_request",{p_code:c}); $("#codeGo").disabled=false; if(error){ toast((error.message||"").replace(/^.*?: /,"")||"Couldn't send"); return; } $("#codeIn").value=""; $("#addRow").dataset.user=""; toast(`Request sent to ${data.name} — they'll see it in their Squad`); await loadFriends(); };
+$("#codeGo").onclick=async()=>{ const c=$("#codeIn").value.trim().toUpperCase().replace(/^ORN-?/,"ORN-"); if(!c||!sb) return; $("#codeGo").disabled=true; const {data,error}=await sb.rpc("send_request",{p_code:c}); $("#codeGo").disabled=false; if(error){ dbStale(error); toast((error.message||"").replace(/^.*?: /,"")||"Couldn't send"); return; } $("#codeIn").value=""; $("#addRow").dataset.user=""; toast(`Request sent to ${data.name} — they'll see it in their Squad`); await loadFriends(); };
 $("#codeIn").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); $("#codeGo").click(); } });
 $("#dbody").addEventListener("click",async e=>{
   const acc=e.target.closest("[data-acc]"); if(acc){ const {error}=await sb.rpc("respond_request",{p_from:acc.dataset.acc,p_accept:true}); if(error) toast("Couldn't accept"); else toast("Friends!"); await loadFriends(); return; }
@@ -1174,7 +1174,7 @@ function resortFlip(host,before){ render();
 function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=JSON.stringify(Object.assign({},S,{open:null,tab:S.tab})); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Date.now(); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
 async function push(){ if(!doc) return; if(pushing){again=true;return;} pushing=true; try{ await doc.set(JSON.parse(JSON.stringify(S))); sync(true);}catch(e){ sync(false); } pushing=false; if(again){again=false;push();} }
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-04.1";
+const BUILD="2026-11-04.2";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
@@ -1217,7 +1217,7 @@ async function refreshFriends(){ const before=new Set(FRIENDS.map(f=>f.id)); awa
 setInterval(()=>{ if(sb&&ME&&!document.hidden) refreshFriends(); },30000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&sb&&ME) refreshFriends(); });
 let LF_BUSY=false, LF_AGAIN=false;
 async function loadFriends(){ if(!sb||!ME) return; if(LF_BUSY){ LF_AGAIN=true; return; } LF_BUSY=true; try{ await _loadFriends(); }catch(e){ console.warn(e); } LF_BUSY=false; if(LF_AGAIN){ LF_AGAIN=false; await loadFriends(); } }
-async function _loadFriends(){ const {data:links}=await sb.from("friends").select("user_id,friend_id,status").or(`user_id.eq.${ME.id},friend_id.eq.${ME.id}`); const L=links||[];
+async function _loadFriends(){ const {data:links,error:lerr}=await sb.from("friends").select("user_id,friend_id,status").or(`user_id.eq.${ME.id},friend_id.eq.${ME.id}`); if(lerr){ dbStale(lerr); if(!STALE_WARNED){ STALE_WARNED=true; toast("Squad can't load: "+(lerr.message||"database error")); } } const L=links||[];
   /* the server is the only thing that adds or removes links (send_request / respond_request / remove_friend); the page never deletes on its own */
   const acc=L.filter(x=>x.user_id===ME.id&&x.status==="accepted").map(x=>x.friend_id);
   const inn=L.filter(x=>x.friend_id===ME.id&&x.status==="pending").map(x=>x.user_id);
