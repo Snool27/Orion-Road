@@ -1,4 +1,4 @@
--- ===== Orion Road: RESET friends & chat, then full setup (v3.3) =====
+-- ===== Orion Road: RESET friends & chat, then full setup (v3.4) =====
 -- Wipes every friendship, request and message. Accounts, names, codes and progress are kept.
 truncate table public.friends;
 truncate table public.messages;
@@ -282,7 +282,6 @@ end $$;
 grant execute on function public.is_clean(text) to authenticated;
 
 -- tell the API layer about new functions/columns right away
-notify pgrst, 'reload schema';
 
 -- ================= v3.3: conversations outlive friendships =================
 -- You can always read the name/avatar of anyone you've exchanged messages with, so old threads never turn into "unknown".
@@ -305,3 +304,55 @@ begin
   return public.send_request(c);
 end $$;
 grant execute on function public.send_request_id(uuid) to authenticated;
+
+-- ================= v3.4: unfriending hides the thread for the person who unfriended; re-friending brings it back =================
+create table if not exists public.hidden_threads (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  other_id uuid not null references auth.users(id) on delete cascade,
+  primary key (user_id, other_id)
+);
+alter table public.hidden_threads enable row level security;
+drop policy if exists "hidden: own" on public.hidden_threads;
+create policy "hidden: own" on public.hidden_threads for select to authenticated using (user_id = auth.uid());
+
+create or replace function public.remove_friend(p_id uuid) returns void language plpgsql security definer set search_path = public as $$
+begin
+  delete from public.friends where (user_id = auth.uid() and friend_id = p_id) or (user_id = p_id and friend_id = auth.uid());
+  insert into public.hidden_threads (user_id, other_id) values (auth.uid(), p_id) on conflict do nothing;
+end $$;
+grant execute on function public.remove_friend(uuid) to authenticated;
+
+create or replace function public.send_request(p_code text) returns public.profiles language plpgsql security definer set search_path = public as $$
+declare me uuid := auth.uid(); other public.profiles;
+begin
+  if me is null then raise exception 'not signed in'; end if;
+  select * into other from public.profiles where upper(code) = upper(trim(p_code));
+  if other.id is null then raise exception 'No one has that code'; end if;
+  if other.id = me then raise exception 'That is your own code'; end if;
+  delete from public.hidden_threads where (user_id = me and other_id = other.id) or (user_id = other.id and other_id = me);
+  if exists (select 1 from public.friends where user_id = me and friend_id = other.id and status = 'accepted') then raise exception 'Already friends'; end if;
+  if exists (select 1 from public.friends where user_id = other.id and friend_id = me and status = 'pending') then
+    update public.friends set status = 'accepted' where user_id = other.id and friend_id = me;
+    insert into public.friends (user_id, friend_id, status) values (me, other.id, 'accepted') on conflict (user_id, friend_id) do update set status = 'accepted';
+    return other;
+  end if;
+  insert into public.friends (user_id, friend_id, status) values (me, other.id, 'pending') on conflict do nothing;
+  return other;
+end $$;
+grant execute on function public.send_request(text) to authenticated;
+
+create or replace function public.respond_request(p_from uuid, p_accept boolean) returns void language plpgsql security definer set search_path = public as $$
+declare me uuid := auth.uid();
+begin
+  if not exists (select 1 from public.friends where user_id = p_from and friend_id = me and status = 'pending') then raise exception 'No such request'; end if;
+  if p_accept then
+    update public.friends set status = 'accepted' where user_id = p_from and friend_id = me;
+    insert into public.friends (user_id, friend_id, status) values (me, p_from, 'accepted') on conflict (user_id, friend_id) do update set status = 'accepted';
+    delete from public.hidden_threads where (user_id = me and other_id = p_from) or (user_id = p_from and other_id = me);
+  else
+    delete from public.friends where user_id = p_from and friend_id = me;
+  end if;
+end $$;
+grant execute on function public.respond_request(uuid, boolean) to authenticated;
+
+notify pgrst, 'reload schema';
