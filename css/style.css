@@ -616,3 +616,30 @@ body.lite .celebrate .cam::before{animation:none!important}
 .gun{content-visibility:auto;contain-intrinsic-size:auto 220px}
 /* phones: closed gun cards show the header, camo buttons and progress only; the square rows appear when you open the gun */
 @media (max-width:560px){ .gun:not(.open) .ladwrap .lg{display:none} .gun:not(.open) .grow .side{justify-content:space-between} .gun:not(.open) .grow .side::before{content:"Tap for every camo ▾";margin-right:auto;font-size:11px;letter-spacing:.04em;color:var(--ink3);align-self:center} }
+
+/* ===== dopamine pass ===== */
+/* class tabs fill bottom-up with the next camo */
+.ctabs button .fill{position:absolute;left:0;right:0;bottom:0;z-index:0;opacity:.5;transition:height .9s cubic-bezier(.2,.8,.2,1);pointer-events:none;border-radius:0 0 8px 8px}
+.ctabs button .fill::before{left:0;width:100%;animation:none}
+.ctabs button > span:not(.fill):not(.bar),.ctabs button > small,.ctabs button > em{position:relative;z-index:1}
+.ctabs button.filling{text-shadow:0 1px 2px color-mix(in srgb,var(--bg) 70%,transparent)}
+.ctabs button .near{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--acc-ink);background:var(--acc);border-radius:999px;padding:1px 6px;align-self:flex-start;margin-top:2px;text-shadow:none;animation:nearPulse 1.8s ease-in-out infinite}
+@keyframes nearPulse{50%{transform:scale(1.08)}}
+.ctabs button.tabpop{animation:tabPop .9s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes tabPop{0%{transform:scale(1)}25%{transform:scale(1.18) rotate(-2deg)}60%{transform:scale(.96)}100%{transform:scale(1)}}
+.ctabs button.shiny::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);background-size:250% 100%;animation:tabSheen 3.2s ease-in-out infinite;pointer-events:none;z-index:2}
+@keyframes tabSheen{0%{background-position:120% 0}60%,100%{background-position:-60% 0}}
+/* "2 guns from Gold Assault rifles" */
+.cls-h .nudge{font-size:12px;font-weight:700;color:var(--acc);border:1px solid var(--acc);border-radius:999px;padding:3px 10px;animation:nearPulse 2.2s ease-in-out infinite}
+/* skipped Season guns */
+.gun.skipped{opacity:.55} .gun.skipped:hover{opacity:.8}
+.chip .ctag.skip{background:var(--ink3);color:var(--bg)}
+/* session haul in the top bar */
+.dock .haul{font-size:12px;font-weight:600;color:var(--ink2);white-space:nowrap;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--acc) 18%,transparent)}
+.dock .haul b{color:var(--acc);font-weight:800}
+.dock .haul.bump{animation:haulBump .6s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes haulBump{0%{transform:scale(1)}35%{transform:scale(1.3)}100%{transform:scale(1)}}
+.dock .dk{grid-template-columns:1fr auto auto auto auto}
+@media (max-width:560px){ .dock .dk{grid-template-columns:1fr auto auto} .dock .haul{grid-column:1/-1;grid-row:3;justify-self:start} }
+@media (prefers-reduced-motion:reduce){ .ctabs button .near,.cls-h .nudge,.ctabs button.shiny::after{animation:none} }
+body.lite .ctabs button .near,body.lite .cls-h .nudge,body.lite .ctabs button.shiny::after{animation:none}

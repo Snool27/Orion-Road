@@ -1,6 +1,6 @@
 /* Accounts, cloud saving (with merge), friends and chat, via Supabase. */
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-09.4";
+const BUILD="2026-11-09.5";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false, cloudFailed=false, cloudRetry=null;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
@@ -36,12 +36,12 @@ let CBASE=null, CTS=null, CONFLICTS=0, PULLING=false;
 const sameTs=(a,b)=>!!a&&!!b&&new Date(a).getTime()===new Date(b).getTime();
 function setBase(state,ts){ CBASE={uid:ME.id,ts,state:JSON.parse(JSON.stringify(state))}; CTS=ts; /* a separate copy, so later edits on this page never change it */ try{ localStorage.setItem("orion-cbase",JSON.stringify(CBASE)); }catch(e){} }
 const dirty=()=>(S.updated||0)>((CBASE&&CBASE.state&&CBASE.state.updated)||0);
-const MAPS=["weapons","m","mt","mu","col"];
+const MAPS=["weapons","m","mt","mu","col","skip"];
 function merge3(base,mine,theirs){ base=base||{}; const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b); const out=Object.assign(blank(),theirs);
   for(const k of MAPS){ const B=base[k]||{}, M=mine[k]||{}, o=Object.assign({},theirs[k]||{}); for(const id of new Set([...Object.keys(M),...Object.keys(B)])){ if(!same(M[id],B[id])){ if(M[id]===undefined) delete o[id]; else o[id]=M[id]; } } out[k]=o; }
   for(const k of Object.keys(mine)){ if(MAPS.includes(k)||k==="updated") continue; if(!same(mine[k],base[k])) out[k]=mine[k]; }
   out.updated=Math.max(Date.now(),mine.updated||0,(theirs.updated||0)+1); out.tab=mine.tab; out.open=null; if(!FILT_OK.includes(out.filt)) out.filt=""; return out; }
-function takeState(next,note){ const changed=JSON.stringify(PK.map(k=>next[k]))!==snap(); S=next; lsSave(); LASTJ=snap(); HIST=[]; bgRender(); try{ renderWho(); }catch(e){} if(note&&changed) toast(note); }
+function takeState(next,note){ const changed=JSON.stringify(PK.map(k=>next[k]))!==snap(); S=next; HAUL_LAST=null; try{ haulTick(); }catch(e){} lsSave(); LASTJ=snap(); HIST=[]; bgRender(); try{ renderWho(); }catch(e){} if(note&&changed) toast(note); }
 /* decide what to do with the cloud copy: nothing, take it, or merge it with unsaved changes here */
 function syncFromRow(row,note){
   if(!row||!row.state){ CBASE=null; CTS=null; try{ localStorage.removeItem("orion-cbase"); }catch(e){} if(S.updated) cloudPush(); return; }

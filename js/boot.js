@@ -1,5 +1,5 @@
 /* Start-up, plus the offline helper (service worker) registration. */
-async function boot(){ document.querySelectorAll(".nbase").forEach(e=>{ e.textContent=BASE.length; }); load(); lastM=milestones(); try{ LASTJ=snap(); }catch(e){} render(); sync(false); refreshExp();
+async function boot(){ document.querySelectorAll(".nbase").forEach(e=>{ e.textContent=BASE.length; }); load(); lastM=milestones(); HAUL_LAST=null; haulTick(); try{ LASTJ=snap(); }catch(e){} render(); sync(false); refreshExp();
   cloudInit(); if(SUPA.url) return;
   const HOSTED=!(window.claude&&window.claude.use); if(HOSTED){ sync(false); return; }
   let db=null,u=null; for(let i=0;i<4&&!(db&&u);i++){ try{ [db,u]=await Promise.all([claude.use("db"),claude.use("user")]); }catch(e){} if(!(db&&u)) await new Promise(r=>setTimeout(r,1500*(i+1))); }
