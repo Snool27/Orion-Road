@@ -29,6 +29,15 @@ const done=s=>s.mil+spDone(s)+(s.gold?1:0)+(s.plat?1:0)+(s.hb?1:0);
 const POOL=c=>TRACKED().filter(w=>c==="ALL"||w.cls===c), NEED=c=>BASE.filter(w=>c==="ALL"||w.cls===c).length;
 const reach=(c,k)=>POOL(c).filter(w=>W(w.id)[k]).length>=NEED(c);
 const bestSteps=c=>{ const cp=cap(); return POOL(c).map(w=>Math.min(done(W(w.id)),cp)).sort((a,b)=>b-a).slice(0,NEED(c)).reduce((a,b)=>a+b,0); };
+function nextUp(c){ const ws=POOL(c), cp=cap(), out=[], t=cnt(w=>W(w.id).plat)>=BASE.length;
+  const stage=(k,name,txt,ok)=>{ const r=ws.filter(ok); if(r.length) out.push({k,name,txt,ws:r}); };
+  if(cp>=14&&t) stage("hb","Harmonic Break",hbTxt(c),w=>W(w.id).plat&&!W(w.id).hb);
+  if(cp>=13&&reach(c,"gold")) stage("plat","Platinum",platTxt(c),w=>W(w.id).gold&&!W(w.id).plat);
+  stage("gold","Gold",goldTxt(),w=>{ const s=W(w.id); return s.mil>=8&&spDone(s)===3&&!s.gold; });
+  return out; }
+function nextHTML(c){ const n=nextUp(c); if(!n.length) return ""; const [a,...rest]=n, pl=CLS[c][0];
+  return `<div class="nextup"><span class="sw3 cam cam-${a.k}"></span><div class="nt"><small>Next for ${a.ws.length===POOL(c).length?"every gun":a.ws.length+" gun"+(a.ws.length>1?"s":"")} in ${esc(pl)}</small><b>${a.name} · ${esc(a.txt)}</b>
+    <div class="ng">${a.ws.map(w=>`<button data-go="${esc(w.id)}">${esc(w.name)}</button>`).join("")}</div>${rest.map(r=>`<p>Also ready for ${r.name}: ${r.ws.length} gun${r.ws.length>1?"s":""} · ${esc(r.txt)}</p>`).join("")}</div></div>`; }
 const classGold=c=>({d:cntB(w=>w.cls===c&&W(w.id).gold),t:cntB(w=>w.cls===c)});
 const cap=()=>LCAP[S.goal.l]||14;
 const hasGoal=()=>!!S.goal.l;
@@ -175,10 +184,10 @@ function render(){
       ws=ws.filter(w=>!hiddenGun(w));
       if(S.filt!=="close") ws.sort((a,b)=>ORDER.indexOf(a.cls)-ORDER.indexOf(b.cls)||WEAPONS.indexOf(a)-WEAPONS.indexOf(b));   /* grouped by class, same order as the tabs */
       VIEW={key,ids:ws.map(w=>w.id)}; }
-    let lastCls=null; for(const w of ws){ if(S.filt!=="close"&&w.cls!==lastCls){ lastCls=w.cls; const hd=document.createElement("div"); hd.className="ghead"; hd.dataset.gun="h-"+w.cls; const n=ws.filter(x=>x.cls===w.cls).length; hd.innerHTML=`<span>${esc(CLS[w.cls][0])}</span><em class="num tw">${clsPct(w.cls)}%</em><small>${n} gun${n===1?"":"s"}</small>`; put(hd); } put(gun(w,t,classGold(w.cls),true)); }
+    let lastCls=null; for(const w of ws){ if(S.filt!=="close"&&w.cls!==lastCls){ lastCls=w.cls; const hd=document.createElement("div"); hd.className="ghead"; hd.dataset.gun="h-"+w.cls; const n=ws.filter(x=>x.cls===w.cls).length; hd.innerHTML=`<span>${esc(CLS[w.cls][0])}</span><em class="num tw">${clsPct(w.cls)}%</em><small>${n} gun${n===1?"":"s"}</small>${(x=>x?`<i class="gnext"><span class="sw cam cam-${x.k}"></span>Next: ${x.name} · ${esc(x.txt)} <u>${x.ws.length} ready</u></i>`:"")(nextUp(w.cls)[0])}`; put(hd); } put(gun(w,t,classGold(w.cls),true)); }
   } else {
     const c=S.tab; const cg=classGold(c); const plats=cntB(w=>w.cls===c&&W(w.id).plat);
-    const nx=fillOf(c); setHTML($("#clsH"),`<div class="l1"><b>${CLS[c][0]}</b><span class="num tw">${clsPct(c)}%</span>${nx&&nx.left<=3?`<span class="nudge">${nx.left} gun${nx.left>1?"s":""} from ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[nx.k]} ${esc(CLS[c][0])}</span>`:""}${bulk(WEAPONS.filter(w=>w.cls===c),"class")}</div>${hideRow(WEAPONS.filter(w=>w.cls===c))}`);
+    const nx=fillOf(c); setHTML($("#clsH"),`<div class="l1"><b>${CLS[c][0]}</b><span class="num tw">${clsPct(c)}%</span>${nx&&nx.left<=3?`<span class="nudge">${nx.left} gun${nx.left>1?"s":""} from ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[nx.k]} ${esc(CLS[c][0])}</span>`:""}${bulk(WEAPONS.filter(w=>w.cls===c),"class")}</div>${nextHTML(c)}${hideRow(WEAPONS.filter(w=>w.cls===c))}`);
     const ckey=["C",c,hid().gold,hid().plat,hid().hb].join("|"); let cws;
     if(VIEW.key===ckey&&VIEW.ids){ cws=VIEW.ids.map(id=>WEAPONS.find(w=>w.id===id)); } else { cws=WEAPONS.filter(w=>w.cls===c&&!hiddenGun(w)); VIEW={key:ckey,ids:cws.map(w=>w.id)}; }
     for(const w of cws) put(gun(w,t,cg));
@@ -229,7 +238,7 @@ function gun(w,t,cg,showCls){
   const lw=document.createElement("div"); lw.className="listw"; el.appendChild(lw);
   if(S.open===w.id||CLOSING===w.id){
     const list=document.createElement("div"); list.className="list";
-    const platOK=cg.d===cg.t&&s.gold, hbOK=t.plat>=BASE.length&&s.plat, goldOK=s.mil>=8&&spDone(s)===3;
+    const platOK=reach(w.cls,"gold")&&s.gold, hbOK=t.plat>=BASE.length&&s.plat, goldOK=s.mil>=8&&spDone(s)===3;
     const TEX2=TEX;
     const sw=(name)=>TEX2[name]?`<span class="sw cam ${TEX2[name]}"></span>`:`<button class="sw" data-sw="${esc(name)}" style="background:${col(name)}" title="Pick the colour of this camo" aria-label="Pick the colour of ${esc(name)}"></button>`;
     const item=(on,name,sub,right,ok,act,i)=>`<div class="item ${ok?'':'locked'}"><button class="ck ${on?'on':''}" data-act="${act}" data-i="${i??''}" ${ok?'':'disabled'} aria-label="${esc(name)}"></button>${sw(name)}<div class="t"><b>${esc(name)}</b>${sub?`<small>${esc(sub)}${where(sub)?` <em>(${esc(where(sub))})</em>`:''}</small>`:''}</div><span class="r">${right||''}</span></div>`;
@@ -240,7 +249,7 @@ function gun(w,t,cg,showCls){
       ${[0,1,2].map(i=>item(s.sp[i],spName(w,i),spText(w,i),(w.specials||[])[i]?.level?"lv "+w.specials[i].level:"",true,"sp",i)).join("")}
       ${s.pr>0?item(true,PYRO[s.pr],PYROSUB[s.pr],"prestige",true,"none"):""}
       ${item(s.gold,"Gold",goldTxt(),goldOK||s.gold?"":"needs 8 + 3",goldOK||s.gold,"gold")}
-      ${CAPN>=13?item(s.plat,"Platinum",platTxt(w.cls),platOK||s.plat?"":`class Gold ${cg.d}/${cg.t}`,platOK||s.plat,"plat"):""}
+      ${CAPN>=13?item(s.plat,"Platinum",platTxt(w.cls),platOK||s.plat?"":`class Gold ${Math.min(NEED(w.cls),POOL(w.cls).filter(x=>W(x.id).gold).length)}/${NEED(w.cls)}`,platOK||s.plat,"plat"):""}
       ${CAPN>=14?item(s.hb,"Harmonic Break",hbTxt(w.cls),hbOK||s.hb?"":`Platinum ${t.plat}/${BASE.length} guns`,hbOK||s.hb,"hb"):""}
       ${t.tracks.map(k=>TRACKS[k].steps.map((m,idx)=>{ const prev=TRACKS[k].steps[idx-1]; const ok=t.div&&(idx===0||!!S.mu[prev.id]); return `<div class="item ${ok||S.mu[m.id]?'':'locked'}"><button class="ck ${S.mu[m.id]?'on':''}" data-mast="${m.id}" data-k="${k}" data-idx="${idx}" ${ok||S.mu[m.id]?'':'disabled'} aria-label="${esc(m.n)}"></button><span class="sw cam cam-${m.id}"></span><div class="t"><b>${esc(m.n)}</b><small>${esc(m.c)}</small></div><span class="r">${t.div?(S.mu[m.id]?"unlocked":""):"after Divergence"}</span></div>`; }).join("")).join("")}`;
     if(S.pick){ const pr=document.createElement("div"); pr.className="picker"; pr.innerHTML=`<span>Colour for <b>${esc(S.pick)}</b></span><div>${PAL.map(c=>`<button data-pick="${esc(S.pick)}" data-c="${c}" style="background:${c}" class="${col(S.pick)===c?'on':''}" aria-label="${c}"></button>`).join("")}<button data-pick="${esc(S.pick)}" data-c="auto" class="auto">auto</button></div>`; list.appendChild(pr); }
