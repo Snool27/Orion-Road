@@ -660,3 +660,26 @@ body.lite .ctabs button .near,body.lite .cls-h .nudge,body.lite .ctabs button.sh
 .nextup p{margin:4px 0 0;font-size:12px;color:var(--ink2)}
 .ghead{flex-wrap:wrap} .ghead .gnext{flex-basis:100%;display:flex;align-items:center;gap:6px;font-style:normal;font-weight:600;letter-spacing:0;text-transform:none;font-size:12px;color:var(--ink)} .ghead .gnext .sw{width:14px;height:14px;border-radius:4px;flex:none} .ghead .gnext u{text-decoration:none;color:var(--ink3);font-weight:500}
 .nextup .sw3,.ghead .gnext .sw{display:block;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 30%,transparent)} .nextup .sw3::before,.ghead .gnext .sw::before{left:0;width:100%;animation:none} .nextup .sw3::after,.ghead .gnext .sw::after{display:none}
+/* ===== top tiles: progress toward 33 ===== */
+.stat{position:relative;overflow:hidden;--k:var(--ink3)}
+.stat.k-max{--k:var(--ink)} .stat.k-prest{--k:#ff7a3d} .stat.k-gold{--k:#e2a53a} .stat.k-plat{--k:#9fb6d3} .stat.k-hb{--k:#ff3b3b}
+.stat .nx{display:block;font-style:normal;font-size:10.5px;color:var(--ink3);line-height:1.2;margin-top:1px;white-space:nowrap}
+.stat .sbar{position:absolute;left:0;right:0;bottom:0;height:3px;background:color-mix(in srgb,var(--ink) 8%,transparent);pointer-events:none;z-index:0}
+.stat .sbar i{position:absolute;left:0;top:0;bottom:0;display:block;transition:width .9s cubic-bezier(.2,.8,.2,1)} .stat .sbar i.flat{background:var(--ink)}
+.stat .sbar i.cam::before{left:0;width:100%;animation:none} .stat .sbar i.cam::after{display:none}
+.stat > span.sw3,.stat > div{position:relative;z-index:1}
+.stat.lv1{border-color:color-mix(in srgb,var(--k) 30%,var(--line))} .stat.lv1 .sbar{height:4px}
+.stat.lv2{border-color:color-mix(in srgb,var(--k) 55%,var(--line))} .stat.lv2 .sbar{height:5px} .stat.lv2 .nx{color:var(--ink2)}
+.stat.lv3{border-color:var(--k);box-shadow:0 0 0 1px color-mix(in srgb,var(--k) 40%,transparent)} .stat.lv3 .sbar{height:6px} .stat.lv3 .nx{color:var(--ink);font-weight:600}
+.stat.near{animation:statNear 1.8s ease-in-out infinite}
+@keyframes statNear{0%,100%{box-shadow:0 0 0 1px color-mix(in srgb,var(--k) 40%,transparent)}50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--k) 55%,transparent),0 0 16px color-mix(in srgb,var(--k) 45%,transparent)}}
+.stat.lv4{border-color:var(--k)} .stat.lv4 .sbar{top:0;height:auto;background:none} .stat.lv4 .sbar i{width:100%!important}
+.stat.lv4 b,.stat.lv4 small,.stat.lv4 .nx{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.55)} .stat.lv4 .nx{font-weight:700}
+.stat.lv4.k-plat b,.stat.lv4.k-plat small,.stat.lv4.k-plat .nx{color:#111;text-shadow:none}
+.stat.lv4.k-max b,.stat.lv4.k-max small,.stat.lv4.k-max .nx{color:var(--bg);text-shadow:none}
+.stat.lv4 .bon{background:rgba(0,0,0,.35);color:#fff}
+.stat.lv4::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);background-size:250% 100%;animation:tabSheen 3.2s ease-in-out infinite}
+.stat.spop{animation:statPop .7s cubic-bezier(.2,1.6,.4,1)}
+@keyframes statPop{0%{transform:scale(1)}35%{transform:scale(1.12)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){ .stat.near,.stat.lv4::after,.stat.spop{animation:none} }
+body.lite .stat.near,body.lite .stat.lv4::after{animation:none}

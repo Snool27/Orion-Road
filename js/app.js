@@ -147,8 +147,11 @@ function render(){
   $("#setup").classList.toggle("nogoal",!S.goal.l); $("#qT").classList.toggle("off",S.goal.l!=="div");
   document.querySelectorAll("#goalT [data-t]").forEach(b=>{ b.setAttribute("aria-pressed",S.goal.l==="div"&&!!S.goal[b.dataset.t]); b.disabled=S.goal.l!=="div"; });
   { const hide=!!S.seen||(t.steps>0&&hasGoal()); const ob=$("#onb"); if(hide&&!ob.hidden&&!ob.classList.contains("out")){ ob.classList.add("out"); setTimeout(()=>{ ob.hidden=true; ob.classList.remove("out"); },360); } else if(!hide){ ob.hidden=false; ob.classList.remove("out"); } }
-  const st=(cls,v,l,f)=>`<button class="stat ${S.tab==="ALL"&&S.filt===f?'sel':''}" data-sf="${f||''}" title="Show these guns"><span class="sw3 ${cls}"></span><div><b class="num tw">${v}</b><small>${l}</small></div></button>`;
-  setHTML($("#stats"),st("flat",`${t.maxed}/${BASE.length}${bon(w=>W(w.id).mil>=8)}`,"Max","f-max")+(t.prest?st("cam cam-pyro",`${t.prest}${bon(w=>W(w.id).pr>0)}`,"Prestiged","f-prest"):"")+st("cam cam-gold",`${t.gold}/${BASE.length}${bon(w=>W(w.id).gold)}`,"Gold","f-gold")+(cap()>=13?st("cam cam-plat",`${t.plat}/${BASE.length}${bon(w=>W(w.id).plat)}`,"Platinum","f-plat"):"")+(cap()>=14?st("cam cam-hb",`${t.hb}/${BASE.length}${bon(w=>W(w.id).hb)}`,"H. Break","f-hb")+st("cam cam-div"+(t.div?"":" locked"),t.div?"✓":`${t.hb}/${BASE.length}`,"Divergence","f-hb").replace('class="stat ','class="stat '+(t.div?'':'locked ')):"")+bonNote());
+  /* top tiles: fill with their camo as you go, step up at each quarter of the 33 (9 · 17 · 25 · 33), glow near the end, go full camo at 33 */
+  const st=(cls,v,l,f,n,k)=>{ const T=BASE.length, has=typeof n==="number", M=[Math.ceil(T/4),Math.ceil(T/2),Math.ceil(3*T/4),T];
+    const q=has?M.filter(x=>n>=x).length:0, fr=has?Math.min(1,n/T):0, nx=has?(q>=4?"all done ✓":`${M[q]-n} to ${M[q]}`):"";
+    return `<button class="stat ${S.tab==="ALL"&&S.filt===f?'sel':''}${has?` lv${q} k-${k}${q<4&&M[q]-n<=2?" near":""}`:""}" data-sf="${f||''}" data-k="${k||""}" data-q="${q}" title="Show these guns"><span class="sw3 ${cls}"></span><div><b class="num tw">${v}</b><small>${l}</small>${has?`<i class="nx">${nx}</i>`:""}</div>${has?`<span class="sbar"><i class="${cls}" style="width:${Math.round(fr*100)}%"></i></span>`:""}</button>`; };
+  setHTML($("#stats"),st("flat",`${t.maxed}/${BASE.length}${bon(w=>W(w.id).mil>=8)}`,"Max","f-max",t.maxed,"max")+(t.prest?st("cam cam-pyro",`${t.prest}${bon(w=>W(w.id).pr>0)}`,"Prestiged","f-prest",t.prest,"prest"):"")+st("cam cam-gold",`${t.gold}/${BASE.length}${bon(w=>W(w.id).gold)}`,"Gold","f-gold",t.gold,"gold")+(cap()>=13?st("cam cam-plat",`${t.plat}/${BASE.length}${bon(w=>W(w.id).plat)}`,"Platinum","f-plat",t.plat,"plat"):"")+(cap()>=14?st("cam cam-hb",`${t.hb}/${BASE.length}${bon(w=>W(w.id).hb)}`,"H. Break","f-hb",t.hb,"hb")+st("cam cam-div"+(t.div?"":" locked"),t.div?"✓":`${t.hb}/${BASE.length}`,"Divergence","f-hb").replace('class="stat ','class="stat '+(t.div?'':'locked ')):"")+bonNote());
   const clsPct=c=>Math.round(100*bestSteps(c)/(NEED(c)*cap()));
   const shiny=c=>{ if(reach(c,"hb")) return "cam cam-hb shiny"; if(cap()>=13&&reach(c,"plat")) return "cam cam-plat shiny light"; if(reach(c,"gold")) return "cam cam-gold shiny"; return ""; };
   /* the tab fills from the bottom with the next camo as guns reach it: 3 of 9 Gold = a third full of gold */
@@ -157,6 +160,7 @@ function render(){
   const tab=(c,label,pct)=>{ const fl=fillOf(c); /* a Gold tab keeps filling with Platinum, and so on */ const tip=fl?`${Math.round(fl.f*NEED(c))}/${NEED(c)} at ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[fl.k]}`:"Complete";
     return `<button role="tab" data-c="${c}" aria-selected="${S.tab===c}" class="${shiny(c)}${fl&&fl.f>0?" filling":""}" title="${tip}">${fl&&fl.f>0?`<span class="fill cam cam-${fl.k}" style="height:${Math.max(8,Math.round(fl.f*100))}%"></span>`:""}<span>${label}</span><small class="tw">${pct}%</small>${fl&&fl.left<=2&&fl.f>0?`<em class="near">${fl.left} left</em>`:""}<span class="bar"><i style="width:${pct}%"></i></span></button>`; };
   $("#ctabs").style.opacity=q?".35":""; setHTML($("#ctabs"),tab("ALL","All",Math.round(t.ladder*100))+ORDER.map(c=>tab(c,CLS[c][3],clsPct(c))).join(""));
+  statPops();
   BURSTS=noteLevels(); if(BURSTS.length>12) BURSTS=[];
   const host=$("#guns"); const fresh=lastTab!==S.tab||host._q!==q||!!q||!host.children.length; host._q=q; if(fresh) host.innerHTML=""; host.classList.toggle("enter",fresh); lastTab=S.tab; const NEW=[]; const put=el=>{ if(fresh) host.appendChild(el); else NEW.push(el); };
   if(LAST_OPEN&&LAST_OPEN!==S.open){ CLOSING=LAST_OPEN; clearTimeout(closeT); closeT=setTimeout(()=>{ CLOSING=null; render(); },420); } LAST_OPEN=S.open;
@@ -356,6 +360,11 @@ function applyMotion(){ if(S.motion!=="lite") S.motion="smooth"; document.body.c
 let doc=null,timer=null,pushing=false,again=false,DB=null,canWrite=null;
 function milestones(){ const m={}; for(const c of ORDER){ m["g-"+c]=reach(c,"gold"); m["p-"+c]=reach(c,"plat"); m["h-"+c]=reach(c,"hb"); } m["g-ALL"]=cnt(w=>W(w.id).gold)>=BASE.length; m["p-ALL"]=cnt(w=>W(w.id).plat)>=BASE.length; m["h-ALL"]=cnt(w=>W(w.id).hb)>=BASE.length; for(const w of WEAPONS){ const s=W(w.id); m["gun-"+w.id]= s.mil>=8&&spDone(s)===3&&s.gold; } return m; }
 let lastM=null;
+const STAGE={}; function statPops(){ const T=BASE.length; document.querySelectorAll("#stats .stat[data-k]").forEach(el=>{ const k=el.dataset.k; if(!k) return; const q=+el.dataset.q, was=STAGE[k]; STAGE[k]=q;
+  if(was===undefined||q<=was||q-was>1) return; el.classList.remove("spop"); void el.offsetWidth; el.classList.add("spop");
+  try{ burst(el,{max:"plat",prest:"gold",gold:"gold",plat:"plat",hb:"hb"}[k]||"gold",80); }catch(e){}
+  const name={max:"Max level",prest:"Prestiged",gold:"Gold",plat:"Platinum",hb:"Harmonic Break"}[k]; const n=[Math.ceil(T/4),Math.ceil(T/2),Math.ceil(3*T/4),T][q-1];
+  if(q<4) toast(`${name}: ${n} guns · ${q===1?"a quarter":q===2?"halfway":"three quarters"} there`); }); }
 /* camos earned since the page was opened: shown in the top bar, ticks up with every claim */
 let HAUL=0, HAUL_LAST=null; const haulCount=()=>{ let n=0; for(const w of WEAPONS){ const s=W(w.id); n+=s.mil+spDone(s)+(s.gold?1:0)+(s.plat?1:0)+(s.hb?1:0); } return n+Object.keys(S.mu||{}).length; };
 function haulTick(){ const n=haulCount(); if(HAUL_LAST===null){ HAUL_LAST=n; return; } const d=n-HAUL_LAST; HAUL_LAST=n; /* one or two camos at a time = a claim; bigger jumps are setting up old progress, not counted */ if(d>0&&d<=2){ HAUL+=d; const h=$("#haul"); if(h){ h.hidden=false; h.querySelector("b").textContent="+"+HAUL; h.classList.remove("bump"); void h.offsetWidth; h.classList.add("bump"); } } }
