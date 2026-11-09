@@ -55,9 +55,12 @@ $("#goalL").addEventListener("click",e=>{ const b=e.target.closest("[data-l]"); 
 $("#goalT").addEventListener("click",e=>{ const b=e.target.closest("[data-t]"); if(!b||b.disabled) return; S.goal[b.dataset.t]=!S.goal[b.dataset.t]; save(); render(); });
 $("#ctabs").addEventListener("click",e=>{ const b=e.target.closest("[data-c]"); if(!b) return; VIEW={}; S.tab=b.dataset.c; S.open=null; Q=""; $("#search").value=""; save(); render(); });
 $("#clsH").addEventListener("click",e=>{ const ub=e.target.closest("#undoBtn"); if(ub){ undo(); return; }
+  const tb=e.target.closest("#toolsBtn"); if(tb){ TOOLS_OPEN=!TOOLS_OPEN; render(); return; }
   const hb=e.target.closest("[data-h]"); if(hb){ if(hb.disabled) return; hid()[hb.dataset.h]=!hid()[hb.dataset.h]; VIEW={}; save(); render(); return; }
   const bb=e.target.closest("[data-bulk]"); if(bb&&!bb.disabled){ const ws=S.tab==="ALL"?WEAPONS:WEAPONS.filter(w=>w.cls===S.tab); const a=bb.dataset.bulk; const label=ws=>S.tab==="ALL"?"All "+ws.length:CLS[S.tab][0];
     if(a==="clear"){ if(!bb.classList.contains("confirm")){ bb.classList.add("confirm"); bb.textContent=`Clear ${S.tab==="ALL"?"all guns":"this class"}?`; clearTimeout(bb._t); bb._t=setTimeout(()=>{ bb.classList.remove("confirm"); bb.textContent="Clear"; },3500); return; }
       for(const w of ws){ S.weapons[w.id]={mil:0,max:false,pr:0,sp:[false,false,false],gold:false,plat:false,hb:false,tok:false}; } save(); render(); toast("Cleared · tap Undo to bring it back"); return; } const allOn=bb.classList.contains("on"); const lv=LV[a]; for(const w of ws){ const s=W(w.id); setLevel(s, allOn? lv-1 : lv); } save(); render(); toast(allOn?`${label(ws)} un-ticked`:`${label(ws)} set to ${({1:"Military",2:"Specials",3:"Gold",4:"Platinum",5:"Harmonic Break"})[lv]} · Undo if needed`); return; } const b=e.target.closest("[data-f]"); if(!b) return; VIEW={}; S.filt=S.filt===b.dataset.f?"":b.dataset.f; save(); render(); });
 /* "Next for every gun" card: tap a gun name to open it */
 document.addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(!b) return; const id=b.dataset.go; if(!WEAPONS.some(w=>w.id===id)) return; S.open=id; S.pick=null; save(); render(); requestAnimationFrame(()=>{ const g=document.querySelector(`.gun[data-gun="${CSS.escape(id)}"]`); if(g) g.scrollIntoView({block:"start",behavior:"smooth"}); }); });
+/* goal summary line: tap to open the full goal picker, tap again to fold it */
+document.addEventListener("click",e=>{ if(e.target.closest("#setupSum")){ SETUP_OPEN=!SETUP_OPEN; render(); } });

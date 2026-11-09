@@ -708,28 +708,20 @@ h1,h2,.top h1,.dock .dtitle,.dock .dnum{font-family:var(--f-d);font-weight:700;l
 .gun.almost{border:0} .gun.almost .side span{color:var(--ink2);font-weight:500}
 .gun::after{display:none}
 
-/* gun header: small camo swatch + name */
-.chip.calm{all:unset;display:flex;align-items:center;gap:12px;min-width:0;color:var(--ink)}
-.chip.calm .csw{position:relative;overflow:hidden;flex:none;width:44px;height:44px;border-radius:12px;background:var(--soft);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12)}
-.chip.calm .csw.none{background:var(--soft);border:0}
-.chip.calm .csw.pop{animation:chipPop .6s var(--ease)}
-.chip.calm .csw .bands{position:absolute;inset:0;display:flex}
-.chip.calm .ctx{display:flex;flex-direction:column;gap:2px;min-width:0}
-.chip.calm b{font-size:16px;font-weight:600;color:var(--ink);text-shadow:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chip.calm small{font-size:13px;color:var(--ink2);text-shadow:none;letter-spacing:0;opacity:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chip.calm .ctag{background:var(--soft);color:var(--ink2);text-shadow:none;font-size:10px;letter-spacing:.04em;padding:2px 7px;margin-right:6px;box-shadow:inset 0 0 0 .5px var(--line)}
-.chip.calm .ctag.s1{color:var(--acc)}
+/* gun header: the camo tile, softened */
+.chip{border-radius:14px;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12)}
+.chip .ctag{background:rgba(0,0,0,.38);box-shadow:none}
 .grow{grid-template-columns:minmax(150px,200px) auto 1fr auto;padding:12px 14px}
 .side .gp{color:var(--ink)!important;font-weight:600} .side .cnt{color:var(--ink3)!important;font-weight:500}
 
 /* quick buttons: quiet capsules, a soft tint of the camo when done */
 .qb{border:0;border-radius:999px;background:var(--soft);box-shadow:none}
-.qb.cam::before,.qb.cam::after{display:none!important}
+.qb.cam::after{display:none!important} .qb.off.cam::before{opacity:0}
 .qb span,.qb.on span{color:var(--ink2);text-shadow:none;font-weight:600;letter-spacing:.02em}
 .qb.on{background:color-mix(in srgb,var(--k,var(--ink)) 16%,var(--card))} .qb.on span{color:var(--ink)}
 .qb.on.flat{background:color-mix(in srgb,var(--ink) 10%,var(--card))} .qb.on.flat span{color:var(--ink)}
 .qb[data-q="gold"]{--k:var(--c-gold)} .qb[data-q="plat"]{--k:var(--c-plat)} .qb[data-q="hb"]{--k:var(--c-hb)} .qb.pst{--k:var(--c-prest)}
-.qb.on::after{content:"";display:inline-block!important;position:static;width:6px;height:6px;border-radius:50%;background:var(--k,var(--ink));margin-left:5px;vertical-align:middle}
+
 .qb.on{display:inline-flex;align-items:center;justify-content:center}
 .qb:disabled{opacity:.35}
 .qb.nx{border:0;background:color-mix(in srgb,var(--acc) 12%,var(--card))} .qb.nx span{color:var(--ink);font-weight:600;letter-spacing:.02em;font-size:11px}
@@ -778,6 +770,73 @@ h1,h2,.top h1,.dock .dtitle,.dock .dnum{font-family:var(--f-d);font-weight:700;l
 .shiny::after,.ctabs button.shiny::after{display:none!important}
 .dock{border-bottom:0;box-shadow:0 1px 0 var(--line)}
 .qb,.gun.open .qb{border:0!important}
-.qb.on.cam span,.qb.on.cam-plat span,.qb.on span{color:var(--ink)!important;text-shadow:none!important}
+.qb.on span{color:var(--ink)!important;text-shadow:none!important} .qb.on.cam span{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.55)!important} .qb.on.cam-plat span{color:#111!important;text-shadow:none!important}
 .qb.off span{color:var(--ink2)}
 .qb,.qb.on{box-shadow:none!important}
+
+/* round 2: camo images back at a satisfying size, and no cut-off words */
+.ctabs button.cam{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)} .ctabs button.cam small{color:#fff;opacity:.92}
+.ctabs button.cam-plat{color:#111;text-shadow:none} .ctabs button.cam-plat small{color:#2a2c31}
+.ctabs button.cam .bar{display:none} .ctabs button.cam::before{left:0;width:100%;animation:none}
+.ctabs button.cam[aria-selected="true"]{box-shadow:0 0 0 2px var(--ink),var(--shadow)}
+.stat .sw3{width:30px;height:30px;border-radius:9px;align-self:center;margin-top:0}
+.nextup .sw3{width:34px;height:34px;border-radius:10px;margin-top:0}
+.ghead .gnext .sw{width:14px;height:14px;border-radius:4px}
+.chip b,.chip small,.chip.calm b,.chip.calm small,.stat .nx,.ctabs button,.side{white-space:normal;overflow:visible;text-overflow:clip}
+.chip b,.chip small{overflow-wrap:anywhere}
+.qb.on{background:color-mix(in srgb,var(--k,var(--ink)) 16%,var(--card))}
+
+/* round 3: satisfying, not noisy. Big camo where it's a reward; motion only when you earn something */
+@media (max-width:560px){ .grow{grid-template-columns:1fr;padding:10px;gap:10px} }
+.chip{min-height:92px;border-radius:14px}
+.chip b{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.stat b{font-size:22px}
+.stat .sbar,.stat.lv1 .sbar,.stat.lv2 .sbar,.stat.lv3 .sbar{height:4px;bottom:7px;border-radius:3px}
+.stat .sbar i{border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--k) 70%,transparent),var(--k))!important}
+.stat.cam > *{position:relative;z-index:1} .stat.cam::before{left:0;width:100%;animation:none} .stat.cam .sbar{display:none} .stat.cam .sw3{box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+.stat.cam b,.stat.cam small,.stat.cam .nx{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.stat.cam.cam-plat b,.stat.cam.cam-plat small,.stat.cam.cam-plat .nx{color:#111!important;text-shadow:none}
+.stat.cam .bon{background:rgba(0,0,0,.35);color:#fff}
+.stat.spop{animation:statPop2 .7s cubic-bezier(.2,1.5,.4,1)} @keyframes statPop2{0%{transform:scale(1)}35%{transform:scale(1.08)}100%{transform:scale(1)}}
+.ctabs button .bar{height:3px;bottom:3px;border-radius:2px}
+.ctabs button.tabpop{animation:statPop2 .7s cubic-bezier(.2,1.5,.4,1)}
+.qb{height:32px}
+@media (prefers-reduced-motion:reduce){ .stat.spop,.ctabs button.tabpop{animation:none} }
+
+/* round 4: spacing and calm navigation. One rhythm: 8 inside things, 16 between things, 32 between sections */
+main{padding-block:36px 96px}
+.top{margin-bottom:20px}
+.setup{margin:0 0 24px;border:0;box-shadow:var(--shadow);border-radius:18px;padding:18px 18px 10px;gap:18px}
+.setup .goal{gap:8px}
+.setsum{display:none}
+#setup.folded{padding:0;gap:0;background:none;box-shadow:none}
+#setup.folded > .q{display:none}
+#setup.folded .setsum,#setup:not(.folded) .setsum{display:flex}
+.setsum{align-items:center;gap:10px;flex-wrap:wrap;width:100%;padding:14px 18px;border-radius:16px;background:var(--card);box-shadow:var(--shadow);text-align:left}
+#setup:not(.folded) .setsum{order:9;background:none;box-shadow:none;padding:4px 0 8px;justify-content:flex-end}
+#setup:not(.folded) .setsum .sl,#setup:not(.folded) .setsum b{display:none}
+.setsum .sl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.setsum b{font-size:15px;font-weight:600;color:var(--ink)}
+.setsum small{font-size:13px;color:var(--ink2)}
+.setsum .ch{margin-left:auto;font-size:13px;font-weight:600;color:var(--acc)}
+.stats{gap:10px;padding:0;margin-bottom:8px}
+.stat{padding:14px 16px 16px;min-height:76px}
+.bonnote{margin:6px 0 24px;font-size:12px;color:var(--ink3)}
+.srow{margin-bottom:14px}
+.ctabs{margin-bottom:18px;padding-bottom:6px;gap:8px}
+.ctabs button{min-width:76px;padding:10px 14px 12px}
+.cls-h{gap:14px;margin:0 0 18px}
+.cls-h .l1{gap:10px}
+.cls-h .l1 .tr{margin-left:auto;display:flex;gap:8px;align-items:center}
+.tbtn,.cls-h .undo{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:var(--card);border:0;border-radius:999px;padding:8px 14px;box-shadow:var(--shadow);cursor:pointer}
+.tbtn[aria-expanded="true"]{background:var(--ink);color:var(--bg)}
+.tools{display:grid;gap:14px;padding:16px;border-radius:16px;background:var(--card);box-shadow:var(--shadow)}
+.tools .bulk{display:flex;flex-wrap:wrap;gap:8px;align-items:center} .tools .bulk em{flex-basis:100%;font-style:normal;font-size:12px;font-weight:600;color:var(--ink3)}
+.tools .hide{margin:0;padding:14px 0 0;border-top:1px solid var(--line)}
+.ghead{padding:28px 4px 10px}
+.gun{margin-bottom:14px}
+.grow{padding:14px;gap:14px}
+@media (max-width:560px){ .grow{padding:12px;gap:12px} .gun{margin-bottom:12px} .ctabs button{min-width:70px} }
+.nextup{margin:0}
+@media (max-width:560px){ .qb{height:38px} .chip{min-height:80px} }
+@media (max-width:560px){ .grow{gap:10px} }
