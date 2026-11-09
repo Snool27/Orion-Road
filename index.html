@@ -143,6 +143,8 @@ body.lite .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:var
 .gun:hover{border-color:var(--ink3)}
 .gun.open{border-color:var(--ink2)}
 .grow{cursor:pointer;display:grid;grid-template-columns:160px auto 1fr auto;gap:12px;align-items:center;padding:8px 12px 8px 8px;width:100%}
+.stat b .bon,.bonnote .bon{font-style:normal;display:inline-block;font-size:11px;font-weight:700;line-height:1;padding:3px 6px;margin-left:5px;border-radius:999px;background:var(--acc);color:var(--acc-ink);vertical-align:2px;letter-spacing:.02em}
+.bonnote{grid-column:1/-1;margin:2px 0 0;font-size:12px;color:var(--ink3);line-height:1.45} .bonnote b{color:var(--ink2);font-weight:600} .bonnote .bon{margin:0 1px;vertical-align:1px}
 /* phone layout: moved to the end of the stylesheet so it wins over the base rules */
 .chip{transition:color .4s var(--ease),background-color .4s var(--ease),border-color .4s var(--ease);border-radius:9px;padding:10px 12px;min-height:100px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);display:flex;flex-direction:column;justify-content:center;gap:2px;position:relative;overflow:hidden;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .chip.light{color:#111;text-shadow:0 1px 2px rgba(255,255,255,.4)}
@@ -801,6 +803,10 @@ function lsSave(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
 
 /* derived */
 const cnt=f=>BASE.filter(f).length;
+/* Season guns: extra grind on top of the 33 launch guns. They show as a gold "+N" next to each count, never in the "/33" the game requires */
+const SEASON=WEAPONS.filter(w=>w.season);
+const bon=f=>{ const n=SEASON.filter(f).length; return n?`<em class="bon" title="${n} Season gun${n>1?"s":""} too: extra grind, not needed for the next camo">+${n}</em>`:""; };
+const bonNote=()=>SEASON.length?`<p class="bonnote">Counts show the <b>${BASE.length} launch guns</b> the game needs for Platinum, Harmonic Break and Divergence. <em class="bon">+1</em> means Season guns you've done too (${SEASON.length} so far). They're extra grind, never required.</p>`:"";
 const spDone=s=>s.sp.filter(Boolean).length;
 const done=s=>s.mil+spDone(s)+(s.gold?1:0)+(s.plat?1:0)+(s.hb?1:0);
 const classGold=c=>({d:cnt(w=>w.cls===c&&W(w.id).gold),t:cnt(w=>w.cls===c)});
@@ -913,7 +919,7 @@ function render(){
   document.querySelectorAll("#goalT [data-t]").forEach(b=>{ b.setAttribute("aria-pressed",S.goal.l==="div"&&!!S.goal[b.dataset.t]); b.disabled=S.goal.l!=="div"; });
   { const hide=!!S.seen||(t.steps>0&&hasGoal()); const ob=$("#onb"); if(hide&&!ob.hidden&&!ob.classList.contains("out")){ ob.classList.add("out"); setTimeout(()=>{ ob.hidden=true; ob.classList.remove("out"); },360); } else if(!hide){ ob.hidden=false; ob.classList.remove("out"); } }
   const st=(cls,v,l,f)=>`<button class="stat ${S.tab==="ALL"&&S.filt===f?'sel':''}" data-sf="${f||''}" title="Show these guns"><span class="sw3 ${cls}"></span><div><b class="num tw">${v}</b><small>${l}</small></div></button>`;
-  setHTML($("#stats"),st("flat",`${t.maxed}/${BASE.length}`,"Max","f-max")+(t.prest?st("cam cam-pyro",t.prest,"Prestiged","f-prest"):"")+st("cam cam-gold",`${t.gold}/${BASE.length}`,"Gold","f-gold")+(cap()>=13?st("cam cam-plat",`${t.plat}/${BASE.length}`,"Platinum","f-plat"):"")+(cap()>=14?st("cam cam-hb",`${t.hb}/${BASE.length}`,"H. Break","f-hb")+st("cam cam-div"+(t.div?"":" locked"),t.div?"✓":`${t.hb}/${BASE.length}`,"Divergence","f-hb").replace('class="stat ','class="stat '+(t.div?'':'locked ')):""));
+  setHTML($("#stats"),st("flat",`${t.maxed}/${BASE.length}${bon(w=>W(w.id).mil>=8)}`,"Max","f-max")+(t.prest?st("cam cam-pyro",`${t.prest}${bon(w=>W(w.id).pr>0)}`,"Prestiged","f-prest"):"")+st("cam cam-gold",`${t.gold}/${BASE.length}${bon(w=>W(w.id).gold)}`,"Gold","f-gold")+(cap()>=13?st("cam cam-plat",`${t.plat}/${BASE.length}${bon(w=>W(w.id).plat)}`,"Platinum","f-plat"):"")+(cap()>=14?st("cam cam-hb",`${t.hb}/${BASE.length}${bon(w=>W(w.id).hb)}`,"H. Break","f-hb")+st("cam cam-div"+(t.div?"":" locked"),t.div?"✓":`${t.hb}/${BASE.length}`,"Divergence","f-hb").replace('class="stat ','class="stat '+(t.div?'':'locked ')):"")+bonNote());
   const clsPct=c=>{ const ws=BASE.filter(w=>w.cls===c); return Math.round(100*ws.reduce((a,w)=>a+Math.min(done(W(w.id)),cap()),0)/(ws.length*cap())); };
   const shiny=ws=>{ if(ws.every(w=>W(w.id).hb)) return "cam cam-hb shiny"; if(cap()>=13&&ws.every(w=>W(w.id).plat)) return "cam cam-plat shiny light"; if(ws.every(w=>W(w.id).gold)) return "cam cam-gold shiny"; return ""; };
   const tab=(c,label,pct,ws)=>`<button role="tab" data-c="${c}" aria-selected="${S.tab===c}" class="${shiny(ws)}"><span>${label}</span><small class="tw">${pct}%</small><span class="bar"><i style="width:${pct}%"></i></span></button>`;
@@ -1198,7 +1204,7 @@ function resortFlip(host,before){ render();
 function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=snap(); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Math.max(Date.now(),(S.updated||0)+1); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
 async function push(){ if(!doc) return; if(pushing){again=true;return;} pushing=true; try{ await doc.set(JSON.parse(JSON.stringify(S))); sync(true);}catch(e){ sync(false); } pushing=false; if(again){again=false;push();} }
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-09.1";
+const BUILD="2026-11-09.2";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false, cloudFailed=false, cloudRetry=null;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
