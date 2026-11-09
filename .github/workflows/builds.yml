@@ -1,0 +1,49 @@
+# Keeps builds.json current: checks the MW4 patch every day and refreshes every gun's builds when it changes
+# (or at least every 30 days). Needs the ANTHROPIC_API_KEY repository secret.
+name: Refresh builds
+on:
+  schedule:
+    - cron: "23 10 * * *"   # every day, 10:23 UTC
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Refresh every gun even if the patch hasn't changed"
+        type: boolean
+        default: false
+      only:
+        description: "Only these guns (comma-separated ids, e.g. vel-46,han-86)"
+        type: string
+        default: ""
+permissions:
+  contents: write   # commit builds.json
+  actions: write    # start the site deploy afterwards
+concurrency:
+  group: builds
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet anthropic
+      - name: Refresh builds
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FORCE: ${{ inputs.force && '1' || '' }}
+          ONLY: ${{ inputs.only }}
+        run: python scripts/update_builds.py
+      - name: Commit and redeploy if builds changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- builds.json && git ls-files --error-unmatch builds.json >/dev/null 2>&1; then echo "no change"; exit 0; fi
+          git config user.name "orion-road-builds"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add builds.json
+          git commit -m "Refresh builds ($(jq -r .patch builds.json))"
+          git push
+          gh workflow run pages.yml --ref main   # pushes made by this job don't start other workflows on their own
