@@ -841,3 +841,23 @@ main{padding-block:36px 96px}
 .nextup{margin:0}
 @media (max-width:560px){ .qb{height:38px} .chip{min-height:80px} }
 @media (max-width:560px){ .grow{gap:10px} }
+
+/* round 5: compact checklist rows. Closed card = camo tile + % on one line, camo buttons on the next */
+.gun:not(.open) .chip{min-height:56px;padding:9px 12px;justify-content:center}
+.gun:not(.open) .chip b{font-size:15px}
+.gun:not(.open) .chip small{font-size:12px}
+.gun{margin-bottom:8px}
+.ghead{padding:22px 4px 8px}
+@media (max-width:560px){
+  .gun:not(.open) .grow{grid-template-columns:1fr auto;gap:8px;padding:8px}
+  .gun:not(.open) .grow .chip{grid-column:1;grid-row:1}
+  .gun:not(.open) .grow .side{grid-column:2;grid-row:1;flex-direction:column;justify-content:center;align-items:flex-end;gap:2px;padding:0 4px 0 2px}
+  .gun:not(.open) .grow .side::before{display:none}
+  .gun:not(.open) .grow .side::after{content:"▾";font-size:11px;color:var(--ink3);line-height:1}
+  .gun:not(.open) .side .gp{font-size:17px}
+  .gun:not(.open) .gclear,.gun:not(.open) .pq,.gun:not(.open) .qb.nx:disabled{display:none}
+  .gun:not(.open) .quick{grid-column:1/-1;grid-row:2;gap:6px}
+  .gun:not(.open) .qb{height:36px}
+  .gun:not(.open) .qb.nx{height:36px}
+  .gun{margin-bottom:8px}
+}

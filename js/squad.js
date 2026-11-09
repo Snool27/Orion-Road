@@ -1,6 +1,6 @@
 /* Accounts, cloud saving (with merge), friends and chat, via Supabase. */
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-09.13";
+const BUILD="2026-11-09.14";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false, cloudFailed=false, cloudRetry=null;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
