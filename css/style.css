@@ -683,3 +683,101 @@ body.lite .ctabs button .near,body.lite .cls-h .nudge,body.lite .ctabs button.sh
 @keyframes statPop{0%{transform:scale(1)}35%{transform:scale(1.12)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){ .stat.near,.stat.lv4::after,.stat.spop{animation:none} }
 body.lite .stat.near,body.lite .stat.lv4::after{animation:none}
+
+/* =====================================================================
+   CALM LAYER: cream paper, system type, soft surfaces, camo kept to small swatches.
+   Last in the file on purpose: it overrides the louder rules above.
+   ===================================================================== */
+:root{
+  --f:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-d:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --bg:#f6f3ee; --card:#fffdfa; --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#8e8e93; --line:rgba(29,29,31,.08);
+  --acc:#b88a3e; --acc-ink:#1d1d1f; --soft:rgba(29,29,31,.04);
+  --shadow:0 1px 2px rgba(60,45,20,.04),0 6px 20px rgba(60,45,20,.05);
+  --c-gold:#c9a24b; --c-plat:#a7b4c4; --c-hb:#d0453b; --c-prest:#e07a3f; --c-max:#1d1d1f;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#141311; --card:#1d1c1a; --ink:#f5f5f7; --ink2:#a1a1a6; --ink3:#7c7c80; --line:rgba(255,255,255,.07); --acc:#d6b46e; --acc-ink:#141311; --soft:rgba(255,255,255,.04); --shadow:0 1px 2px rgba(0,0,0,.3); --c-max:#f5f5f7; color-scheme:dark } }
+:root[data-theme="dark"]{ --bg:#141311; --card:#1d1c1a; --ink:#f5f5f7; --ink2:#a1a1a6; --ink3:#7c7c80; --line:rgba(255,255,255,.07); --acc:#d6b46e; --acc-ink:#141311; --soft:rgba(255,255,255,.04); --shadow:0 1px 2px rgba(0,0,0,.3); --c-max:#f5f5f7; color-scheme:dark }
+body{font-family:var(--f);-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+h1,h2,.top h1,.dock .dtitle,.dock .dnum{font-family:var(--f-d);font-weight:700;letter-spacing:-.035em}
+.cap,.ghead,.stat small,.ctabs button small{letter-spacing:.02em}
+
+/* cards: no hard outlines, soft lift */
+.gun,.nextup,.stat,.onb,details{border:0!important;box-shadow:var(--shadow);background:var(--card)}
+.gun{border-radius:18px;margin-bottom:10px} .gun:hover{transform:none;box-shadow:var(--shadow)} .gun.open{box-shadow:0 0 0 1px var(--line),var(--shadow)}
+.gun.almost{border:0} .gun.almost .side span{color:var(--ink2);font-weight:500}
+.gun::after{display:none}
+
+/* gun header: small camo swatch + name */
+.chip.calm{all:unset;display:flex;align-items:center;gap:12px;min-width:0;color:var(--ink)}
+.chip.calm .csw{position:relative;overflow:hidden;flex:none;width:44px;height:44px;border-radius:12px;background:var(--soft);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12)}
+.chip.calm .csw.none{background:var(--soft);border:0}
+.chip.calm .csw.pop{animation:chipPop .6s var(--ease)}
+.chip.calm .csw .bands{position:absolute;inset:0;display:flex}
+.chip.calm .ctx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.chip.calm b{font-size:16px;font-weight:600;color:var(--ink);text-shadow:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.calm small{font-size:13px;color:var(--ink2);text-shadow:none;letter-spacing:0;opacity:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.calm .ctag{background:var(--soft);color:var(--ink2);text-shadow:none;font-size:10px;letter-spacing:.04em;padding:2px 7px;margin-right:6px;box-shadow:inset 0 0 0 .5px var(--line)}
+.chip.calm .ctag.s1{color:var(--acc)}
+.grow{grid-template-columns:minmax(150px,200px) auto 1fr auto;padding:12px 14px}
+.side .gp{color:var(--ink)!important;font-weight:600} .side .cnt{color:var(--ink3)!important;font-weight:500}
+
+/* quick buttons: quiet capsules, a soft tint of the camo when done */
+.qb{border:0;border-radius:999px;background:var(--soft);box-shadow:none}
+.qb.cam::before,.qb.cam::after{display:none!important}
+.qb span,.qb.on span{color:var(--ink2);text-shadow:none;font-weight:600;letter-spacing:.02em}
+.qb.on{background:color-mix(in srgb,var(--k,var(--ink)) 16%,var(--card))} .qb.on span{color:var(--ink)}
+.qb.on.flat{background:color-mix(in srgb,var(--ink) 10%,var(--card))} .qb.on.flat span{color:var(--ink)}
+.qb[data-q="gold"]{--k:var(--c-gold)} .qb[data-q="plat"]{--k:var(--c-plat)} .qb[data-q="hb"]{--k:var(--c-hb)} .qb.pst{--k:var(--c-prest)}
+.qb.on::after{content:"";display:inline-block!important;position:static;width:6px;height:6px;border-radius:50%;background:var(--k,var(--ink));margin-left:5px;vertical-align:middle}
+.qb.on{display:inline-flex;align-items:center;justify-content:center}
+.qb:disabled{opacity:.35}
+.qb.nx{border:0;background:color-mix(in srgb,var(--acc) 12%,var(--card))} .qb.nx span{color:var(--ink);font-weight:600;letter-spacing:.02em;font-size:11px}
+.qb.nx:disabled{background:var(--soft)} .qb.nx:disabled span{color:var(--ink3)}
+
+/* class tabs: plain segmented text, small camo dot when a class reaches a camo */
+.ctabs{border-bottom:0;gap:6px}
+.ctabs button{border-radius:12px;padding:8px 12px 10px;color:var(--ink2);background:transparent;box-shadow:none;text-shadow:none}
+.ctabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.ctabs button[aria-selected="true"]::after{display:none}
+.ctabs button .tl{display:flex;align-items:center;gap:6px}
+.ctabs button .tdot{position:relative;display:inline-block;width:9px;height:9px;border-radius:50%;overflow:hidden;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.2)}
+.ctabs button .bar{left:12px;right:12px;bottom:4px;height:2px;background:var(--line)} .ctabs button .bar i,.ctabs button[aria-selected="true"] .bar i{background:var(--ink2)}
+.ctabs button.lv-gold .bar i{background:var(--c-gold)} .ctabs button.lv-plat .bar i{background:var(--c-plat)} .ctabs button.lv-hb .bar i{background:var(--c-hb)}
+.ctabs button.tabpop{animation:none}
+
+/* top tiles: number, label, how far to the next step, one hairline of progress */
+.stat{border-radius:16px;padding:12px 14px;gap:12px;--k:var(--ink3)}
+.stat.k-max{--k:var(--c-max)} .stat.k-prest{--k:var(--c-prest)} .stat.k-gold{--k:var(--c-gold)} .stat.k-plat{--k:var(--c-plat)} .stat.k-hb{--k:var(--c-hb)}
+.stat:hover{transform:none} .stat.sel{box-shadow:0 0 0 1.5px var(--ink),var(--shadow)}
+.stat .sw3{width:12px;height:12px;border-radius:50%;align-self:flex-start;margin-top:5px;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.2)} .stat .sw3.flat{background:var(--c-max)}
+.stat b{font-size:20px;font-weight:600;letter-spacing:-.02em}
+.stat small{text-transform:none;font-size:12px;color:var(--ink2)}
+.stat .nx{font-size:11px;color:var(--ink3);font-weight:500}
+.stat .sbar,.stat.lv1 .sbar,.stat.lv2 .sbar,.stat.lv3 .sbar{left:14px;right:14px;bottom:8px;height:2px;border-radius:2px;overflow:hidden;background:var(--line)}
+.stat .sbar i{background:var(--k)!important} .stat .sbar i.cam::before{display:none}
+.stat.lv1,.stat.lv2,.stat.lv3,.stat.lv4{border:0;box-shadow:var(--shadow)}
+.stat.lv2 .nx,.stat.lv3 .nx{color:var(--ink2);font-weight:500}
+.stat.lv4 .sbar{top:auto;bottom:8px;height:2px;background:var(--k)}
+.stat.lv4 b,.stat.lv4 small,.stat.lv4 .nx,.stat.lv4.k-plat b,.stat.lv4.k-plat small,.stat.lv4.k-plat .nx,.stat.lv4.k-max b,.stat.lv4.k-max small,.stat.lv4.k-max .nx{color:inherit;text-shadow:none}
+.stat.lv4 b{color:var(--ink)} .stat.lv4 small{color:var(--ink2)} .stat.lv4 .nx{color:var(--k);font-weight:600}
+.stat.lv4::after{display:none}
+.stat.lv4 .bon{background:var(--soft);color:var(--ink2)}
+.stat.spop{animation:statSettle .5s var(--ease)} @keyframes statSettle{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+.stat b .bon,.bonnote .bon{background:var(--soft);color:var(--acc);box-shadow:inset 0 0 0 .5px var(--line)}
+
+/* next-up card and class header */
+.nextup{border-radius:18px;padding:14px 16px}
+.nextup .sw3{width:12px;height:12px;border-radius:50%;margin-top:5px}
+.nextup .nt b{font-weight:600;font-size:16px}
+.nextup .ng button{border:0;background:var(--soft);color:var(--ink);font-weight:500}
+.cls-h .nudge,.ctabs button .near{animation:none!important;background:none;color:var(--ink3);box-shadow:none;border:0}
+.ghead{color:var(--ink3);font-weight:600} .ghead .gnext{color:var(--ink2);font-weight:500} .ghead .gnext .sw{width:9px;height:9px;border-radius:50%}
+
+/* everything else that blinked or glowed */
+.shiny::after,.ctabs button.shiny::after{display:none!important}
+.dock{border-bottom:0;box-shadow:0 1px 0 var(--line)}
+.qb,.gun.open .qb{border:0!important}
+.qb.on.cam span,.qb.on.cam-plat span,.qb.on span{color:var(--ink)!important;text-shadow:none!important}
+.qb.off span{color:var(--ink2)}
+.qb,.qb.on{box-shadow:none!important}
