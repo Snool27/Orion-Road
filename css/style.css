@@ -868,3 +868,27 @@ main{padding-block:36px 96px}
   .gun:not(.open) .qb{width:auto;height:38px}
   .gun:not(.open) .grow .side::after{content:"▾";font-size:11px;color:var(--ink3)}
 }
+/* round 8: fill a gun in straight from its row: the camo boxes and Next show without opening */
+.gun:not(.open) .ladwrap{display:flex!important}
+.gun:not(.open) .ladwrap .lg{display:flex!important}
+.gun:not(.open) .qb.nx:not(:disabled){display:flex!important}
+@media (max-width:560px){
+  .gun:not(.open) .grow{grid-template-rows:auto auto auto auto}
+  .gun:not(.open) .grow .quick{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .gun:not(.open) .qb.nx:not(:disabled){grid-column:1/-1;grid-row:1;height:32px}
+  .gun:not(.open) .grow .ladwrap{grid-column:1/-1;grid-row:3;flex-wrap:wrap;gap:6px 14px;margin-top:2px}
+}
+@media (min-width:561px){
+  .gun:not(.open) .grow{grid-template-columns:240px auto minmax(0,1fr) auto}
+  .gun:not(.open) .quick{grid-template-columns:repeat(5,56px)}
+  .gun:not(.open) .qb.nx:not(:disabled){grid-column:1/-1}
+  .gun:not(.open) .ladwrap{flex-wrap:wrap;gap:6px 14px}
+}
+@media (min-width:561px){
+  .gun:not(.open) .grow{grid-template-columns:240px minmax(0,1fr) auto;grid-template-rows:auto auto;gap:8px 18px;align-items:center}
+  .gun:not(.open) .grow .chip{grid-column:1;grid-row:1/3;align-self:stretch}
+  .gun:not(.open) .grow .quick{grid-column:2;grid-row:1;grid-template-columns:repeat(5,56px) 1fr;align-items:center}
+  .gun:not(.open) .qb.nx:not(:disabled){grid-column:6;grid-row:1;justify-self:start;padding:0 14px;max-width:260px}
+  .gun:not(.open) .grow .ladwrap{grid-column:2;grid-row:2;flex-wrap:nowrap;gap:6px 16px;overflow-x:auto;scrollbar-width:none}
+  .gun:not(.open) .grow .side{grid-column:3;grid-row:1/3}
+}
