@@ -375,7 +375,7 @@ function milestones(){ const m={}; for(const c of ORDER){ m["g-"+c]=reach(c,"gol
 let lastM=null;
 const MCOL={mp:"#9b5cff",dmz:"#f0a030",wz:"#e0503a"};
 function mastTile(k,t){ const st=TRACKS[k].steps, n=st.filter(s=>S.mu[s.id]).length, last=st[2], nxt=st.find(s=>!S.mu[s.id]), done=n>=3, lock=!t.div&&!n;
-  return `<button class="stat st2 k-mast${done?" lv4 cam cam-"+last.id:""}${lock?" locked":""}" style="--k:${MCOL[k]}" data-sf="" title="${esc(LAST[k])} mastery · ${esc(TRACKS[k].name)}"><span class="st1"><span class="sw3 cam cam-${last.id}"></span><small>${esc(LAST[k])}</small><em class="sx">${esc(TRACKS[k].name)}</em></span><b class="num tw">${n}/3</b><i class="nx">${done?"✓ Complete":lock?"after Divergence":"next · "+esc(nxt.n)}</i><span class="sbar"><i style="width:${Math.round(n/3*100)}%"></i></span></button>`; }
+  return `<button class="stat st2 k-mast${done?" lv4 cam cam-"+last.id:""}${lock?" locked":""}" style="--k:${MCOL[k]}" data-sf="" title="${esc(LAST[k])} mastery · ${esc(TRACKS[k].name)}"><span class="st1"><span class="sw3 cam cam-${last.id}"></span><small>${esc(LAST[k])}</small><em class="sx">${({mp:"MP",dmz:"DMZ",wz:"WZ"})[k]}</em></span><b class="num tw">${n}/3</b><i class="nx">${done?"✓ Complete":lock?"after Divergence":"next · "+esc(nxt.n)}</i><span class="sbar"><i style="width:${Math.round(n/3*100)}%"></i></span></button>`; }
 /* gun % counts up and its bar slides when it goes up */
 const PREV_PCT={}; function pctTick(){ document.querySelectorAll("#guns .gun[data-gun]").forEach(g=>{ const el=g.querySelector(".side .gp"), bar=g.querySelector(".gbar i"); if(!el) return; const id=g.dataset.gun, v=parseInt(el.textContent)||0, was=PREV_PCT[id]; PREV_PCT[id]=v;
   if(was===undefined||v<=was||REDUCED()) return;
