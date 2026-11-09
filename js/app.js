@@ -25,6 +25,10 @@ const bon=f=>{ const n=SEASON.filter(w=>!skipped(w)).filter(f).length; return n?
 const bonNote=()=>SEASON.length?`<p class="bonnote"><em class="bon">S1</em> Season guns count too: any <b>${BASE.length} guns</b> unlock Harmonic Break and Divergence, so you can pass ${BASE.length}. Skip one from its card.</p>`:"";
 const spDone=s=>s.sp.filter(Boolean).length;
 const done=s=>s.mil+spDone(s)+(s.gold?1:0)+(s.plat?1:0)+(s.hb?1:0);
+/* a class (or All) counts as Gold/Plat/HB once it has as many guns there as it has launch guns: Season guns can stand in, like the 33 rule */
+const POOL=c=>TRACKED().filter(w=>c==="ALL"||w.cls===c), NEED=c=>BASE.filter(w=>c==="ALL"||w.cls===c).length;
+const reach=(c,k)=>POOL(c).filter(w=>W(w.id)[k]).length>=NEED(c);
+const bestSteps=c=>{ const cp=cap(); return POOL(c).map(w=>Math.min(done(W(w.id)),cp)).sort((a,b)=>b-a).slice(0,NEED(c)).reduce((a,b)=>a+b,0); };
 const classGold=c=>({d:cntB(w=>w.cls===c&&W(w.id).gold),t:cntB(w=>w.cls===c)});
 const cap=()=>LCAP[S.goal.l]||14;
 const hasGoal=()=>!!S.goal.l;
@@ -39,7 +43,7 @@ function effort(){ const c=cap(); let done=0,total=0;
 }
 function totals(){
   const t={steps:0,gold:cnt(w=>W(w.id).gold),plat:cnt(w=>W(w.id).plat),hb:cnt(w=>W(w.id).hb),maxed:cnt(w=>W(w.id).mil>=8),prest:cnt(w=>W(w.id).pr>0)};
-  const c=cap(); for(const w of BASE) t.steps+=Math.min(done(W(w.id)),c);
+  const c=cap(); t.steps=bestSteps("ALL");
   t.ladder=t.steps/(BASE.length*c); t.div=t.hb>=BASE.length;
   const tr=S.goal.l==="div"?Object.keys(TRACKS).filter(k=>S.goal[k]):[];
   const tp=k=>{ let a=0; for(const s of TRACKS[k].steps){ if(S.mu[s.id]){a+=1;continue;} const tot=s.edit?(+S.mt[s.id]||0):s.t; if(tot) a+=Math.min(1,(+S.m[s.id]||0)/tot); } return a/3; };
@@ -136,14 +140,14 @@ function render(){
   { const hide=!!S.seen||(t.steps>0&&hasGoal()); const ob=$("#onb"); if(hide&&!ob.hidden&&!ob.classList.contains("out")){ ob.classList.add("out"); setTimeout(()=>{ ob.hidden=true; ob.classList.remove("out"); },360); } else if(!hide){ ob.hidden=false; ob.classList.remove("out"); } }
   const st=(cls,v,l,f)=>`<button class="stat ${S.tab==="ALL"&&S.filt===f?'sel':''}" data-sf="${f||''}" title="Show these guns"><span class="sw3 ${cls}"></span><div><b class="num tw">${v}</b><small>${l}</small></div></button>`;
   setHTML($("#stats"),st("flat",`${t.maxed}/${BASE.length}${bon(w=>W(w.id).mil>=8)}`,"Max","f-max")+(t.prest?st("cam cam-pyro",`${t.prest}${bon(w=>W(w.id).pr>0)}`,"Prestiged","f-prest"):"")+st("cam cam-gold",`${t.gold}/${BASE.length}${bon(w=>W(w.id).gold)}`,"Gold","f-gold")+(cap()>=13?st("cam cam-plat",`${t.plat}/${BASE.length}${bon(w=>W(w.id).plat)}`,"Platinum","f-plat"):"")+(cap()>=14?st("cam cam-hb",`${t.hb}/${BASE.length}${bon(w=>W(w.id).hb)}`,"H. Break","f-hb")+st("cam cam-div"+(t.div?"":" locked"),t.div?"✓":`${t.hb}/${BASE.length}`,"Divergence","f-hb").replace('class="stat ','class="stat '+(t.div?'':'locked ')):"")+bonNote());
-  const clsPct=c=>{ const ws=BASE.filter(w=>w.cls===c); return Math.round(100*ws.reduce((a,w)=>a+Math.min(done(W(w.id)),cap()),0)/(ws.length*cap())); };
-  const shiny=ws=>{ if(ws.every(w=>W(w.id).hb)) return "cam cam-hb shiny"; if(cap()>=13&&ws.every(w=>W(w.id).plat)) return "cam cam-plat shiny light"; if(ws.every(w=>W(w.id).gold)) return "cam cam-gold shiny"; return ""; };
+  const clsPct=c=>Math.round(100*bestSteps(c)/(NEED(c)*cap()));
+  const shiny=c=>{ if(reach(c,"hb")) return "cam cam-hb shiny"; if(cap()>=13&&reach(c,"plat")) return "cam cam-plat shiny light"; if(reach(c,"gold")) return "cam cam-gold shiny"; return ""; };
   /* the tab fills from the bottom with the next camo as guns reach it: 3 of 9 Gold = a third full of gold */
-  const fillOf=ws=>{ const n=k=>ws.filter(w=>W(w.id)[k]).length, L=ws.length; if(!L) return null;
+  const fillOf=c=>{ const ws=POOL(c), n=k=>Math.min(L,ws.filter(w=>W(w.id)[k]).length), L=NEED(c); if(!L) return null;
     if(n("gold")<L) return {k:"gold",f:n("gold")/L,left:L-n("gold")}; if(cap()>=13&&n("plat")<L) return {k:"plat",f:n("plat")/L,left:L-n("plat")}; if(cap()>=14&&n("hb")<L) return {k:"hb",f:n("hb")/L,left:L-n("hb")}; return null; };
-  const tab=(c,label,pct,ws)=>{ const fl=shiny(ws)?null:fillOf(ws); const tip=fl?`${Math.round(fl.f*ws.length)}/${ws.length} at ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[fl.k]}`:"Complete";
-    return `<button role="tab" data-c="${c}" aria-selected="${S.tab===c}" class="${shiny(ws)}${fl&&fl.f>0?" filling":""}" title="${tip}">${fl&&fl.f>0?`<span class="fill cam cam-${fl.k}" style="height:${Math.max(8,Math.round(fl.f*100))}%"></span>`:""}<span>${label}</span><small class="tw">${pct}%</small>${fl&&fl.left<=2&&fl.f>0?`<em class="near">${fl.left} left</em>`:""}<span class="bar"><i style="width:${pct}%"></i></span></button>`; };
-  $("#ctabs").style.opacity=q?".35":""; setHTML($("#ctabs"),tab("ALL","All",Math.round(t.ladder*100),BASE)+ORDER.map(c=>tab(c,CLS[c][3],clsPct(c),BASE.filter(w=>w.cls===c))).join(""));
+  const tab=(c,label,pct)=>{ const fl=fillOf(c); /* a Gold tab keeps filling with Platinum, and so on */ const tip=fl?`${Math.round(fl.f*NEED(c))}/${NEED(c)} at ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[fl.k]}`:"Complete";
+    return `<button role="tab" data-c="${c}" aria-selected="${S.tab===c}" class="${shiny(c)}${fl&&fl.f>0?" filling":""}" title="${tip}">${fl&&fl.f>0?`<span class="fill cam cam-${fl.k}" style="height:${Math.max(8,Math.round(fl.f*100))}%"></span>`:""}<span>${label}</span><small class="tw">${pct}%</small>${fl&&fl.left<=2&&fl.f>0?`<em class="near">${fl.left} left</em>`:""}<span class="bar"><i style="width:${pct}%"></i></span></button>`; };
+  $("#ctabs").style.opacity=q?".35":""; setHTML($("#ctabs"),tab("ALL","All",Math.round(t.ladder*100))+ORDER.map(c=>tab(c,CLS[c][3],clsPct(c))).join(""));
   BURSTS=noteLevels(); if(BURSTS.length>12) BURSTS=[];
   const host=$("#guns"); const fresh=lastTab!==S.tab||host._q!==q||!!q||!host.children.length; host._q=q; if(fresh) host.innerHTML=""; host.classList.toggle("enter",fresh); lastTab=S.tab; const NEW=[]; const put=el=>{ if(fresh) host.appendChild(el); else NEW.push(el); };
   if(LAST_OPEN&&LAST_OPEN!==S.open){ CLOSING=LAST_OPEN; clearTimeout(closeT); closeT=setTimeout(()=>{ CLOSING=null; render(); },420); } LAST_OPEN=S.open;
@@ -174,7 +178,7 @@ function render(){
     let lastCls=null; for(const w of ws){ if(S.filt!=="close"&&w.cls!==lastCls){ lastCls=w.cls; const hd=document.createElement("div"); hd.className="ghead"; hd.dataset.gun="h-"+w.cls; const n=ws.filter(x=>x.cls===w.cls).length; hd.innerHTML=`<span>${esc(CLS[w.cls][0])}</span><em class="num tw">${clsPct(w.cls)}%</em><small>${n} gun${n===1?"":"s"}</small>`; put(hd); } put(gun(w,t,classGold(w.cls),true)); }
   } else {
     const c=S.tab; const cg=classGold(c); const plats=cntB(w=>w.cls===c&&W(w.id).plat);
-    const cb=BASE.filter(w=>w.cls===c), nx=fillOf(cb); setHTML($("#clsH"),`<div class="l1"><b>${CLS[c][0]}</b><span class="num tw">${clsPct(c)}%</span>${nx&&nx.left<=3?`<span class="nudge">${nx.left} gun${nx.left>1?"s":""} from ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[nx.k]} ${esc(CLS[c][0])}</span>`:""}${bulk(WEAPONS.filter(w=>w.cls===c),"class")}</div>${hideRow(WEAPONS.filter(w=>w.cls===c))}`);
+    const nx=fillOf(c); setHTML($("#clsH"),`<div class="l1"><b>${CLS[c][0]}</b><span class="num tw">${clsPct(c)}%</span>${nx&&nx.left<=3?`<span class="nudge">${nx.left} gun${nx.left>1?"s":""} from ${({gold:"Gold",plat:"Platinum",hb:"Harmonic Break"})[nx.k]} ${esc(CLS[c][0])}</span>`:""}${bulk(WEAPONS.filter(w=>w.cls===c),"class")}</div>${hideRow(WEAPONS.filter(w=>w.cls===c))}`);
     const ckey=["C",c,hid().gold,hid().plat,hid().hb].join("|"); let cws;
     if(VIEW.key===ckey&&VIEW.ids){ cws=VIEW.ids.map(id=>WEAPONS.find(w=>w.id===id)); } else { cws=WEAPONS.filter(w=>w.cls===c&&!hiddenGun(w)); VIEW={key:ckey,ids:cws.map(w=>w.id)}; }
     for(const w of cws) put(gun(w,t,cg));
@@ -341,7 +345,7 @@ function applyMotion(){ if(S.motion!=="lite") S.motion="smooth"; document.body.c
 
 
 let doc=null,timer=null,pushing=false,again=false,DB=null,canWrite=null;
-function milestones(){ const m={}; for(const c of ORDER){ const ws=BASE.filter(w=>w.cls===c); m["g-"+c]=ws.every(w=>W(w.id).gold); m["p-"+c]=ws.every(w=>W(w.id).plat); m["h-"+c]=ws.every(w=>W(w.id).hb); } m["g-ALL"]=cnt(w=>W(w.id).gold)>=BASE.length; m["p-ALL"]=cnt(w=>W(w.id).plat)>=BASE.length; m["h-ALL"]=cnt(w=>W(w.id).hb)>=BASE.length; for(const w of WEAPONS){ const s=W(w.id); m["gun-"+w.id]= s.mil>=8&&spDone(s)===3&&s.gold; } return m; }
+function milestones(){ const m={}; for(const c of ORDER){ m["g-"+c]=reach(c,"gold"); m["p-"+c]=reach(c,"plat"); m["h-"+c]=reach(c,"hb"); } m["g-ALL"]=cnt(w=>W(w.id).gold)>=BASE.length; m["p-ALL"]=cnt(w=>W(w.id).plat)>=BASE.length; m["h-ALL"]=cnt(w=>W(w.id).hb)>=BASE.length; for(const w of WEAPONS){ const s=W(w.id); m["gun-"+w.id]= s.mil>=8&&spDone(s)===3&&s.gold; } return m; }
 let lastM=null;
 /* camos earned since the page was opened: shown in the top bar, ticks up with every claim */
 let HAUL=0, HAUL_LAST=null; const haulCount=()=>{ let n=0; for(const w of WEAPONS){ const s=W(w.id); n+=s.mil+spDone(s)+(s.gold?1:0)+(s.plat?1:0)+(s.hb?1:0); } return n+Object.keys(S.mu||{}).length; };
