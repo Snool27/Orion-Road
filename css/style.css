@@ -643,3 +643,14 @@ body.lite .celebrate .cam::before{animation:none!important}
 @media (max-width:560px){ .dock .dk{grid-template-columns:1fr auto auto} .dock .haul{grid-column:1/-1;grid-row:3;justify-self:start} }
 @media (prefers-reduced-motion:reduce){ .ctabs button .near,.cls-h .nudge,.ctabs button.shiny::after{animation:none} }
 body.lite .ctabs button .near,body.lite .cls-h .nudge,body.lite .ctabs button.shiny::after{animation:none}
+
+/* ===== builds (inside an opened gun) ===== */
+.builds{padding:10px 0 12px;border-bottom:1px solid var(--line);margin-bottom:6px;display:grid;gap:10px}
+.builds .bh{display:flex;align-items:baseline;gap:10px} .builds .bh b{font-size:13px;letter-spacing:.08em;text-transform:uppercase} .builds .bh small{font-size:12px;color:var(--ink3)}
+.builds .bm{display:grid;gap:8px} .builds .bm > em{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.builds .blinks{display:flex;flex-wrap:wrap;gap:6px} .builds .blinks a{font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--card);transition:border-color var(--dur) var(--ease)} .builds .blinks a:hover{border-color:var(--acc)} .builds .blinks a:first-child{border-color:var(--acc)}
+.builds .bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.bcard{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);min-width:0} .bcard.best{border-color:var(--acc)}
+.bcard .bt{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap} .bcard .bt b{font-size:14px} .bcard .bt small{font-size:12px;color:var(--ink3)}
+.bcard ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px} .bcard li{display:grid;grid-template-columns:84px 1fr;gap:8px;font-size:13px} .bcard li span{color:var(--ink3);font-size:12px} .bcard li b{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.bcard p{margin:8px 0 0;font-size:12px;color:var(--ink2)} .bcard .src{display:flex;gap:10px;margin-top:6px} .bcard .src a{font-size:12px;color:var(--ink3)}
