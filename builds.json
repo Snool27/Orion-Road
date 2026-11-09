@@ -1,0 +1,3090 @@
+{
+ "updated": "2026-11-09",
+ "patch": "Season 1",
+ "model": "researched by Claude",
+ "guns": {
+  "han-86": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "HAN 86 Silenced 413mm"
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FTAC Griplord 80"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.56 NATO Overpressured"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 59,
+     "note": "Codmunity #1 Versatile MP build: built-in suppression with a strong recoil and handling balance.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/han-86"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "HAN 86 Silenced 413mm"
+      },
+      {
+       "slot": "Optic",
+       "name": "KV Corsac Holo"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Drum"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FTAC Griplord 80"
+      }
+     ],
+     "level": 55,
+     "note": "Codmunity #1 DMZ long range build; the 60-round drum helps against squads and AI.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/han-86",
+      "https://games.gg/call-of-duty-modern-warfare-4/guides/han-86-best-loadout/"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Hanbit RK8 406mm"
+      },
+      {
+       "slot": "Optic",
+       "name": "KV Corsac Holo"
+      },
+      {
+       "slot": "Stock",
+       "name": "FR4 Retractable Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Drum"
+      }
+     ],
+     "level": 47,
+     "note": "games.gg DMZ build with its suggested Hanbit RK8 barrel swap until the Level 68 barrel unlocks.",
+     "sources": [
+      "https://games.gg/call-of-duty-modern-warfare-4/guides/han-86-best-loadout/"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Hanbit Lightning-7 465mm"
+      },
+      {
+       "slot": "Magazine",
+       "name": "45 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.56 NATO High Velocity"
+      }
+     ],
+     "level": 70,
+     "note": "Codmunity #1 Warzone long range build, tuned for bullet velocity and range.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/han-86"
+     ]
+    },
+    "early": null
+   }
+  },
+  "m4": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "FT Cannonade 7"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Schlager STB Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.56 NATO Overpressured"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 22,
+     "note": "Codmunity #1 Versatile (Pro Favorite) build; it unlocks fully by about gun level 22.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/m4"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Optic",
+       "name": "KV Corsac Holo"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Drum"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Schlager STB Grip"
+      }
+     ],
+     "level": 69,
+     "note": "Codmunity #1 DMZ long range build, with a drum mag for sustained fights.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/m4"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "16 Highmark Barrel"
+      },
+      {
+       "slot": "Magazine",
+       "name": "45 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.56 NATO High Velocity"
+      }
+     ],
+     "level": 70,
+     "note": "Codmunity #1 Warzone long range build for range and bullet velocity.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/m4"
+     ]
+    },
+    "early": null
+   }
+  },
+  "hyeon-burst": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS40"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Mugi Hwando-Z3 521mm"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "HYN-Meipeul"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "6.8x43mm Overpressured"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 68,
+     "note": "Codmunity #1 Versatile build; it also runs the Hyeon Hyperburst Apex (Level 68).",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/hyeon-burst"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Mugi Seungri-0P 609mm"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "HYN-Meipeul"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "6.8x43mm High Velocity"
+      }
+     ],
+     "level": 68,
+     "note": "Codmunity #1 Warzone long range build, plus the Hyeon Hyperburst Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/hyeon-burst"
+     ]
+    },
+    "early": null
+   }
+  },
+  "patriot-xmr": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Undertow Gen. 2"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "EXP TR-Wrap"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62 NATO Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "35 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 72,
+     "note": "Codmunity #1 Versatile build; it also runs the Patriot XMR Volt Apex (Level 72).",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/patriot-xmr"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Undertow Gen. 2"
+      },
+      {
+       "slot": "Optic",
+       "name": "KV Corsac Holo"
+      },
+      {
+       "slot": "Magazine",
+       "name": "50 Round Drum Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "EXP TR-Wrap"
+      }
+     ],
+     "level": 72,
+     "note": "Codmunity #1 DMZ long range build, plus the Patriot XMR Volt Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/patriot-xmr"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "ZLR Cold Echo"
+      },
+      {
+       "slot": "Magazine",
+       "name": "35 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Schlager Attack-7 Grip"
+      },
+      {
+       "slot": "Stock",
+       "name": "XRK Ranger D4"
+      }
+     ],
+     "level": 47,
+     "note": "Codmunity #1 Warzone pick is a sniper-support build for close and mid range.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/patriot-xmr"
+     ]
+    },
+    "early": null
+   }
+  },
+  "kastov-762": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "FJX Ghostfire 16.3\""
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Hanbit TechGrip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62 Soviet Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "45 Round Mag 7.62"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 61,
+     "note": "Codmunity #1 Versatile build; games.gg also picks the FJX Ghostfire 16.3\" barrel.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/kastov-762",
+      "https://games.gg/call-of-duty-modern-warfare-4/guides/kastov-762-best-loadout/"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "Gauge-12 Mono"
+      },
+      {
+       "slot": "Barrel",
+       "name": "BCS-K 589mm Barrel"
+      },
+      {
+       "slot": "Magazine",
+       "name": "45 Round Mag 7.62"
+      },
+      {
+       "slot": "Stock",
+       "name": "Hanbit Blitz v.9"
+      }
+     ],
+     "level": 67,
+     "note": "Codmunity #1 Warzone long range build for hard-hitting long range shots.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/kastov-762"
+     ]
+    },
+    "early": null
+   }
+  },
+  "oden": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Comb",
+       "name": "NXK-9F Comb"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "12.7x55mm Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "30 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 49,
+     "note": "Codmunity #1 Versatile build that controls the Oden's heavy recoil.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/oden"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Optic",
+       "name": "KV Corsac Holo"
+      },
+      {
+       "slot": "Magazine",
+       "name": "30 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Comb",
+       "name": "NXK-9F Comb"
+      }
+     ],
+     "level": 63,
+     "note": "Codmunity #1 DMZ long range build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/oden"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "SZ Lonewolf Holo"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Rockfall-900 Barrel"
+      },
+      {
+       "slot": "Magazine",
+       "name": "30 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "12.7x55mm High Velocity"
+      }
+     ],
+     "level": 61,
+     "note": "Codmunity #1 Warzone long range build for range and velocity.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/oden"
+     ]
+    },
+    "early": null
+   }
+  },
+  "axion": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Matuzek S5-Brace"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Matuzek Lockgrip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".300 BLK Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 65,
+     "note": "Codmunity #1 Versatile (Pro Favorite) MP build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/axion"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Matuzek S5-Brace"
+      },
+      {
+       "slot": "Optic",
+       "name": "KV Corsac Holo"
+      },
+      {
+       "slot": "Magazine",
+       "name": "100 Round Drum"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Matuzek Lockgrip"
+      }
+     ],
+     "level": 38,
+     "note": "Codmunity #1 DMZ build; the 100-round drum sustains fire and it unlocks by gun level 38.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/axion"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA DMN-L 30"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Stock",
+       "name": "TA Harrow Stock"
+      }
+     ],
+     "level": 65,
+     "note": "Codmunity #1 Warzone long range build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/axion"
+     ]
+    },
+    "early": null
+   }
+  },
+  "cronen-squall": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "ZLR Cold Echo"
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Comb",
+       "name": "Bryson N40 Comb"
+      },
+      {
+       "slot": "Magazine",
+       "name": "30 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 62,
+     "note": "First listed Codmunity MP build (likely Versatile); the page doesn't label which is which.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/cronen-squall"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "EXP Undertow Gen. 2"
+      },
+      {
+       "slot": "Barrel",
+       "name": "FJX Sypher 27\""
+      },
+      {
+       "slot": "Magazine",
+       "name": "30 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "6.8 Wrath High Velocity"
+      }
+     ],
+     "level": 63,
+     "note": "Codmunity #1 Warzone long range build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/cronen-squall"
+     ]
+    },
+    "early": null
+   }
+  },
+  "cronen-osprey": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "XRK Mil-Tac Suppressor"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Cronen 56"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.56 NATO Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 67,
+     "note": "First listed Codmunity MP build for the new Season 1 AR (likely Versatile).",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/cronen-osprey"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "Locus PX3 Canted"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "IO-556 Tac 18\""
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Fireline Grip"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      }
+     ],
+     "level": 54,
+     "note": "Codmunity #1 Warzone long range build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/cronen-osprey"
+     ]
+    },
+    "early": null
+   }
+  },
+  "iso-nightshade": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS Crackdown"
+      },
+      {
+       "slot": "Barrel",
+       "name": "ZLR Carbon-900"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Demo STP-1"
+      },
+      {
+       "slot": "Stock",
+       "name": "GI-80 Milspec Stock"
+      }
+     ],
+     "level": null,
+     "note": "Tames its heavy kick; Crackdown, Carbon-900, Tac90 and STP-1 recur across guides.",
+     "sources": [
+      "https://games.gg/call-of-duty-modern-warfare-4/guides/iso-nightshade-best-loadout/",
+      "https://codmunity.gg/weapon/mw4/iso-nightshade"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS Crackdown"
+      },
+      {
+       "slot": "Barrel",
+       "name": "ZLR Mag-Z 9"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Demo STP-1"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP G2-44 Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      }
+     ],
+     "level": 10,
+     "note": "All five unlock by level 10 and cover recoil, handling and ammo.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/iso-nightshade"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "ZLR Mag-Z 9"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Demo STP-1"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP G2-44 Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum High Velocity"
+      }
+     ],
+     "level": 61,
+     "note": "CODMunity's pro-favourite close-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/iso-nightshade"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "ZLR Mag-Z 9"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Demo STP-1"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP G2-44 Stock"
+      }
+     ],
+     "level": 10,
+     "note": "Same build minus the level-61 High Velocity ammo.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/iso-nightshade"
+     ]
+    }
+   }
+  },
+  "vel-46": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS Crackdown"
+      },
+      {
+       "slot": "Barrel",
+       "name": "VB-46 Series 11"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Sakin Rubber Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "4.6x30mm Overpressured"
+      }
+     ],
+     "level": 52,
+     "note": "Two sites agree on the core; add the VEL 46 Snap Apex at level 60.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/vel-46",
+      "https://warzoneloadout.games/mw4/vel-46"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS Crackdown"
+      },
+      {
+       "slot": "Barrel",
+       "name": "VB-46 Series 11"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "V46 R-Skel Grip"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Fireline Grip"
+      }
+     ],
+     "level": 10,
+     "note": "Low-level parts from the guide builds for recoil and handling.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/vel-46"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "TA TacPro-56"
+      },
+      {
+       "slot": "Barrel",
+       "name": "RV-B v2 Barrel"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Fireline Grip"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP U-Turn Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "4.6x30mm High Velocity"
+      }
+     ],
+     "level": 57,
+     "note": "CODMunity's pro-favourite close-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/vel-46"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "VB-46 Series 11"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "V46 R-Skel Grip"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Fireline Grip"
+      }
+     ],
+     "level": 10,
+     "note": "Early parts from CODMunity's Warzone builds.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/vel-46"
+     ]
+    }
+   }
+  },
+  "wz-55-striga": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC Silent Recon"
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Striga Wood Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Makarov Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "35 Round Mag"
+      }
+     ],
+     "level": 48,
+     "note": "CODMunity's top versatile build: suppressed, faster kills.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/wz-55-striga"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC Silent Recon"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Striga Wood Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Makarov Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "35 Round Mag"
+      }
+     ],
+     "level": 13,
+     "note": "Same build minus the level-48 optic.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/wz-55-striga"
+     ]
+    }
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC Silent Recon"
+      },
+      {
+       "slot": "Barrel",
+       "name": "DS 9x18 Pro"
+      },
+      {
+       "slot": "Laser",
+       "name": "QFL-S4.5"
+      },
+      {
+       "slot": "Magazine",
+       "name": "50 Round Drum Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Makarov Overpressured"
+      }
+     ],
+     "level": 49,
+     "note": "CODMunity tags this close-range build for DMZ; add Rampage Apex at 60.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/wz-55-striga"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC Silent Recon"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Striga Wood Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Makarov Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "35 Round Mag"
+      }
+     ],
+     "level": 13,
+     "note": "Reuses the MP early build; no DMZ-specific early build found.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/wz-55-striga"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Full Port Comp"
+      },
+      {
+       "slot": "Barrel",
+       "name": "GW Sender 500"
+      },
+      {
+       "slot": "Magazine",
+       "name": "50 Round Drum Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Matuzek 532-L Grip"
+      },
+      {
+       "slot": "Stock",
+       "name": "Wire Stock"
+      }
+     ],
+     "level": 52,
+     "note": "CODMunity's close-range Warzone build; drum mag for squads.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/wz-55-striga"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Full Port Comp"
+      },
+      {
+       "slot": "Barrel",
+       "name": "GW Sender 500"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Matuzek 532-L Grip"
+      }
+     ],
+     "level": 15,
+     "note": "The three low-level parts of the Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/wz-55-striga"
+     ]
+    }
+   }
+  },
+  "ppsh-41": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Haebang BAM70"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Hanbit RDR-Tiger 50"
+      },
+      {
+       "slot": "Stock",
+       "name": "Hanbit Janggun-H9"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62 Tokarev Overpressured"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 37,
+     "note": "Two sites agree on this versatile build for range and control.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/ppsh-41",
+      "https://warzoneloadout.games/mw4/ppsh-41"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Hanbit Chimmuk-INTR"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62 Tokarev Overpressured"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 9,
+     "note": "Close-range guide build minus the level-25 stock.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/ppsh-41"
+     ]
+    }
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Hanbit Chimmuk-INTR"
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Stock",
+       "name": "Hanbit Janggun-H9"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      }
+     ],
+     "level": 25,
+     "note": "CODMunity's top DMZ close-range build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/ppsh-41"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Hanbit Chimmuk-INTR"
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      }
+     ],
+     "level": 7,
+     "note": "The DMZ build minus the level-25 stock.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/ppsh-41"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "Full Port Comp"
+      },
+      {
+       "slot": "Barrel",
+       "name": "TT Banseok-24N"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Mire-50 Tac Grip"
+      },
+      {
+       "slot": "Stock",
+       "name": "MT-L5 Jinhwa"
+      }
+     ],
+     "level": 52,
+     "note": "CODMunity's close-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/ppsh-41"
+     ]
+    },
+    "early": null
+   }
+  },
+  "x-58-nyx": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Mugi HYU-90 228mm"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Mugi-X Wrap"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.8x21mm Overpressured"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 40,
+     "note": "CODMunity's top versatile build: mobile, with faster kills.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/x-58-nyx"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Mugi HYU-90 228mm"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.8x21mm Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      }
+     ],
+     "level": 17,
+     "note": "All of these come from the guide builds and unlock by level 17.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/x-58-nyx"
+     ]
+    }
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Mugi-X Wrap"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      }
+     ],
+     "level": 40,
+     "note": "CODMunity's DMZ close-range build; add the X-58 Void Apex at level 53.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/x-58-nyx"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      }
+     ],
+     "level": 17,
+     "note": "The DMZ build's parts that unlock by level 17.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/x-58-nyx"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Doksa 4F 305mm"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Mire-50 Tac Grip"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "BOK-980"
+      },
+      {
+       "slot": "Stock",
+       "name": "Mugi HUL-73.M Stock"
+      }
+     ],
+     "level": 37,
+     "note": "CODMunity's close-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/x-58-nyx"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Underbarrel",
+       "name": "Mire-50 Tac Grip"
+      },
+      {
+       "slot": "Magazine",
+       "name": "60 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "BOK-980"
+      },
+      {
+       "slot": "Stock",
+       "name": "Mugi HUL-73.M Stock"
+      }
+     ],
+     "level": 20,
+     "note": "The Warzone build minus the level-37 barrel.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/x-58-nyx"
+     ]
+    }
+   }
+  },
+  "csg-35": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Forage-Tac"
+      },
+      {
+       "slot": "Stock",
+       "name": "RASH-90 Heavy Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "CQC Stop"
+      }
+     ],
+     "level": 41,
+     "note": "Two sites list this versatile build; no Apex needed.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/csg-35",
+      "https://warzoneloadout.games/mw4/csg-35"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Stock",
+       "name": "RASH-90 Heavy Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      }
+     ],
+     "level": 17,
+     "note": "The versatile build's parts that unlock by level 17.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/csg-35"
+     ]
+    }
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Forage-Hvy"
+      },
+      {
+       "slot": "Stock",
+       "name": "XRK Slight Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Matuzek Fire-Pro"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum Overpressured"
+      }
+     ],
+     "level": 39,
+     "note": "CODMunity's DMZ close-range build; add the CSG Crossfire Apex at 42.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/csg-35",
+      "https://warzoneloadout.games/mw4/csg-35"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Stock",
+       "name": "XRK Slight Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum Overpressured"
+      }
+     ],
+     "level": 26,
+     "note": "The DMZ build's parts that unlock by level 26.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/csg-35"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "RTR-8 Pro"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Matuzek Fire-Pro"
+      },
+      {
+       "slot": "Stock",
+       "name": "XRK Slight Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum High Velocity"
+      }
+     ],
+     "level": 39,
+     "note": "CODMunity's free close-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/csg-35"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "RTR-8 Pro"
+      },
+      {
+       "slot": "Magazine",
+       "name": "40 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum High Velocity"
+      }
+     ],
+     "level": 24,
+     "note": "The Warzone build's parts that unlock by level 24.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/csg-35"
+     ]
+    }
+   }
+  },
+  "rezi-12": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC LTS-707"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Haebang 635R-7"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Guard",
+       "name": "Demo Service-12G"
+      }
+     ],
+     "level": 60,
+     "note": "CODMunity close-range build; add Rezi 12 Enforcer Apex. Guides vary.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/rezi-12"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      },
+      {
+       "slot": "Barrel",
+       "name": "ZLR Rogue 90 25\""
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      }
+     ],
+     "level": 18,
+     "note": "Low-level parts taken from CODMunity's builds.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/rezi-12"
+     ]
+    }
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Firelite 12"
+      },
+      {
+       "slot": "Barrel",
+       "name": "ZLR Rogue 90 25\""
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Bolt",
+       "name": "XRK Quad-80"
+      },
+      {
+       "slot": "Guard",
+       "name": "Demo Service-12G"
+      }
+     ],
+     "level": 60,
+     "note": "CODMunity's DMZ close-range build; add the Rezi 12 Enforcer Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/rezi-12"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Firelite 12"
+      },
+      {
+       "slot": "Barrel",
+       "name": "ZLR Rogue 90 25\""
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      }
+     ],
+     "level": 24,
+     "note": "The DMZ build's parts that unlock by level 24.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/rezi-12"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Haebang Bulsae-10"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Haebang 635R-7"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Laser",
+       "name": "Pulse-MW Laser"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "12 Gauge Slug"
+      }
+     ],
+     "level": 48,
+     "note": "CODMunity's Warzone slug build for extra range.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/rezi-12"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Haebang Bulsae-10"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Haebang 635R-7"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "12 Gauge Slug"
+      }
+     ],
+     "level": 28,
+     "note": "The Warzone build minus the level-48 laser.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/rezi-12"
+     ]
+    }
+   }
+  },
+  "warlord": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Mugi Kalnal-T 12G"
+      },
+      {
+       "slot": "Barrel",
+       "name": "NK Gangta-12G"
+      },
+      {
+       "slot": "Bolt",
+       "name": "L-Strike Bolt"
+      },
+      {
+       "slot": "Stock",
+       "name": "Mugi Tac-717 Stock"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "DV3-Sinsok Grip"
+      }
+     ],
+     "level": 46,
+     "note": "Two sites agree on this build; add the Warlord Lumen Apex at level 59.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/warlord",
+      "https://warzoneloadout.games/mw4/warlord"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Mugi Chujeok-800"
+      },
+      {
+       "slot": "Stock",
+       "name": "Mugi D40 Stock"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "DV3-Sinsok Grip"
+      }
+     ],
+     "level": 8,
+     "note": "The mobility build's low-level parts.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/warlord",
+      "https://warzoneloadout.games/mw4/warlord"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "WX-600 Choke"
+      },
+      {
+       "slot": "Barrel",
+       "name": "NK Gangta-12G"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Mire-50 Tac Grip"
+      },
+      {
+       "slot": "Laser",
+       "name": "Bruen 22-LPW"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "12 Gauge Slug"
+      }
+     ],
+     "level": 55,
+     "note": "CODMunity's close-range Warzone slug build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/warlord"
+     ]
+    },
+    "early": null
+   }
+  },
+  "finn-lmg": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP V-TAC Suppressor"
+      },
+      {
+       "slot": "Laser",
+       "name": "SZ Gen.6 PEQ"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP Bulldog-9"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FTAC R7 Wrap"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Bruen Renegade Grip"
+      }
+     ],
+     "level": 55,
+     "note": "CODMunity's top versatile build: suppressed and stable.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/finn-lmg"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP V-TAC Suppressor"
+      },
+      {
+       "slot": "Magazine",
+       "name": "150 Round Box Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FTAC Combat Grip"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      }
+     ],
+     "level": 20,
+     "note": "Parts from CODMunity's MP builds that unlock by level 20.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/finn-lmg"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "SZ Helios Holo"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FSS IS300"
+      },
+      {
+       "slot": "Barrel",
+       "name": "TA Sustain-99 20\""
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Schlager KM60-G"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "5.56 NATO High Velocity"
+      }
+     ],
+     "level": 43,
+     "note": "CODMunity's long-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/finn-lmg"
+     ]
+    },
+    "early": null
+   }
+  },
+  "type-73": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Ivanov QR600"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Assault-L9 Wood Grip"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Bruen Renegade Grip"
+      }
+     ],
+     "level": 51,
+     "note": "CODMunity's top versatile build built around the QR600 muzzle.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/type-73"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Ivanov QR600"
+      },
+      {
+       "slot": "Stock",
+       "name": "No Stock"
+      },
+      {
+       "slot": "Magazine",
+       "name": "100 Round Box Mag"
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      }
+     ],
+     "level": 27,
+     "note": "Parts from CODMunity's MP builds that unlock by level 27.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/type-73"
+     ]
+    }
+   }
+  },
+  "apoc-338": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA Trident 24.5\""
+      },
+      {
+       "slot": "Optic",
+       "name": "ZLR Type C"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "EXP Dyna-3 Grip"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Bruen Renegade Grip"
+      }
+     ],
+     "level": 26,
+     "note": "Two sites agree on this versatile build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/apoc-338",
+      "https://warzoneloadout.games/mw4/apoc-338"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA Trident 24.5\""
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "Bruen Renegade Grip"
+      },
+      {
+       "slot": "Laser",
+       "name": "SZ Gen.6 PEQ"
+      }
+     ],
+     "level": 10,
+     "note": "The close-range build minus its two later unlocks.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/apoc-338",
+      "https://warzoneloadout.games/mw4/apoc-338"
+     ]
+    }
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "SZ Helios Holo"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA Trident 24.5\""
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FSS TCB-1 Grip"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP Arc-7 Stock"
+      }
+     ],
+     "level": 47,
+     "note": "CODMunity's long-range Warzone build.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/apoc-338"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "SZ Helios Holo"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "TV Multical-77"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA Trident 24.5\""
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FSS TCB-1 Grip"
+      }
+     ],
+     "level": 7,
+     "note": "The Warzone build minus the level-47 stock.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/apoc-338"
+     ]
+    }
+   }
+  },
+  "mar-9": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Bruen Reaper-X"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Schlager PLM-S9"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62 NATO Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "30 Round Mag"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 73,
+     "note": "Codmunity Versatile build; pair with the MAR-9 Auto Apex for full-auto fire.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mar-9"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "SZ Echelon Holo"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Bruen Reaper-X"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Hanbit Wrap 76"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62 NATO High Velocity"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "MG-Tac Trigger"
+      }
+     ],
+     "level": 69,
+     "note": "Long-range build: faster bullets and holo sight for mid-long fights.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mar-9"
+     ]
+    },
+    "early": null
+   }
+  },
+  "oris-8-6": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "EXP Undertow Gen. 2"
+      },
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Stock",
+       "name": "SA Dynamo-90 Stock"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Bruen R7-TC Grip"
+      },
+      {
+       "slot": "Underbarrel",
+       "name": "FSS Tac90 Grip"
+      }
+     ],
+     "level": 66,
+     "note": "Codmunity Versatile build balancing recoil control and handling.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/oris-8-6"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "SZ Helios Holo"
+      },
+      {
+       "slot": "Barrel",
+       "name": "EXP Shadow-70 14\""
+      },
+      {
+       "slot": "Magazine",
+       "name": "20 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Bruen C-Wrap 60"
+      },
+      {
+       "slot": "Bolt",
+       "name": "Lightfire-5 Quick Bolt"
+      }
+     ],
+     "level": 61,
+     "note": "Long-range build with bigger mag and quicker bolt cycling.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/oris-8-6"
+     ]
+    },
+    "early": null
+   }
+  },
+  "mosin-nagant": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "330TC2 Gridlock"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Mosin S762 Barrel"
+      },
+      {
+       "slot": "Bolt",
+       "name": "TV-Light 7-Bolt"
+      },
+      {
+       "slot": "Optic",
+       "name": "Cronen R808"
+      },
+      {
+       "slot": "Stock",
+       "name": "Lockwood Eagle Stock"
+      }
+     ],
+     "level": 60,
+     "note": "Top Codmunity MP set: fast bolt and clean optic for quick follow-ups.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mosin-nagant"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Optic",
+       "name": "VLK Rize-40"
+      },
+      {
+       "slot": "Muzzle",
+       "name": "FTAC Silent Recon"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Mosin K025 Barrel"
+      },
+      {
+       "slot": "Stock",
+       "name": "Usenko Shturm 76"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62x54mmR High Velocity"
+      }
+     ],
+     "level": 34,
+     "note": "Suppressed sniper build with high-velocity rounds; all unlock by level 34.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mosin-nagant"
+     ]
+    },
+    "early": null
+   }
+  },
+  "kg-7-vulcan": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Ivanov QR600"
+      },
+      {
+       "slot": "Barrel",
+       "name": "TT Baem 12\""
+      },
+      {
+       "slot": "Optic",
+       "name": "Schlager 7x"
+      },
+      {
+       "slot": "Stock",
+       "name": "Bruen KG-7 Mk. IV"
+      },
+      {
+       "slot": "Comb",
+       "name": "TT Type 40 Comb"
+      }
+     ],
+     "level": 75,
+     "note": "Codmunity #1 MP sniper build; pair with the KG-7 Drillcharge Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/kg-7-vulcan"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Gauge-12 Mono"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Haebang RMT762 29\""
+      },
+      {
+       "slot": "Stock",
+       "name": "Bruen KG-7 Mk. IV"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62x54mmR High Velocity"
+      },
+      {
+       "slot": "Comb",
+       "name": "TT Type 40 Comb"
+      }
+     ],
+     "level": 75,
+     "note": "Long-barrel DMZ sniper build; pair with the KG-7 Drillcharge Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/kg-7-vulcan"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Gauge-12 Mono"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Haebang RMT762 29\""
+      },
+      {
+       "slot": "Stock",
+       "name": "TT G76-RP Stock"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "7.62x54mmR High Velocity"
+      },
+      {
+       "slot": "Bolt",
+       "name": "KT76 Light Bolt"
+      }
+     ],
+     "level": 71,
+     "note": "Long-range build with high-velocity ammo and a faster bolt.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/kg-7-vulcan"
+     ]
+    },
+    "early": null
+   }
+  },
+  "astaroth-57": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS Moodkiller"
+      },
+      {
+       "slot": "Barrel",
+       "name": "FTAC Crosswind 30\""
+      },
+      {
+       "slot": "Optic",
+       "name": "Schlager 7x"
+      },
+      {
+       "slot": "Stock",
+       "name": "Cronen Strand-BG Stock"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FJX S-TAC Grip"
+      }
+     ],
+     "level": 44,
+     "note": "Codmunity MP sniper build focused on aim speed and stability.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/astaroth-57"
+     ]
+    },
+    "early": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS Moodkiller"
+      },
+      {
+       "slot": "Barrel",
+       "name": "FTAC Crosswind 30\""
+      },
+      {
+       "slot": "Laser",
+       "name": "Schlager Visiv-5"
+      },
+      {
+       "slot": "Optic",
+       "name": "Schlager 7x"
+      },
+      {
+       "slot": "Stock",
+       "name": "Usenko V8-LKR"
+      }
+     ],
+     "level": 9,
+     "note": "Codmunity Close Range build; every part unlocks by level 9.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/astaroth-57"
+     ]
+    }
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Usenko 900 BL-X"
+      },
+      {
+       "slot": "Barrel",
+       "name": "FTAC Harbinger 45\""
+      },
+      {
+       "slot": "Stock",
+       "name": "Cronen Strand-BG Stock"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "FJX S-TAC Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".57 Cal High Velocity"
+      }
+     ],
+     "level": 50,
+     "note": "Long-range DMZ sniper build with high-velocity ammo.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/astaroth-57"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Usenko 900 BL-X"
+      },
+      {
+       "slot": "Barrel",
+       "name": "FTAC Harbinger 45\""
+      },
+      {
+       "slot": "Stock",
+       "name": "Usenko V8-LKR"
+      },
+      {
+       "slot": "Laser",
+       "name": "XRK Clutch-LS"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".57 Cal High Velocity"
+      }
+     ],
+     "level": 50,
+     "note": "Long-barrel sniper build with high-velocity ammo for range.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/astaroth-57"
+     ]
+    },
+    "early": null
+   }
+  },
+  "signal-50": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS DES-Tac70"
+      },
+      {
+       "slot": "Barrel",
+       "name": "S50-SB Gen.2 22\""
+      },
+      {
+       "slot": "Optic",
+       "name": "Schlager 7x"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP T50-S Heavy"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "GL Zero Drop 6"
+      }
+     ],
+     "level": 63,
+     "note": "Codmunity #1 MP sniper build; short barrel helps its slow handling.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/signal-50"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS HOC-30"
+      },
+      {
+       "slot": "Barrel",
+       "name": "MR50 Tyrant 29\""
+      },
+      {
+       "slot": "Optic",
+       "name": "Schlager 7x"
+      },
+      {
+       "slot": "Stock",
+       "name": "EXP T50-S Heavy"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "GL Zero Drop 6"
+      }
+     ],
+     "level": 74,
+     "note": "Codmunity DMZ sniper build; pair with the Signal Inferno Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/signal-50"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FSS HOC-30"
+      },
+      {
+       "slot": "Barrel",
+       "name": "MR50 Tyrant 29\""
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "EXP Trim-54F"
+      },
+      {
+       "slot": "Stock",
+       "name": "Cronen SN-Pad50"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".50 Cal High Velocity"
+      }
+     ],
+     "level": 70,
+     "note": "Long-range sniper build with high-velocity .50 Cal rounds.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/signal-50"
+     ]
+    },
+    "early": null
+   }
+  },
+  "sang-9mm": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Expedite Drill L4"
+      },
+      {
+       "slot": "Optic",
+       "name": "Z-Dot 9"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "SANG Wood Grip"
+      },
+      {
+       "slot": "Magazine",
+       "name": "17 Round Mag"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "SANG Insta-F Trigger"
+      }
+     ],
+     "level": 38,
+     "note": "Codmunity Versatile build; pair with the Sang Breach Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/sang-9mm"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "SFO Proto-33"
+      },
+      {
+       "slot": "Barrel",
+       "name": "TT CP-9mm Barrel"
+      },
+      {
+       "slot": "Optic",
+       "name": "Z-Dot 9"
+      },
+      {
+       "slot": "Magazine",
+       "name": "24 Round Mag"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "SANG Highmatch"
+      }
+     ],
+     "level": 38,
+     "note": "DMZ close-range build with bigger mag; pair with the Sang Breach Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/sang-9mm"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "SFO Proto-33"
+      },
+      {
+       "slot": "Barrel",
+       "name": "TT CP-9mm Barrel"
+      },
+      {
+       "slot": "Magazine",
+       "name": "17 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "XRK M-Line Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": "9mm Parabellum High Velocity"
+      }
+     ],
+     "level": 36,
+     "note": "Close-range sidearm build for quick swaps.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/sang-9mm"
+     ]
+    },
+    "early": null
+   }
+  },
+  "krait-p68": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Expedite Drill L4"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA Omni 5.5\""
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "MAGTAC .45"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".45 Auto Frangible"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "P68 Tapper 9"
+      }
+     ],
+     "level": 38,
+     "note": "Codmunity Versatile build; pair with the Krait P68 Commando Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/krait-p68"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Expedite Drill L4"
+      },
+      {
+       "slot": "Barrel",
+       "name": "SA Omni 5.5\""
+      },
+      {
+       "slot": "Optic",
+       "name": "Z-Dot 9"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "MAGTAC .45"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "P68 Tapper 9"
+      }
+     ],
+     "level": 38,
+     "note": "DMZ close-range build; pair with the Krait P68 Commando Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/krait-p68"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "SFO Proto-33"
+      },
+      {
+       "slot": "Barrel",
+       "name": "XRK Doc-40 6"
+      },
+      {
+       "slot": "Magazine",
+       "name": "20 Round Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "Shonay R-Wrap"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "P68 Tapper 9"
+      }
+     ],
+     "level": 35,
+     "note": "Close-range sidearm build with a bigger mag.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/krait-p68"
+     ]
+    },
+    "early": null
+   }
+  },
+  "50-gs": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "TA SVG-50K"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "ZLR Tact-99 Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".50 Pistol Overpressured"
+      },
+      {
+       "slot": "Magazine",
+       "name": "14 Round Mag"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "Corio Lightning N6"
+      }
+     ],
+     "level": 41,
+     "note": "Codmunity Versatile build: overpressured ammo for fast kills.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/50-gs"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC HVY-S50"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Matuzek Monarch"
+      },
+      {
+       "slot": "Optic",
+       "name": "Bruen Field-Op"
+      },
+      {
+       "slot": "Magazine",
+       "name": "25 Round Drum Mag"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "ZLR Tact-99 Grip"
+      }
+     ],
+     "level": 50,
+     "note": "Drum-mag close-range build; pair with the GS Magna Apex.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/50-gs"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "FTAC HVY-S50"
+      },
+      {
+       "slot": "Barrel",
+       "name": "Matuzek Monarch"
+      },
+      {
+       "slot": "Magazine",
+       "name": "14 Round Mag"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".50 Pistol High Velocity"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "Corio Lightning N6"
+      }
+     ],
+     "level": 47,
+     "note": "Close-range sidearm build with high-velocity ammo.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/50-gs"
+     ]
+    },
+    "early": null
+   }
+  },
+  "mojave-357": {
+   "mp": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Barrel",
+       "name": "Bryson Snub 2"
+      },
+      {
+       "slot": "Cylinder",
+       "name": "Mojave Speed Cylinder"
+      },
+      {
+       "slot": "Rear Grip",
+       "name": "SA Tyrant Grip"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".357 Magnum Overpressured"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "M357 Light"
+      }
+     ],
+     "level": 23,
+     "note": "Codmunity Versatile build; most parts unlock by level 23.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mojave-357"
+     ]
+    },
+    "early": null
+   },
+   "dmz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Mojave Flash"
+      },
+      {
+       "slot": "Barrel",
+       "name": "XRK Greywolf 7.5\""
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".357 Magnum Snake Shot"
+      },
+      {
+       "slot": "Cylinder",
+       "name": "Mojave Speed Cylinder"
+      },
+      {
+       "slot": "Trigger Action",
+       "name": "M357 Heavy"
+      }
+     ],
+     "level": 42,
+     "note": "Snake Shot close-range build for DMZ.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mojave-357"
+     ]
+    },
+    "early": null
+   },
+   "wz": {
+    "best": {
+     "attachments": [
+      {
+       "slot": "Muzzle",
+       "name": "Matuzek H357-M Comp"
+      },
+      {
+       "slot": "Barrel",
+       "name": "XRK Greywolf 7.5\""
+      },
+      {
+       "slot": "Laser",
+       "name": "GW MDL-2"
+      },
+      {
+       "slot": "Ammunition",
+       "name": ".357 Magnum Snake Shot"
+      },
+      {
+       "slot": "Cylinder",
+       "name": "Mojave Speed Cylinder"
+      }
+     ],
+     "level": 42,
+     "note": "Snake Shot close-range build for quick sidearm kills.",
+     "sources": [
+      "https://codmunity.gg/weapon/mw4/mojave-357"
+     ]
+    },
+    "early": null
+   }
+  }
+ }
+}
