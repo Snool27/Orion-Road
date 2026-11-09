@@ -782,7 +782,8 @@ h1,h2,.top h1,.dock .dtitle,.dock .dnum{font-family:var(--f-d);font-weight:700;l
 .stat .sw3{width:30px;height:30px;border-radius:9px;align-self:center;margin-top:0}
 .nextup .sw3{width:34px;height:34px;border-radius:10px;margin-top:0}
 .ghead .gnext .sw{width:14px;height:14px;border-radius:4px}
-.chip b,.chip small,.chip.calm b,.chip.calm small,.stat .nx,.ctabs button,.side{white-space:normal;overflow:visible;text-overflow:clip}
+.chip b,.chip small,.stat .nx{white-space:normal;overflow:visible;text-overflow:clip}
+.ctabs button{overflow:hidden} .ctabs button .tl,.ctabs button small{white-space:nowrap}
 .chip b,.chip small{overflow-wrap:anywhere}
 .qb.on{background:color-mix(in srgb,var(--k,var(--ink)) 16%,var(--card))}
 
