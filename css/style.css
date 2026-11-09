@@ -942,9 +942,45 @@ main{padding-block:36px 96px}
 .ctabs button .fill::after{display:none}
 .ctabs button .fill{box-shadow:0 -1px 0 rgba(255,255,255,.55)}
 .ctabs button > .tl,.ctabs button > small{position:relative;z-index:1}
-.ctabs button.filling.cam-gold .tl,.ctabs button.filling small{text-shadow:0 1px 2px rgba(0,0,0,.55)}
 /* squad: a clear "Progress" button beside each friend's name */
 .fr .n b .vw{margin-left:8px;display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:11px;font-weight:600;color:var(--ink);background:var(--soft);border:0;border-radius:999px;padding:3px 9px;cursor:pointer;vertical-align:middle;box-shadow:inset 0 0 0 1px var(--line)}
 .fr .n b .vw:hover{background:color-mix(in srgb,var(--acc) 18%,var(--card))}
-.ctabs button.filling .tl,.ctabs button.filling small{color:#fff!important;opacity:1;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 8px rgba(0,0,0,.45)!important}
-.ctabs button.filling.cam-plat .tl,.ctabs button.filling.cam-plat small{color:#111!important;text-shadow:0 0 6px rgba(255,255,255,.9)!important}
+/* tab text follows the camo it's actually sitting on (fill over ~45% = the fill's camo) */
+.ctabs button.ink-gold .tl,.ctabs button.ink-gold small,.ctabs button.ink-hb .tl,.ctabs button.ink-hb small{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 8px rgba(0,0,0,.4)!important}
+.ctabs button.ink-plat .tl,.ctabs button.ink-plat small{color:#111!important;text-shadow:0 0 6px rgba(255,255,255,.9)!important}
+.ctabs button.ink-hb .near{color:#fff}
+/* Max/other finished tiles: number in full ink */
+.stat.st2.lv4:not(.cam) b{color:var(--ink)!important}
+/* mastery tiles */
+.stat.st2.k-mast.locked{opacity:.55}
+.stat.st2.k-mast .sbar i{background:var(--k)!important}
+/* Prestige on every row */
+.gun:not(.open) .pq{display:block!important;grid-column:auto!important}
+.gun:not(.open) .pq .qb{width:100%}
+@media (max-width:560px){
+  .gun:not(.open) .grow .quick{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .gun:not(.open) .qb.pst span{font-size:0} .gun:not(.open) .qb.pst span::after{content:attr(data-s);font-size:9.5px}
+}
+@media (min-width:561px){
+  .gun:not(.open) .grow .quick{grid-template-columns:repeat(5,56px) 84px 1fr}
+  .gun:not(.open) .qb.nx:not(:disabled){grid-column:7}
+  .gun:not(.open) .qb.pst span{font-size:0} .gun:not(.open) .qb.pst span::after{content:attr(data-s);font-size:11px}
+}
+/* tab text: strongest rule wins regardless of the camo classes */
+.ctabs button[class*="ink-"] .tl,.ctabs button[class*="ink-"] small{opacity:1!important}
+.ctabs button.ink-gold.ink-gold .tl,.ctabs button.ink-gold.ink-gold small,.ctabs button.ink-hb.ink-hb .tl,.ctabs button.ink-hb.ink-hb small{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.5)!important}
+.ctabs button.ink-plat.ink-plat .tl,.ctabs button.ink-plat.ink-plat small{color:#111!important;text-shadow:0 0 6px rgba(255,255,255,.95)!important}
+/* phone rows: six buttons that fit their labels */
+@media (max-width:560px){
+  .gun:not(.open) .grow{grid-template-columns:minmax(0,38%) minmax(0,1fr)}
+  .gun:not(.open) .grow .quick{gap:3px}
+  .gun:not(.open) .qb{padding:0!important;min-width:0}
+  .gun:not(.open) .qb span,.gun:not(.open) .qb.pst span::after{font-size:8.5px!important;letter-spacing:-.02em!important;overflow:visible;text-overflow:clip;white-space:nowrap}
+}
+/* half-filled tabs: a soft dark veil so white text reads on both camos */
+.ctabs button.cam::after{animation:none!important;background:none!important}
+.ctabs button.filling::after{content:"";display:block!important;position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(0,0,0,.34),rgba(0,0,0,.22))!important;pointer-events:none}
+.ctabs button.filling .tl,.ctabs button.filling small,.ctabs button.filling.ink-plat.ink-plat .tl,.ctabs button.filling.ink-plat.ink-plat small{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.8)!important;position:relative;z-index:2}
+@media (max-width:560px){ .gun:not(.open) .qb.pst span{font-size:0!important} }
+@media (min-width:561px){ .gun:not(.open) .qb.pst span{font-size:0!important} }
+.ctabs button .fill{box-shadow:none!important}
