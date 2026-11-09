@@ -638,6 +638,8 @@ body.lite .celebrate .cam::before{animation:none!important}
 @media (max-width:560px){.grow{grid-template-columns:1fr;gap:10px;padding:10px}.grow .ladwrap{grid-column:1/-1;gap:8px 12px}.grow .lad{height:30px}.grow .lad i{width:30px}.lad i.n em{font-size:12px}.qb{width:auto;height:36px}.qb span{font-size:11px}.quick{grid-column:1/-1;grid-template-columns:repeat(5,1fr);gap:6px}.qb.nx{height:40px}.qb.nx span{font-size:12px}.grow .side{flex-direction:row;justify-content:flex-end;gap:10px;align-items:baseline}.chip{min-height:60px}.ck{width:28px!important;height:28px!important}.item{padding:12px 0}.mil8 button{height:34px;font-size:13px}.pill,.seg{padding:9px 14px;font-size:14px}.bulk button{padding:8px 11px;font-size:13px}.bulk{margin-left:0;flex-wrap:wrap;border-radius:14px;max-width:100%;padding:8px 10px}.bulk em{flex-basis:100%;margin:0 0 2px}.cls-h .l1{gap:8px}.undo{margin-left:0}.ctabs button{padding:12px 14px;font-size:14px}.got{padding:10px 16px!important}.gclear{padding:6px 10px;font-size:11px}.grow .side{grid-column:1/-1;flex-direction:row;justify-content:flex-end;gap:8px;align-items:baseline}.lad i.n{min-height:30px}.qb.pst{height:36px}.gclear{min-height:32px}.item .ck{min-width:28px}}
 /* off-screen gun cards are not drawn (and their camo animations pause) until you scroll to them */
 .gun{content-visibility:auto;contain-intrinsic-size:auto 220px}
+/* phones: closed gun cards show the header, camo buttons and progress only; the square rows appear when you open the gun */
+@media (max-width:560px){ .gun:not(.open) .ladwrap .lg{display:none} .gun:not(.open) .grow .side{justify-content:space-between} .gun:not(.open) .grow .side::before{content:"Tap for every camo ▾";margin-right:auto;font-size:11px;letter-spacing:.04em;color:var(--ink3);align-self:center} }
 </style>
 
 <main>
@@ -1204,7 +1206,7 @@ function resortFlip(host,before){ render();
 function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=snap(); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Math.max(Date.now(),(S.updated||0)+1); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
 async function push(){ if(!doc) return; if(pushing){again=true;return;} pushing=true; try{ await doc.set(JSON.parse(JSON.stringify(S))); sync(true);}catch(e){ sync(false); } pushing=false; if(again){again=false;push();} }
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-09.2";
+const BUILD="2026-11-09.3";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false, cloudFailed=false, cloudRetry=null;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
