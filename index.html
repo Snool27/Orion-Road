@@ -143,7 +143,7 @@ body.lite .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:var
 .gun:hover{border-color:var(--ink3)}
 .gun.open{border-color:var(--ink2)}
 .grow{cursor:pointer;display:grid;grid-template-columns:160px auto 1fr auto;gap:12px;align-items:center;padding:8px 12px 8px 8px;width:100%}
-@media (max-width:560px){.grow{grid-template-columns:1fr;gap:10px;padding:10px}.grow .ladwrap{grid-column:1/-1;gap:8px 12px}.grow .lad{height:30px}.grow .lad i{width:30px}.lad i.n em{font-size:12px}.qb{width:auto;height:36px}.qb span{font-size:11px}.quick{grid-column:1/-1;grid-template-columns:repeat(5,1fr);gap:6px}.pq{grid-column:1/-1}.qb.nx{height:40px}.qb.nx span{font-size:12px}.grow .side{flex-direction:row;justify-content:flex-end;gap:10px;align-items:baseline}.chip{min-height:60px}.ck{width:28px!important;height:28px!important}.item{padding:12px 0}.mil8 button{height:34px;font-size:13px}.pill,.seg{padding:9px 14px;font-size:14px}.bulk button{padding:8px 11px;font-size:13px}.bulk{margin-left:0;flex-wrap:wrap;border-radius:14px;max-width:100%;padding:8px 10px}.bulk em{flex-basis:100%;margin:0 0 2px}.cls-h .l1{gap:8px}.undo{margin-left:0}.ctabs button{padding:12px 14px;font-size:14px}.got{padding:10px 16px!important}.gclear{padding:6px 10px;font-size:11px}.grow .side{grid-column:1/-1;flex-direction:row;justify-content:flex-end;gap:8px;align-items:baseline}}
+/* phone layout: moved to the end of the stylesheet so it wins over the base rules */
 .chip{transition:color .4s var(--ease),background-color .4s var(--ease),border-color .4s var(--ease);border-radius:9px;padding:10px 12px;min-height:100px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);display:flex;flex-direction:column;justify-content:center;gap:2px;position:relative;overflow:hidden;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .chip.light{color:#111;text-shadow:0 1px 2px rgba(255,255,255,.4)}
 .chip b{font-weight:600;font-size:15px;line-height:1.15}
@@ -185,7 +185,6 @@ body.lite .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:var
 .side{align-items:flex-end}
 .side .cnt{font-size:11px;color:var(--ink3)}
 .quick{display:grid;grid-template-columns:repeat(5,40px);gap:5px;align-content:center}
-@media (max-width:560px){.quick{grid-template-columns:repeat(6,34px)}}
 .qb{width:40px;height:30px;border-radius:7px;border:1.5px solid var(--line);background:var(--bg);position:relative;overflow:hidden;transition:transform .18s var(--ease),border-color var(--dur) var(--ease),opacity var(--dur) var(--ease),background-color var(--dur) var(--ease);display:grid;place-items:center}
 .qb::before{transition:opacity .45s var(--ease),filter .45s var(--ease)} .qb span{transition:color var(--dur) var(--ease),text-shadow var(--dur) var(--ease)}
 .qb span{position:relative;z-index:1;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 2px}
@@ -633,6 +632,10 @@ body.lite .gun::after{display:none} body.lite .burst{display:none} body.lite .ch
 body.lite .gun.flash-gold .chip,body.lite .gun.flash-plat .chip,body.lite .gun.flash-hb .chip{animation:none}
 body.lite .celebrate .cam::before{animation:none!important}
 @media (prefers-reduced-motion: reduce){*{transition:none!important} .cam::before,.cam::after,.pct.mast span,.top h1 em.ttl,.list,#guns.enter .gun,.pop{animation:none!important} .cam::before{transform:none}}
+
+@media (max-width:560px){.grow{grid-template-columns:1fr;gap:10px;padding:10px}.grow .ladwrap{grid-column:1/-1;gap:8px 12px}.grow .lad{height:30px}.grow .lad i{width:30px}.lad i.n em{font-size:12px}.qb{width:auto;height:36px}.qb span{font-size:11px}.quick{grid-column:1/-1;grid-template-columns:repeat(5,1fr);gap:6px}.qb.nx{height:40px}.qb.nx span{font-size:12px}.grow .side{flex-direction:row;justify-content:flex-end;gap:10px;align-items:baseline}.chip{min-height:60px}.ck{width:28px!important;height:28px!important}.item{padding:12px 0}.mil8 button{height:34px;font-size:13px}.pill,.seg{padding:9px 14px;font-size:14px}.bulk button{padding:8px 11px;font-size:13px}.bulk{margin-left:0;flex-wrap:wrap;border-radius:14px;max-width:100%;padding:8px 10px}.bulk em{flex-basis:100%;margin:0 0 2px}.cls-h .l1{gap:8px}.undo{margin-left:0}.ctabs button{padding:12px 14px;font-size:14px}.got{padding:10px 16px!important}.gclear{padding:6px 10px;font-size:11px}.grow .side{grid-column:1/-1;flex-direction:row;justify-content:flex-end;gap:8px;align-items:baseline}.lad i.n{min-height:30px}.qb.pst{height:36px}.gclear{min-height:32px}.item .ck{min-width:28px}}
+/* off-screen gun cards are not drawn (and their camo animations pause) until you scroll to them */
+.gun{content-visibility:auto;contain-intrinsic-size:auto 220px}
 </style>
 
 <main>
@@ -863,7 +866,9 @@ function morph(a,b){
   for(let i=bc.length;i<ac.length;i++) ac[i].remove();
 }
 function setHTML(el,html){ const t=document.createElement(el.tagName); t.innerHTML=html; const ac=[...el.childNodes], bc=[...t.childNodes]; for(let i=0;i<bc.length;i++){ if(ac[i]) morph(ac[i],bc[i]); else el.appendChild(bc[i]); } for(let i=bc.length;i<ac.length;i++) ac[i].remove(); }
-function syncKeyed(host,news){ const old=new Map([...host.children].map(el=>[el.dataset.gun||"",el])); const out=[]; for(const n of news){ const o=n.dataset.gun&&old.get(n.dataset.gun); if(o){ morph(o,n); o.classList.remove("in"); out.push(o); } else { n.classList.add("in"); out.push(n); } } for(const el of [...host.children]) if(!out.includes(el)) el.remove(); out.forEach((el,i)=>{ if(host.children[i]!==el) host.insertBefore(el,host.children[i]||null); }); }
+/* each card remembers the HTML it was last drawn from; a card whose HTML didn't change is left alone (one tap usually changes one gun), only its click handlers are refreshed */
+function copyHandlers(a,b){ const an=[a,...a.querySelectorAll("*:not(.burst)")], bn=[b,...b.querySelectorAll("*")]; if(an.length!==bn.length){ morph(a,b); return; } for(let i=0;i<bn.length;i++) for(const p of EVP) if(bn[i][p]||an[i][p]) an[i][p]=bn[i][p]; }
+function syncKeyed(host,news){ const old=new Map([...host.children].map(el=>[el.dataset.gun||"",el])); const out=[]; for(const n of news){ const o=n.dataset.gun&&old.get(n.dataset.gun); const sig=n.outerHTML; if(o){ if(o.__sig!==sig){ morph(o,n); o.__sig=sig; } else copyHandlers(o,n); o.classList.remove("in"); out.push(o); } else { n.__sig=sig; n.classList.add("in"); out.push(n); } } for(const el of [...host.children]) if(!out.includes(el)) el.remove(); out.forEach((el,i)=>{ if(host.children[i]!==el) host.insertBefore(el,host.children[i]||null); }); }
 let CLOSING=null, LAST_OPEN=null, closeT;
 /* unlock bursts: when a gun crosses into Gold, Platinum or Harmonic Break, its tile throws particles in that camo's colours */
 const PREV_LV={}; let BURSTS=[];
@@ -1193,7 +1198,7 @@ function resortFlip(host,before){ render();
 function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=snap(); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Math.max(Date.now(),(S.updated||0)+1); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
 async function push(){ if(!doc) return; if(pushing){again=true;return;} pushing=true; try{ await doc.set(JSON.parse(JSON.stringify(S))); sync(true);}catch(e){ sync(false); } pushing=false; if(again){again=false;push();} }
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-08.2";
+const BUILD="2026-11-09.1";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false, cloudFailed=false, cloudRetry=null;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
@@ -1371,8 +1376,9 @@ try{ if(window.claude?.hot?.ready){ window.claude.hot.ready(start); setTimeout((
 
 <script>
 /* keep installed copies fresh: check for a new build on every open and when the app comes back to the foreground; reload once when one arrives */
+const HAD_SW=!!(navigator.serviceWorker&&navigator.serviceWorker.controller);
 if("serviceWorker" in navigator){ window.addEventListener("load",async()=>{ try{ const reg=await navigator.serviceWorker.register("./sw.js"); const check=()=>reg.update().catch(()=>{}); check(); setInterval(check,10*60*1000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden) check(); });
-  let reloaded=false; navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(reloaded) return; reloaded=true; sessionStorage.setItem("orion-updated","1"); location.reload(); }); }catch(e){} }); }
+  let reloaded=false; navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(reloaded||!HAD_SW) return; /* first visit: the helper just installed, nothing to update, so no reload */ reloaded=true; sessionStorage.setItem("orion-updated","1"); location.reload(); }); }catch(e){} }); }
 if(sessionStorage.getItem("orion-updated")){ sessionStorage.removeItem("orion-updated"); window.__swUpdated=true; }
 </script>
 </body>
