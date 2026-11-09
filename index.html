@@ -647,7 +647,7 @@ body.lite .celebrate .cam::before{animation:none!important}
     <div class="goal" id="goalL">
       <button class="seg" data-l="gold"><i></i>Gold on every gun</button>
       <button class="seg" data-l="plat"><i></i>Platinum on every gun</button>
-      <button class="seg" data-l="div"><i></i>Divergence <small>all 33 Harmonic Break</small></button>
+      <button class="seg" data-l="div"><i></i>Divergence <small>all <span class="nbase">33</span> Harmonic Break</small></button>
     </div></div>
     <div class="q" id="qT"><div class="qt">Then chase the mastery camos? <small>optional · any</small></div>
     <div class="goal" id="goalT">
@@ -719,7 +719,7 @@ body.lite .celebrate .cam::before{animation:none!important}
     <h3>By effort (default)</h3>
     <p>Every step is weighted by roughly how long it takes, so maxing a gun counts far more than one camo tick, and the mastery camos count for the weeks they actually take. Estimates per gun: Military 2.5 h, each Special 0.6 h, Gold 0.4 h, Platinum 1 h (1.5 h for shotguns, LMGs, marksman, snipers, knife; 3 h for launchers), Harmonic Break 1.2 h (2 h; 5 h for launchers). Mastery: Mercurial Drift 40 h, Polyatomic 35 h, Orion 45 h; Chiral 20 h, Ripple Tide 25 h, Helio 100 h; Warzone ones 30–45 h until Season 1 says otherwise. Your % = effort done ÷ effort in your goal.</p>
     <h3>By count</h3>
-    <p>Plain camo ticks: 14 per gun (12 for a Gold goal, 13 for Platinum) across 33 guns, with mastery counted as a separate 40 % block when a mastery goal is on.</p>
+    <p>Plain camo ticks: 14 per gun (12 for a Gold goal, 13 for Platinum) across <span class="nbase">33</span> launch guns (Season 1 guns are optional extras), with mastery counted as a separate 40 % block when a mastery goal is on.</p>
     <p class="small">Hour estimates are based on Boosting Market's launch-week timings for the ladder (150–250 h to Divergence) and my own for mastery; they're for pacing, not a stopwatch.</p>
   </div></details>
   <details id="saving"><summary>Saving &amp; other devices</summary><div class="body">
@@ -1031,7 +1031,7 @@ function gun(w,t,cg,showCls){
 }
 function bulk(ws,label){ const all=k=>ws.every(w=>levelOf(W(w.id))===LV[k]); const q=[["max","Military"],["spall","Specials"],["gold","Gold"]]; if(cap()>=13) q.push(["plat","Platinum"]); if(cap()>=14) q.push(["hb","HB"]);
   const allPlat=BASE.every(w=>W(w.id).plat); const hbLocked=ws.filter(isBase).length<BASE.length&&!allPlat;
-  return `<span class="bulk"><em>Set ${label} to</em>${q.map(([a,l])=>`<button data-bulk="${a}" class="${all(a)?'on':''}" ${a==="hb"&&hbLocked?'disabled title="Harmonic Break needs Platinum on all 33 guns first"':''}>${l}</button>`).join("")}<button data-bulk="clear" class="warn" title="Clear every gun in this list">Clear</button></span><button class="undo" id="undoBtn" ${HIST.length?'':'disabled'} title="Undo last change"><span class="ic">↶</span>Undo</button>`; }
+  return `<span class="bulk"><em>Set ${label} to</em>${q.map(([a,l])=>`<button data-bulk="${a}" class="${all(a)?'on':''}" ${a==="hb"&&hbLocked?'disabled title="Harmonic Break needs Platinum on all '+BASE.length+' launch guns first"':''}>${l}</button>`).join("")}<button data-bulk="clear" class="warn" title="Clear every gun in this list">Clear</button></span><button class="undo" id="undoBtn" ${HIST.length?'':'disabled'} title="Undo last change"><span class="ic">↶</span>Undo</button>`; }
 const PRL=["","P1","P1 MAX","M150","M250"]; const PYRO=["","Pyroclast","Pyroclast Terminus","Pyroclast Scatter","Pyroclast Cascade"]; const PYROSUB=["","Weapon Prestige 1","Prestige 1 max level","Prestige Master 150","Prestige Master 250"];
 const IMPLIED=[3,5,8];
 function implyMil(s){ for(let i=0;i<3;i++) if(s.sp[i]) s.mil=Math.max(s.mil,IMPLIED[i]); if(s.mil>=8) s.max=true; }
@@ -1086,7 +1086,7 @@ function renderTracks(t){
   const host=$("#tracks"); host.innerHTML=""; const picked=t.tracks;
   $("#mastSect").hidden=!picked.length;
   const U=unlocked();
-  $("#mastP").textContent= U.length? `${U.length}/${t.tracks.length*3} unlocked` : t.div? "" : `Opens after Divergence · ${t.hb}/33`;
+  $("#mastP").textContent= U.length? `${U.length}/${t.tracks.length*3} unlocked` : t.div? "" : `Opens after Divergence · ${t.hb}/${BASE.length}`;
   $(".pct").classList.toggle("mast",U.length>0);
   for(const k of picked){
     const hd=document.createElement("div"); hd.className="mhead"; const got=TRACKS[k].steps.filter(s=>S.mu[s.id]).length; hd.innerHTML=`<span>${TRACKS[k].name}</span><span class="num">${got}/3</span>`; host.appendChild(hd);
@@ -1161,18 +1161,20 @@ $("#goalT").addEventListener("click",e=>{ const b=e.target.closest("[data-t]"); 
 $("#ctabs").addEventListener("click",e=>{ const b=e.target.closest("[data-c]"); if(!b) return; VIEW={}; S.tab=b.dataset.c; S.open=null; Q=""; $("#search").value=""; save(); render(); });
 $("#clsH").addEventListener("click",e=>{ const ub=e.target.closest("#undoBtn"); if(ub){ undo(); return; }
   const hb=e.target.closest("[data-h]"); if(hb){ if(hb.disabled) return; hid()[hb.dataset.h]=!hid()[hb.dataset.h]; VIEW={}; save(); render(); return; }
-  const bb=e.target.closest("[data-bulk]"); if(bb&&!bb.disabled){ const ws=S.tab==="ALL"?WEAPONS:WEAPONS.filter(w=>w.cls===S.tab); const a=bb.dataset.bulk; const label=ws=>S.tab==="ALL"?"All 33":CLS[S.tab][0];
+  const bb=e.target.closest("[data-bulk]"); if(bb&&!bb.disabled){ const ws=S.tab==="ALL"?WEAPONS:WEAPONS.filter(w=>w.cls===S.tab); const a=bb.dataset.bulk; const label=ws=>S.tab==="ALL"?"All "+ws.length:CLS[S.tab][0];
     if(a==="clear"){ if(!bb.classList.contains("confirm")){ bb.classList.add("confirm"); bb.textContent=`Clear ${S.tab==="ALL"?"all guns":"this class"}?`; clearTimeout(bb._t); bb._t=setTimeout(()=>{ bb.classList.remove("confirm"); bb.textContent="Clear"; },3500); return; }
       for(const w of ws){ S.weapons[w.id]={mil:0,max:false,pr:0,sp:[false,false,false],gold:false,plat:false,hb:false,tok:false}; } save(); render(); toast("Cleared · tap Undo to bring it back"); return; } const allOn=bb.classList.contains("on"); const lv=LV[a]; for(const w of ws){ const s=W(w.id); setLevel(s, allOn? lv-1 : lv); } save(); render(); toast(allOn?`${label(ws)} un-ticked`:`${label(ws)} set to ${({1:"Military",2:"Specials",3:"Gold",4:"Platinum",5:"Harmonic Break"})[lv]} · Undo if needed`); return; } const b=e.target.closest("[data-f]"); if(!b) return; VIEW={}; S.filt=S.filt===b.dataset.f?"":b.dataset.f; save(); render(); });
 
 
 
 let doc=null,timer=null,pushing=false,again=false,DB=null,canWrite=null;
-function milestones(){ const m={}; for(const c of ORDER){ const ws=BASE.filter(w=>w.cls===c); m["g-"+c]=ws.every(w=>W(w.id).gold); m["p-"+c]=ws.every(w=>W(w.id).plat); m["h-"+c]=ws.every(w=>W(w.id).hb); } m["g-ALL"]=WEAPONS.every(w=>W(w.id).gold); m["p-ALL"]=WEAPONS.every(w=>W(w.id).plat); m["h-ALL"]=WEAPONS.every(w=>W(w.id).hb); for(const w of WEAPONS){ const s=W(w.id); m["gun-"+w.id]= s.mil>=8&&spDone(s)===3&&s.gold; } return m; }
+function milestones(){ const m={}; for(const c of ORDER){ const ws=BASE.filter(w=>w.cls===c); m["g-"+c]=ws.every(w=>W(w.id).gold); m["p-"+c]=ws.every(w=>W(w.id).plat); m["h-"+c]=ws.every(w=>W(w.id).hb); } m["g-ALL"]=BASE.every(w=>W(w.id).gold); m["p-ALL"]=BASE.every(w=>W(w.id).plat); m["h-ALL"]=BASE.every(w=>W(w.id).hb); for(const w of WEAPONS){ const s=W(w.id); m["gun-"+w.id]= s.mil>=8&&spDone(s)===3&&s.gold; } return m; }
 let lastM=null;
-function checkMilestones(){ const now=milestones(); if(lastM){ for(const k in now) if(now[k]&&!lastM[k]){ const kind=k.slice(0,k.indexOf("-")), id=k.slice(k.indexOf("-")+1); if(kind==="gun"){ const w=WEAPONS.find(x=>x.id===id); mtoast("cam-gold","Gold",w.name); } else { const label=id==="ALL"?"Every gun":CLS[id][0]; const tex={g:"cam-gold",p:"cam-plat",h:"cam-hb"}[kind]; const name={g:"Gold",p:"Platinum",h:"Harmonic Break"}[kind]; mtoast(tex, id==="ALL"?"All 33 · "+name:"Class complete · "+name, label); if(id==="ALL"&&kind==="h") celebrate({id:"div",n:"Divergence"}); } } } lastM=now; }
+function checkMilestones(){ const now=milestones(); if(lastM){ for(const k in now) if(now[k]&&!lastM[k]){ const kind=k.slice(0,k.indexOf("-")), id=k.slice(k.indexOf("-")+1); if(kind==="gun"){ const w=WEAPONS.find(x=>x.id===id); mtoast("cam-gold","Gold",w.name); } else { const label=id==="ALL"?"Every gun":CLS[id][0]; const tex={g:"cam-gold",p:"cam-plat",h:"cam-hb"}[kind]; const name={g:"Gold",p:"Platinum",h:"Harmonic Break"}[kind]; mtoast(tex, id==="ALL"?"All "+BASE.length+" · "+name:"Class complete · "+name, label); if(id==="ALL"&&kind==="h") celebrate({id:"div",n:"Divergence"}); } } } lastM=now; }
 let mtT; function mtoast(tex,small,big){ let d=$(".mtoast"); if(!d){ d=document.createElement("div"); document.body.appendChild(d); } d.className="mtoast cam "+tex; d.innerHTML=`<small>${esc(small)}</small><span>${esc(big)}</span>`; requestAnimationFrame(()=>d.classList.add("show")); clearTimeout(mtT); mtT=setTimeout(()=>d.classList.remove("show"),2600); }
 let HIST=[], LASTJ=null;
+/* undo remembers progress only (not tabs, filters or settings), so Undo always reverses something you can see */
+const PK=["goal","weapons","m","mt","mu","col"]; const snap=()=>JSON.stringify(PK.map(k=>S[k]));
 let resortT=null;
 function scheduleResort(){ clearTimeout(resortT); if(Q) return; resortT=setTimeout(resortNow,10000); }
 function resortNow(){ if(Q||S.open) return; const host=$("#guns"); const before={}; host.querySelectorAll(".gun").forEach(el=>{ before[el.dataset.gun]=el.getBoundingClientRect().top; });
@@ -1188,10 +1190,10 @@ function resortFlip(host,before){ render();
   const after={}; host.querySelectorAll(".gun").forEach(el=>{ after[el.dataset.gun]=el; });
   let moved=false; for(const id in after){ if(before[id]===undefined) continue; const dy=before[id]-after[id].getBoundingClientRect().top; if(Math.abs(dy)>2){ moved=true; const el=after[id]; el.style.transition="none"; el.style.transform=`translateY(${dy}px)`; } }
   if(!moved) return; host.getBoundingClientRect(); requestAnimationFrame(()=>{ for(const id in after){ const el=after[id]; el.style.transition="transform .7s cubic-bezier(.2,.8,.2,1)"; el.style.transform=""; } setTimeout(()=>{ for(const id in after){ after[id].style.transition=""; } },800); }); if(S.tab==="ALL"&&S.filt==="close") toast("Reordered by what's closest"); }
-function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=JSON.stringify(Object.assign({},S,{open:null,tab:S.tab})); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Date.now(); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
+function save(){ if(VIEWING) return; scheduleResort(); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); try{ const cur=snap(); if(LASTJ&&LASTJ!==cur){ HIST.push(LASTJ); if(HIST.length>30) HIST.shift(); } LASTJ=cur; }catch(e){} if(!S.started) S.started=Date.now(); S.updated=Math.max(Date.now(),(S.updated||0)+1); lsSave(); try{ checkMilestones(); }catch(e){} try{ if(S.motion!=="instant") navigator.vibrate&&navigator.vibrate(8); }catch(e){} clearTimeout(timer); timer=setTimeout(push,900); }
 async function push(){ if(!doc) return; if(pushing){again=true;return;} pushing=true; try{ await doc.set(JSON.parse(JSON.stringify(S))); sync(true);}catch(e){ sync(false); } pushing=false; if(again){again=false;push();} }
 /* ===== accounts + squad (Supabase). Anonymous by design: an account is created silently, identified by a friend code and a private sync key. ===== */
-const BUILD="2026-11-06.1";
+const BUILD="2026-11-08.1";
 const SUPA={url:"https://rloasjfejbcupctjkuna.supabase.co",key:"sb_publishable_6H6i-2T8WEiu-v6G14QpkA_j8HSp_uV"};
 let sb=null, ME=null, FRIENDS=[], FPROG={}, VIEWING=null, MYS=null, cloudT=null, cloudBusy=false, cloudAgain=false, CLOUD_OK=false, cloudFailed=false, cloudRetry=null;
 const rid=n=>{ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; const r=new Uint8Array(n); crypto.getRandomValues(r); for(const x of r) s+=a[x%a.length]; return s; };
@@ -1213,13 +1215,50 @@ async function cloudLoad(uid){
   let prof=null; for(let i=0;i<5&&!prof;i++){ const {data}=await sb.from("profiles").select("*").eq("id",uid).maybeSingle(); prof=data; if(!prof) await new Promise(r=>setTimeout(r,400)); }
   if(!prof) throw new Error("no profile");
   ME={id:uid,code:prof.code,name:prof.name,activision:prof.activision||"",receipts:prof.receipts!==false,avatar:prof.avatar||""}; try{ sb.rpc("purge_messages"); }catch(e){}
-  const {data:row}=await sb.from("progress").select("state,updated_at").eq("user_id",uid).maybeSingle();
-  if(row&&row.state&&row.state.v===4&&(row.state.updated||0)>(S.updated||0)){ S=Object.assign(blank(),clean(row.state),{tab:S.tab,open:null}); if(!FILT_OK.includes(S.filt)) S.filt=""; lsSave(); LASTJ=JSON.stringify(Object.assign({},S,{open:null})); render(); }
-  else if(S.updated) cloudPush();
+  const {data:row,error:rerr}=await sb.from("progress").select("state,updated_at").eq("user_id",uid).maybeSingle(); if(rerr) throw rerr;
+  CBASE=null; CTS=null; try{ const b=JSON.parse(localStorage.getItem("orion-cbase")||"null"); if(b&&b.uid===uid&&b.state) CBASE=b; }catch(e){}
+  syncFromRow(row,"");
   CLOUD_OK=true; cloudStatus(true); renderWho(); await loadFriends(); subscribeFriends();
 }
 function cloudStatus(ok){ try{ $("#buildLine").textContent="Build "+BUILD+(window.__swUpdated?" · updated just now":""); $("#who").hidden=!ok; document.body.classList.toggle("cloud",ok); applySB(); sync(ok); }catch(e){} }
-async function cloudPush(){ if(!sb||!ME||VIEWING) return; if(cloudBusy){cloudAgain=true;return;} cloudBusy=true; try{ const state=JSON.parse(JSON.stringify(Object.assign({},S,{open:null}))); const {error}=await sb.from("progress").upsert({user_id:ME.id,state,summary:summaryOf(),updated_at:new Date().toISOString()}); if(error) throw error; sync(true); if(cloudFailed){ cloudFailed=false; toast("Back online: progress saved to your account"); } }catch(e){ sync(false); if(!cloudFailed){ cloudFailed=true; toast("Couldn't save to your account. Saved on this device; retrying…"); } clearTimeout(cloudRetry); cloudRetry=setTimeout(cloudPush,15000); } cloudBusy=false; if(cloudAgain){cloudAgain=false;cloudPush();} }
+/* ===== sync safety =====
+   CBASE = the last version this device knows is in the cloud (kept in localStorage), CTS = its updated_at.
+   A save only replaces the cloud copy if nobody saved since (compare-and-swap). If another device did,
+   the two versions are merged gun by gun: whatever this device changed wins, everything else comes from the cloud. */
+let CBASE=null, CTS=null, CONFLICTS=0, PULLING=false;
+const sameTs=(a,b)=>!!a&&!!b&&new Date(a).getTime()===new Date(b).getTime();
+function setBase(state,ts){ CBASE={uid:ME.id,ts,state:JSON.parse(JSON.stringify(state))}; CTS=ts; /* a separate copy, so later edits on this page never change it */ try{ localStorage.setItem("orion-cbase",JSON.stringify(CBASE)); }catch(e){} }
+const dirty=()=>(S.updated||0)>((CBASE&&CBASE.state&&CBASE.state.updated)||0);
+const MAPS=["weapons","m","mt","mu","col"];
+function merge3(base,mine,theirs){ base=base||{}; const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b); const out=Object.assign(blank(),theirs);
+  for(const k of MAPS){ const B=base[k]||{}, M=mine[k]||{}, o=Object.assign({},theirs[k]||{}); for(const id of new Set([...Object.keys(M),...Object.keys(B)])){ if(!same(M[id],B[id])){ if(M[id]===undefined) delete o[id]; else o[id]=M[id]; } } out[k]=o; }
+  for(const k of Object.keys(mine)){ if(MAPS.includes(k)||k==="updated") continue; if(!same(mine[k],base[k])) out[k]=mine[k]; }
+  out.updated=Math.max(Date.now(),mine.updated||0,(theirs.updated||0)+1); out.tab=mine.tab; out.open=null; if(!FILT_OK.includes(out.filt)) out.filt=""; return out; }
+function takeState(next,note){ const changed=JSON.stringify(PK.map(k=>next[k]))!==snap(); S=next; lsSave(); LASTJ=snap(); HIST=[]; bgRender(); try{ renderWho(); }catch(e){} if(note&&changed) toast(note); }
+/* decide what to do with the cloud copy: nothing, take it, or merge it with unsaved changes here */
+function syncFromRow(row,note){
+  if(!row||!row.state){ CBASE=null; CTS=null; try{ localStorage.removeItem("orion-cbase"); }catch(e){} if(S.updated) cloudPush(); return; }
+  if(CBASE&&sameTs(CBASE.ts,row.updated_at)){ CTS=row.updated_at; if(dirty()) cloudPush(); return; }
+  const remote=clean(row.state); if(remote.v!==4){ CTS=row.updated_at; if(S.updated) cloudPush(); return; }
+  const mine=CBASE?dirty():(S.updated||0)>(remote.updated||0);
+  if(!mine){ const next=Object.assign(blank(),remote,{tab:S.tab,open:null}); if(!FILT_OK.includes(next.filt)) next.filt=""; setBase(remote,row.updated_at); takeState(next,note); return; }
+  const merged=merge3(CBASE&&CBASE.state,S,remote); setBase(remote,row.updated_at); takeState(merged,"Merged with changes from your other device"); cloudPush(); }
+/* re-check the cloud copy (tab comes back into view, or another device saved) */
+async function pullSelf(){ if(!sb||!ME||VIEWING||cloudBusy||PULLING) return; PULLING=true; try{ const {data:row,error}=await sb.from("progress").select("state,updated_at").eq("user_id",ME.id).maybeSingle(); if(!error&&!VIEWING&&!cloudBusy) syncFromRow(row,"Updated from your other device"); }catch(e){} PULLING=false; }
+async function cloudPush(){ if(!sb||!ME||VIEWING) return; if(cloudBusy){cloudAgain=true;return;} cloudBusy=true; try{
+    const state=JSON.parse(JSON.stringify(Object.assign({},S,{open:null}))); const rowv={state,summary:summaryOf(),updated_at:new Date().toISOString()};
+    const res=CTS? await sb.from("progress").update(rowv).eq("user_id",ME.id).eq("updated_at",CTS).select("updated_at")
+                 : await sb.from("progress").insert(Object.assign({user_id:ME.id},rowv)).select("updated_at");
+    if(res.error&&res.error.code!=="23505") throw res.error;
+    if(res.error||!res.data||!res.data.length){ /* someone else saved first: merge, then try again */
+      if(++CONFLICTS>3) throw new Error("sync conflict loop");
+      const {data:row,error:e2}=await sb.from("progress").select("state,updated_at").eq("user_id",ME.id).maybeSingle(); if(e2) throw e2;
+      if(!row){ CBASE=null; CTS=null; }
+      else { const remote=clean(row.state||{}); const merged=merge3(CBASE&&CBASE.state,S,remote); setBase(remote,row.updated_at); takeState(merged,"Merged with changes from your other device"); }
+      cloudAgain=true;
+    } else { CONFLICTS=0; setBase(state,res.data[0].updated_at); sync(true); if(cloudFailed){ cloudFailed=false; toast("Back online: progress saved to your account"); } }
+  }catch(e){ sync(false); if(!cloudFailed){ cloudFailed=true; toast("Couldn't save to your account. Saved on this device; retrying…"); } clearTimeout(cloudRetry); cloudRetry=setTimeout(()=>{ CONFLICTS=0; cloudPush(); },15000); }
+  cloudBusy=false; if(cloudAgain){cloudAgain=false;cloudPush();} }
 const AV_CHOICES=["auto","cam-gold","cam-plat","cam-hb","cam-div","cam-pyro","cam-or","cam-he","cam-em","#d9a441","#2fa35e","#3b82f6","#e11d48","#8b5cf6","#f97316","#17181a"];
 const avStyle=(av,tex)=>{ const ok=x=>typeof x==="string"&&(/^#[0-9a-fA-F]{3,8}$/.test(x)||/^cam-[a-z0-9-]{1,60}$/.test(x)); const a=ok(av)?av:ok(tex)?tex:""; if(!a) return {cls:"flat",style:"background:var(--ink)"}; if(a.startsWith("#")) return {cls:"flat",style:`background:${a}`}; return {cls:"cam "+a,style:""}; };
 function renderAvs(){ const host=$("#avs"); if(!host) return; setHTML(host,AV_CHOICES.map(c=>{ const st=c==="auto"?{cls:"auto",style:""}:avStyle(c); return `<button class="${st.cls}" style="${st.style}" data-av="${c}" aria-pressed="${(ME.avatar||"auto")===c||(c==="auto"&&!ME.avatar)}" title="${c==="auto"?"Follow my goal":c.replace("cam-","")}">${c==="auto"?"AUTO":""}</button>`; }).join("")); }
@@ -1231,7 +1270,7 @@ function levelWord(st,w){ if(!st||!st.weapons||!st.weapons[w.id]) return null; c
 function friendPos(w){ const out=[]; const avOf=f=>avStyle(f.avatar,((FPROG[f.id]||{}).summary||{}).tex||""); const list=VIEWING?[{id:"me",name:"You",state:MYS,av:avStyle(ME&&ME.avatar,"")}].concat(FRIENDS.filter(f=>f.id!==VIEWING.id).map(f=>({id:f.id,name:f.name,state:FSTATE[f.id],av:avOf(f)}))):FRIENDS.map(f=>({id:f.id,name:f.name,state:FSTATE[f.id],av:avOf(f)})); for(const f of list){ const lv=levelWord(f.state,w); out.push({name:f.name,lv,av:f.av}); } return out; }
 try{ READ=JSON.parse(localStorage.getItem("orion-read")||"{}"); }catch(e){}
 async function refreshFriends(){ const before=new Set(FRIENDS.map(f=>f.id)); await loadFriends(); for(const id of before){ if(!FRIENDS.some(f=>f.id===id)){ dropFriend(id); toast("A friend removed you"); } } }
-setInterval(()=>{ if(sb&&ME&&!document.hidden) refreshFriends(); },10000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&sb&&ME) refreshFriends(); });
+setInterval(()=>{ if(sb&&ME&&!document.hidden) refreshFriends(); },10000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&sb&&ME){ refreshFriends(); pullSelf(); } });
 let LF_BUSY=false, LF_AGAIN=false;
 async function loadFriends(){ if(!sb||!ME) return; if(LF_BUSY){ LF_AGAIN=true; return; } LF_BUSY=true; try{ await _loadFriends(); }catch(e){ console.warn(e); } LF_BUSY=false; if(LF_AGAIN){ LF_AGAIN=false; await loadFriends(); } }
 async function _loadFriends(){ const {data:links,error:lerr}=await sb.from("friends").select("user_id,friend_id,status").or(`user_id.eq.${ME.id},friend_id.eq.${ME.id}`); if(lerr){ dbStale(lerr); if(!STALE_WARNED){ STALE_WARNED=true; toast("Squad can't load: "+(lerr.message||"database error")); } } const L=links||[];
@@ -1244,14 +1283,18 @@ async function _loadFriends(){ const {data:links,error:lerr}=await sb.from("frie
   const P=id=>profs.find(p=>p.id===id);
   /* a link whose profile can't be read (deleted account, or database behind the site) is hidden, never deleted from here */
   FRIENDS=acc.map(P).filter(Boolean); REQ_IN=inn.map(P).filter(Boolean); REQ_OUT=out.map(P).filter(Boolean); FPROG={}; FSTATE={}; for(const p of progs){ FPROG[p.user_id]={summary:clean(p.summary||{}),updated_at:p.updated_at}; if(p.state) FSTATE[p.user_id]=clean(p.state); }
-  await loadUnread(); renderSquad(); chatState(); render(); }
+  await loadUnread(); renderSquad(); chatState(); bgRender(); }
+/* background updates (friends, other devices) wait while you're typing in a number box, then redraw when you leave it */
+let RENDER_LATER=false; const typing=()=>{ const a=document.activeElement; return !!(a&&a.matches&&a.matches('input[type="number"]')); };
+function bgRender(){ if(typing()){ RENDER_LATER=true; return; } RENDER_LATER=false; render(); }
+document.addEventListener("focusout",()=>{ if(RENDER_LATER) setTimeout(()=>{ if(RENDER_LATER&&!typing()) bgRender(); },0); });
 let LASTM={}, CONV={}; /* CONV[id] = {id,name,avatar,code,friend:bool} for every thread */
 let HIDDEN=new Set();
 async function loadUnread(){ if(!sb||!ME) return; CONV={}; try{ const {data:hd}=await sb.from("hidden_threads").select("other_id").eq("user_id",ME.id); HIDDEN=new Set((hd||[]).map(x=>x.other_id)); }catch(e){} const {data}=await sb.from("messages").select("sender,recipient,body,created_at,read_at").or(`sender.eq.${ME.id},recipient.eq.${ME.id}`).order("created_at",{ascending:false}).limit(300); UNREAD={}; LASTM={}; for(const m of (data||[])){ const other=m.sender===ME.id?m.recipient:m.sender; if(!LASTM[other]) LASTM[other]=m; CONV[other]=CONV[other]||{id:other}; if(m.recipient===ME.id&&!m.read_at&&!HIDDEN.has(m.sender)&&new Date(m.created_at).getTime()>(READ[m.sender]||0)) UNREAD[m.sender]=(UNREAD[m.sender]||0)+1; }
   for(const f of FRIENDS){ CONV[f.id]=Object.assign(CONV[f.id]||{id:f.id},f,{friend:true}); }
   const need=Object.keys(CONV).filter(id=>!CONV[id].name); if(need.length){ const {data:ps}=await sb.from("profiles").select("id,code,name,activision,receipts,avatar").in("id",need); for(const p of (ps||[])) CONV[p.id]=Object.assign(CONV[p.id]||{id:p.id},clean(p),{friend:false}); for(const id of need){ CONV[id]=CONV[id]||{id}; if(!CONV[id].name) Object.assign(CONV[id],{name:"Former friend",code:"",friend:false,gone:true}); } } }
 let chan=null; function subscribeFriends(){ if(!sb||chan) return; try{ chan=sb.channel("live")
-  .on("postgres_changes",{event:"*",schema:"public",table:"progress"},pl=>{ const r=pl.new; if(!r||!r.user_id||r.user_id===ME.id) return; if(!FRIENDS.some(f=>f.id===r.user_id)) return; FPROG[r.user_id]={summary:clean(r.summary||{}),updated_at:r.updated_at}; if(r.state) FSTATE[r.user_id]=clean(r.state); renderSquad(); if(!VIEWING) render(); if(VIEWING&&VIEWING.id===r.user_id&&r.state){ S=Object.assign(blank(),clean(r.state),{tab:S.tab,open:null}); render(); } })
+  .on("postgres_changes",{event:"*",schema:"public",table:"progress"},pl=>{ const r=pl.new; if(!r||!r.user_id) return; if(r.user_id===ME.id){ if(!(CTS&&sameTs(r.updated_at,CTS))) pullSelf(); return; } if(!FRIENDS.some(f=>f.id===r.user_id)) return; FPROG[r.user_id]={summary:clean(r.summary||{}),updated_at:r.updated_at}; if(r.state) FSTATE[r.user_id]=clean(r.state); renderSquad(); if(!VIEWING) bgRender(); if(VIEWING&&VIEWING.id===r.user_id&&r.state){ S=Object.assign(blank(),clean(r.state),{tab:S.tab,open:null}); render(); } })
   .on("postgres_changes",{event:"*",schema:"public",table:"friends"},()=>{ refreshFriends(); })
   .on("postgres_changes",{event:"UPDATE",schema:"public",table:"messages"},pl=>{ const m=pl.new; if(!m) return; const other=m.sender===ME.id?m.recipient:m.sender; const arr=MSGS[other]; if(arr){ const i=arr.findIndex(x=>x.id===m.id); if(i>=0) arr[i]=Object.assign(arr[i],m); } if(CHAT&&CHAT.id===other) renderChat(); })
   .on("postgres_changes",{event:"DELETE",schema:"public",table:"messages"},pl=>{ const id=pl.old&&pl.old.id; if(id){ for(const k in MSGS){ const i=MSGS[k].findIndex(x=>x.id===id); if(i>=0){ MSGS[k].splice(i,1); if(CHAT&&CHAT.id===k) renderChat(); } } } clearTimeout(window._delT); window._delT=setTimeout(async()=>{ const open=CHAT&&CHAT.id; await loadUnread(); if(open){ const {data}=await sb.from("messages").select("*").or(`and(sender.eq.${ME.id},recipient.eq.${open}),and(sender.eq.${open},recipient.eq.${ME.id})`).order("created_at",{ascending:true}).limit(300); MSGS[open]=data||[]; if(!MSGS[open].length&&!FRIENDS.some(f=>f.id===open)) closeChat(); else renderChat(); } renderSquad(); },400); })
@@ -1263,7 +1306,7 @@ function renderSquad(){ const host=$("#sqlist"); if(!host) return; $("#squadN").
   const fold=(key,title,n,inner,openDefault)=>n?`<details class="rqf" ${(RQ_OPEN[key]??openDefault)?"open":""} data-fold="${key}"><summary><span>${title}</span><em>${n}</em></summary><div class="rqb">${inner}</div></details>`:"";
   setHTML($("#reqs"),fold("in","Friend requests",REQ_IN.length,REQ_IN.map(f=>`<div class="rq"><span class="av flat" style="background:var(--ink)"><span>${esc((f.name||"O").slice(0,2).toUpperCase())}</span></span><div class="n"><b>${esc(f.name)}</b><small>wants to be friends</small></div><div class="acts"><button class="ok" data-acc="${f.id}">Accept</button><button data-dec="${f.id}">Decline</button></div></div>`).join(""),REQ_IN.length<=2)+fold("out","Sent requests",REQ_OUT.length,REQ_OUT.map(f=>`<div class="rq out"><span class="av flat" style="background:var(--ink3)"><span>${esc((f.name||"O").slice(0,2).toUpperCase())}</span></span><div class="n"><b>${esc(f.name)}</b><small>request sent · waiting</small></div><div class="acts"><button data-rm="${f.id}">Cancel</button></div></div>`).join(""),false));
   const rows=FRIENDS.slice().sort((a,b)=>(UNREAD[b.id]||0)-(UNREAD[a.id]||0)||(new Date((LASTM[b.id]||{}).created_at||0)-new Date((LASTM[a.id]||{}).created_at||0))||a.name.localeCompare(b.name)).map(f=>{ const p=FPROG[f.id]||{}; const s=p.summary||{}; const pct=s.pct==null?null:Math.round(s.pct); const tex=s.tex||""; const av=avStyle(f.avatar,tex); const init=(f.name||"O").trim().slice(0,2).toUpperCase(); const lm=LASTM[f.id]; const un=UNREAD[f.id]||0; const active=p.updated_at&&(Date.now()-new Date(p.updated_at))<10*60*1000;
-    const goalLine=s.title?`<small class="gl">Chasing <b>${esc(s.title)}</b> · ${s.doneG!=null?`${s.doneG}/${s.total||33} guns done`:""}${p.updated_at?" · "+ago(p.updated_at):""}</small>`:`<small class="gl">${p.updated_at?"No goal picked yet":"Hasn't started yet"}</small>`;
+    const goalLine=s.title?`<small class="gl">Chasing <b>${esc(s.title)}</b> · ${s.doneG!=null?`${s.doneG}/${s.total||BASE.length} guns done`:""}${p.updated_at?" · "+ago(p.updated_at):""}</small>`:`<small class="gl">${p.updated_at?"No goal picked yet":"Hasn't started yet"}</small>`;
     const sub=goalLine+(lm?`<small class="lm ${un?'un':''}">${lm.sender===ME.id?"You: ":""}${esc(lm.body.slice(0,40))}${lm.body.length>40?"…":""}</small>`:f.activision?`<small class="gt">${esc(f.activision)}</small>`:"");
     return `<div class="fr" data-chat="${f.id}" title="Chat with ${esc(f.name)}"><span class="av ${av.cls}" style="${av.style}"><span>${esc(init)}</span></span><div class="n"><b><i class="onl ${active?'':'off'}" title="${active?'active now':'last seen '+(ago(p.updated_at)||'—')}"></i>${esc(f.name||"Operator")}${un?`<span class="pill">${un}</span>`:""}</b>${sub}</div><div class="p"><b class="num" data-view="${f.id}" title="See ${esc(f.name)}'s tracker">${pct==null?"–":pct+"%"}</b><div class="fbar"><i style="width:${pct||0}%"></i></div><button class="rm ${RM_SURE===f.id?'sure':''}" data-rm="${f.id}" title="Remove friend">${RM_SURE===f.id?"sure?":"remove"}</button></div></div>`; }).join("");
   const others=Object.values(CONV).filter(c=>!c.friend&&LASTM[c.id]&&!HIDDEN.has(c.id)).sort((a,b)=>new Date(LASTM[b.id].created_at)-new Date(LASTM[a.id].created_at));
@@ -1295,8 +1338,8 @@ function closeDrawer(){ const d=$("#drawer"); if(PINNED()) return; d.classList.r
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(CHAT) closeChat(); else closeDrawer(); } });
 function viewBack(){ if(!VIEWING) return; VIEWING=null; S=Object.assign(blank(),MYS); MYS=null; VIEW={}; document.body.classList.remove("viewing"); $("#viewbar").hidden=true; $("#dview").hidden=true; render(); }
 function sync(ok){ if(SUPA.url){ $("#sync").textContent=ok?"✓ Saved to your account. Your sync key (top right → You) brings it to any other device.":"Saved on this device only right now — the account service didn't answer. It retries next time you open the page."; return; } const hosted=!(window.claude&&window.claude.use); $("#sync").textContent=ok?"✓ Synced to your claude.ai account, so it follows you across devices.":hosted?"Saved on this device. Download a backup now and then, or use the transfer code to move to another device.":"Saved in this browser only. Sign in to claude.ai in this browser to sync, or keep a backup file."; }
-function undo(){ if(!HIST.length) return; const prev=JSON.parse(HIST.pop()); const keep={tab:S.tab}; S=Object.assign(blank(),prev,keep); LASTJ=JSON.stringify(Object.assign({},S,{open:null})); lsSave(); S.updated=Date.now(); clearTimeout(timer); timer=setTimeout(push,900); render(); toast("Undone"); }
-async function boot(){ load(); lastM=milestones(); try{ LASTJ=JSON.stringify(Object.assign({},S,{open:null})); }catch(e){} render(); sync(false); refreshExp();
+function undo(){ if(!HIST.length||VIEWING) return; const prev=JSON.parse(HIST.pop()); const b=blank(); PK.forEach((k,i)=>{ S[k]=prev[i]!==undefined?prev[i]:b[k]; }); LASTJ=snap(); S.updated=Math.max(Date.now(),(S.updated||0)+1); lsSave(); clearTimeout(timer); timer=setTimeout(push,900); clearTimeout(cloudT); cloudT=setTimeout(cloudPush,1200); render(); toast("Undone"); }
+async function boot(){ document.querySelectorAll(".nbase").forEach(e=>{ e.textContent=BASE.length; }); load(); lastM=milestones(); try{ LASTJ=snap(); }catch(e){} render(); sync(false); refreshExp();
   cloudInit(); if(SUPA.url) return;
   const HOSTED=!(window.claude&&window.claude.use); if(HOSTED){ sync(false); return; }
   let db=null,u=null; for(let i=0;i<4&&!(db&&u);i++){ try{ [db,u]=await Promise.all([claude.use("db"),claude.use("user")]); }catch(e){} if(!(db&&u)) await new Promise(r=>setTimeout(r,1500*(i+1))); }
