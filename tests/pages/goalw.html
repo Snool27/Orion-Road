@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><iframe id="a" src="/index.html?b" style="width:1100px;height:900px;border:0"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m); const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const f=document.getElementById("a"); f.addEventListener("load",()=>setTimeout(async()=>{ try{ const w=f.contentWindow,d=w.document,E=x=>w.eval(x);
+  const row=()=>{ const st=[...d.querySelectorAll("#stats .stat")]; const sr=d.querySelector("#search").getBoundingClientRect(); const a=st[0].getBoundingClientRect(), z=st[st.length-1].getBoundingClientRect(); return {n:st.length,left:Math.round(a.left-sr.left),right:Math.round(sr.right-z.right),w:Math.round(a.width)}; };
+  E('S.goal.l="gold"; S.modes={mp:true}; S.weapons={}; render();'); await wait(800); let r=row();
+  ok(r.n<=3&&Math.abs(r.left)<=1&&Math.abs(r.right)<=1,"Gold goal: "+r.n+" tiles fill the full width (each "+r.w+"px)");
+  E('S.goal.l="div"; render();'); await wait(400); let r2=row();
+  ok(r2.n>=5&&Math.abs(r2.left)<=1&&Math.abs(r2.right)<=1&&r2.w<r.w,"Divergence goal: "+r2.n+" narrower tiles still fill the width (each "+r2.w+"px)");
+ }catch(e){ R.push("ERROR "+e.stack.split("\n")[0]); } fetch("/result",{method:"POST",body:R.join("\n")}); },1500));
+</script>

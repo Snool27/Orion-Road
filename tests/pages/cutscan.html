@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0"><script>
+const W=+(location.hash.slice(1)||390);
+const ids=["han-86","m4","hyeon-burst","patriot-xmr","kastov-762","oden","axion","cronen-squall","iso-nightshade","vel-46","wz-55-striga","ppsh-41","x-58-nyx","rezi-12","warlord","finn-lmg","type-73","apoc-338","mar-9","oris-8-6","mosin-nagant","kg-7-vulcan","astaroth-57","signal-50","sang-9mm","krait-p68","50-gs","mojave-357","pila","rpg-8","jokr","pm-40-anvil","fss-carbon-edge-1095","cronen-osprey","csg-35"];
+const wp={}; ids.forEach((id,i)=>wp[id]={mil:i%9,max:i%9>=8,pr:i%5,sp:[i%3>0,i%3>1,i%4>2],gold:i%2==0,plat:i%4==0,hb:i%8==0,tok:false});
+localStorage.setItem("orion-road-v4",JSON.stringify({v:4,updated:Date.now(),skip:{},goal:{l:"div",mp:true,dmz:true,wz:true},modes:{mp:true,dmz:true,wz:true},tab:"ALL",filt:"",hide:{gold:false,plat:false,hb:false},motion:"lite",weapons:wp,m:{},mt:{},mu:{md:true,ch:true},col:{},open:"m4"}));
+const f=document.createElement("iframe"); f.style.cssText=`width:${W}px;height:2400px;border:0`; f.src="/index.html?b"; document.body.appendChild(f);
+f.addEventListener("load",()=>setTimeout(()=>{ const w=f.contentWindow,d=w.document; const out=[];
+  const clipAnc=el=>{ for(let a=el.parentElement;a&&a!==d.body;a=a.parentElement){ const c=w.getComputedStyle(a); if(c.overflowX!=="visible"||c.overflow!=="visible") return a; } return null; };
+  d.querySelectorAll("main *").forEach(el=>{ if(!el.offsetParent||el.closest("#rail")) return; /* the side menu hides its labels on purpose */ const own=[...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()); if(!own) return; const c=w.getComputedStyle(el);
+    if(c.textOverflow==="ellipsis"&&el.scrollWidth>el.clientWidth+1) out.push("ELLIPSIS "+el.tagName+"."+[...el.classList].join(".")+" «"+el.textContent.trim().slice(0,40)+"»");
+    else if((c.overflow==="hidden"||c.overflowX==="hidden")&&el.scrollWidth>el.clientWidth+1) out.push("CLIPPED-SELF "+el.tagName+"."+[...el.classList].join(".")+" «"+el.textContent.trim().slice(0,40)+"»");
+    const a=clipAnc(el); if(a&&!a.classList.contains("ctabs")&&!a.closest(".ctabs")){ const r=el.getBoundingClientRect(), ar=a.getBoundingClientRect(); if(r.width>0&&(r.right>ar.right+1||r.left<ar.left-1)) out.push("CUT-BY-PARENT ["+(el.closest(".gun")||{dataset:{}}).dataset.gun+(el.closest(".gun.open")?" OPEN":"")+"] "+el.tagName+"."+[...el.classList].join(".")+" «"+el.textContent.trim().slice(0,40)+"» in "+a.tagName+"."+[...a.classList].join(".")); }
+  });
+  fetch("/result",{method:"POST",body:`width ${W}: `+(out.length?[...new Set(out)].join("\n"):"nothing cut off")}); },2500));
+</script>

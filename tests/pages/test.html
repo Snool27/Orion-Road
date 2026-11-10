@@ -1,0 +1,31 @@
+<!doctype html><meta charset="utf-8"><title>running</title><pre id="o"></pre>
+<iframe id="f" src="/index.html?test" style="width:1200px;height:900px"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m);
+document.getElementById("f").onload=()=>setTimeout(()=>{ try{
+  const w=document.getElementById("f").contentWindow, E=x=>w.eval(x);
+  ok(E("BASE.length")===33&&E("WEAPONS.length")===35,"33 launch guns + 2 Season 1 guns = 35 total");
+  ok([...w.document.querySelectorAll(".nbase")].every(e=>e.textContent==="33"),"help text shows launch-gun count");
+  // UNDO: tick a gun, then change tab + filter (UI only), then undo -> the gun tick is reversed
+  E("HIST=[]; LASTJ=snap();");
+  const id=E("BASE[0].id");
+  E(`W("${id}").gold=true; save();`);
+  E(`S.tab="SMG"; save(); S.filt="close"; save(); S.updated=S.updated; save();`);
+  ok(E("HIST.length")===1,"tab/filter/no-op saves don't add undo steps (history: "+E("HIST.length")+")");
+  E("undo()");
+  ok(!E(`W("${id}").gold`),"undo reversed the gun tick, not the tab/filter");
+  ok(E("S.tab")==="SMG","undo left the current tab alone");
+  // TYPING: background refresh waits while a number box is focused
+  let renders=0; const real=w.render; w.render=function(){ renders++; return real.apply(this,arguments); };
+  const inp=w.document.createElement("input"); inp.type="number"; w.document.body.appendChild(inp); inp.focus(); inp.value="12";
+  E("bgRender()"); E("bgRender()");
+  ok(renders===0&&inp.value==="12","refresh waits while typing (renders during typing: "+renders+")");
+  inp.blur();
+  setTimeout(()=>{ ok(renders===1,"page redraws once after leaving the box ("+renders+")");
+    // milestone check uses the 33 launch guns
+    E(`BASE.forEach(g=>{ const s=W(g.id); s.gold=true; s.plat=true; s.hb=true; });`);
+    ok(E(`milestones()["h-ALL"]`)===true,"Divergence milestone fires with the 33 launch guns (Season 1 guns not required)");
+    finish(); },50);
+ }catch(e){ R.push("ERROR "+e.message); finish(); } },1500);
+function finish(){ fetch("/result",{method:"POST",body:R.join("\n")}); }
+</script>

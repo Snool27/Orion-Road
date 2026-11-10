@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><iframe id="a" src="/index.html?b" style="width:390px;height:844px;border:0"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m); const wait=ms=>new Promise(r=>setTimeout(r,ms)); const errs=[];
+const f=document.getElementById("a"); setInterval(()=>{ try{ const w=f.contentWindow; if(w&&!w.__h){ w.__h=1; w.addEventListener("error",e=>errs.push(e.message)); } }catch(e){} },1);
+f.addEventListener("load",()=>setTimeout(async()=>{ try{ const w=f.contentWindow, d=w.document, E=x=>w.eval(x);
+  E('S.goal={l:null,mp:false,dmz:false,wz:false}; S.modes={mp:true}; HIST=[]; S.tab="ALL"; render();'); await wait(1000);
+  const vis=el=>!!el&&el.offsetParent!==null;
+  ok(vis(d.querySelector("#goalL"))&&!vis(d.querySelector("#setupSum")),"no goal yet: full picker shows");
+  d.querySelector('#goalL [data-l="div"]').click(); await wait(300);
+  ok(!vis(d.querySelector("#goalL"))&&vis(d.querySelector("#setupSum"))&&/Divergence/.test(d.querySelector("#setupSum").textContent),"after picking a goal it folds to one line: "+d.querySelector("#setupSum").textContent.replace(/\s+/g," "));
+  d.querySelector("#setupSum").click(); await wait(200); ok(vis(d.querySelector("#goalL")),"tapping the line opens the picker again");
+  d.querySelector("#setupSum").click(); await wait(200); ok(!vis(d.querySelector("#goalL")),"Fold up closes it");
+  ok(!d.querySelector("#clsH .bulk")&&!d.querySelector("#clsH .hide")&&vis(d.querySelector("#toolsBtn")),"Set-all and Hide tools are tucked behind Options");
+  E("HIST=[]; render();"); await wait(200); ok(!d.querySelector("#undoBtn"),"no Undo button until there's something to undo");
+  d.querySelector("#toolsBtn").click(); await wait(200);
+  ok(vis(d.querySelector("#clsH .bulk"))&&vis(d.querySelector("#clsH .hide")),"Options opens the tools");
+  d.querySelector('#clsH [data-bulk="gold"]').click(); await wait(300);
+  ok(vis(d.querySelector("#undoBtn")),"after a change, Undo appears");
+  d.querySelector("#undoBtn").click(); await wait(300); ok(E('W("han-86").gold')===false,"Undo still works");
+  E('S.tab="AR"; render();'); await wait(200); ok(vis(d.querySelector("#toolsBtn")),"class pages have the same Options button");
+ }catch(e){ R.push("ERROR "+e.stack.split("\n").slice(0,2).join(" ")); }
+ R.push("page errors: "+(errs.length?errs.join(" | "):"none")); fetch("/result",{method:"POST",body:R.join("\n")}); },1500));
+</script>

@@ -1,0 +1,50 @@
+<!doctype html><meta charset="utf-8"><iframe id="a" src="/index.html?d" style="width:390px;height:844px;border:0"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m); const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const f=document.getElementById("a"); const errs=[];
+const hook=setInterval(()=>{ try{ const w=f.contentWindow; if(w&&!w.__h){ w.__h=1; w.addEventListener("error",e=>errs.push(e.message)); } }catch(e){} },1);
+f.addEventListener("load",()=>setTimeout(async()=>{ try{ const w=f.contentWindow, d=w.document, E=x=>w.eval(x);
+  E('S.goal.l="div"; S.motion="lite"; render();');
+  const s1=E('SEASON[0].id'), base32=E('BASE.slice(0,32).map(g=>g.id)'), last=E('BASE[32].id');
+  // 32 launch guns at Platinum
+  E(`BASE.slice(0,32).forEach(g=>setLevel(W(g.id),4)); save(); render();`);
+  ok(E('totals().plat')===32,"32 guns at Platinum counted");
+  ok(!E(`nextStep(BASE[0],classGold(BASE[0].cls),totals())`).act,"Harmonic Break still locked at 32");
+  // a Season gun reaches Platinum -> 33 -> HB opens (the bug you hit)
+  E(`setLevel(W("${s1}"),4); save(); render();`);
+  ok(E('totals().plat')===33,"Season gun Platinum makes it 33");
+  const ns=E(`(()=>{const n=nextStep(BASE[0],classGold(BASE[0].cls),totals()); return n&&n.label;})()`);
+  ok(ns==="Harmonic Break","Harmonic Break unlocks with 32 launch + 1 Season ("+ns+")");
+  const plTile=[...d.querySelectorAll("#stats .stat")].find(b=>/Platinum/i.test(b.textContent));
+  ok(plTile&&/33\/33/.test(plTile.textContent)&&/1 S1/.test(plTile.textContent),"Platinum counter shows 33/33 with '1 S1' ("+(plTile&&plTile.querySelector("b").textContent)+")");
+  // skip the Season gun -> back to 32, locked
+  E(`S.skip={"${s1}":true}; save(); render();`);
+  ok(E('totals().plat')===32&&!E(`nextStep(BASE[0],classGold(BASE[0].cls),totals()).act`),"skipping the Season gun takes it out of the count (locked again)");
+  ok(d.querySelector(`.gun[data-gun="${s1}"]`)?.classList.contains("skipped")!==false,"skipped gun is marked");
+  E(`S.skip={}; save(); render();`);
+  // tab fill: SMG tab partially gold
+  E(`S.weapons={}; const sm=BASE.filter(g=>g.cls==="SMG"); sm.slice(0,2).forEach(g=>setLevel(W(g.id),3)); save(); render();`);
+  const smTab=d.querySelector('#ctabs [data-c="SMG"]'), fill=smTab.querySelector(".fill");
+  const n=E('BASE.filter(g=>g.cls==="SMG").length');
+  ok(!fill&&/2\/5 at Gold/.test(d.querySelector('#ctabs [data-c="SMG"]').title),"SMG tab stays plain, progress in its line and tooltip (2/5 at Gold)");
+  // near: n-1 gold -> "1 left" badge and header nudge
+  E(`BASE.filter(g=>g.cls==="SMG").slice(0,${n-1}).forEach(g=>setLevel(W(g.id),3)); S.tab="SMG"; save(); render();`);
+  ok(/1 left/.test(d.querySelector('#ctabs [data-c="SMG"]').textContent),"tab shows '1 left'");
+  ok(/1 gun from Gold/.test(d.querySelector("#clsH").textContent),"class header nudges: "+(d.querySelector("#clsH .nudge")||{}).textContent);
+  // finish the class -> tab turns gold and pops
+  E(`BASE.filter(g=>g.cls==="SMG").forEach(g=>setLevel(W(g.id),3)); save(); render();`); await wait(200);
+  const t2=d.querySelector('#ctabs [data-c="SMG"]');
+  ok(t2.classList.contains("lv-gold")&&t2.classList.contains("cam-gold"),"finished class tab turns gold");
+  ok(t2.classList.contains("tabpop"),"…and pops");
+  // session haul: a bulk set-up doesn't count, single claims do
+  const h=d.getElementById("haul"); const before=+(h.textContent.match(/\+(\d+)/)||[0,0])[1];
+  E('const g=BASE.find(x=>x.cls==="AR"); W(g.id).mil=Math.min(8,W(g.id).mil+1); save(); render();'); await wait(50);
+  E('const g2=BASE.filter(x=>x.cls==="AR")[1]; W(g2.id).mil=Math.min(8,W(g2.id).mil+1); save(); render();'); await wait(50);
+  const after=+(h.textContent.match(/\+(\d+)/)||[0,0])[1];
+  ok(before===0,"bulk set-up didn't count as claims (was "+before+")");
+  ok(after===before+2,"two single claims counted (+"+after+")");
+  ok(h&&w.getComputedStyle(h).display==="none","'this session' tally stays hidden (removed on request)");
+ }catch(e){ R.push("ERROR "+e.stack.split("\n").slice(0,2).join(" ")); }
+ R.push("page errors: "+(errs.length?errs.join(" | "):"none"));
+ fetch("/result",{method:"POST",body:R.join("\n")}); },2000));
+</script>

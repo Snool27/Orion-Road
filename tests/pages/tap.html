@@ -1,0 +1,25 @@
+<!doctype html><meta charset="utf-8"><iframe id="a" src="/index.html?t" style="width:390px;height:844px;border:0"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m);
+const f=document.getElementById("a"); const wait=ms=>new Promise(r=>setTimeout(r,ms));
+f.onload=()=>setTimeout(async()=>{ try{ const w=f.contentWindow, d=w.document, E=x=>w.eval(x);
+  E('S.goal.l="gold"; S.motion="lite"; render();'); await wait(300);
+  const id=E("BASE[2].id"); const card=()=>d.querySelector(`.gun[data-gun="${id}"]`);
+  const btn=q=>card().querySelector(`[data-q="${q}"]`);
+  const other=d.querySelector(`.gun[data-gun="${E("BASE[5].id")}"]`);
+  btn("gold").click(); await wait(400);
+  ok(E(`W("${id}").gold`)===true,"tapping GOLD sets Gold");
+  ok(btn("gold").classList.contains("on"),"the card shows GOLD as on");
+  ok(d.querySelector(`.gun[data-gun="${E("BASE[5].id")}"]`)===other,"an untouched gun card was left alone (same element)");
+  E("undo()"); await wait(400);
+  ok(E(`W("${id}").gold`)===false&&!btn("gold").classList.contains("on"),"undo cleared it on screen too");
+  btn("gold").click(); await wait(400);
+  ok(E(`W("${id}").gold`)===true&&btn("gold").classList.contains("on"),"tapping again after undo works on the current data");
+  // phone layout: buttons now finger-sized, header compact
+  const qb=btn("max").getBoundingClientRect(), chip=card().querySelector(".chip").getBoundingClientRect(), nx=card().querySelector(".qb.nx");
+  ok(qb.height>=36&&qb.width>=30,"camo buttons are thumb-sized ("+Math.round(qb.width)+"×"+Math.round(qb.height)+")");
+  ok(card().getBoundingClientRect().height<=230,"closed card with fill-in boxes stays reasonable on phones ("+Math.round(card().getBoundingClientRect().height)+"px)");
+  ok(d.documentElement.scrollWidth<=390,"no sideways scrolling ("+d.documentElement.scrollWidth+")");
+  ok(Math.round(card().getBoundingClientRect().height)<300,"a closed gun card is shorter (now "+Math.round(card().getBoundingClientRect().height)+"px, was ~430)");
+ }catch(e){ R.push("ERROR "+e.stack); } fetch("/result",{method:"POST",body:R.join("\n")}); },2000);
+</script>

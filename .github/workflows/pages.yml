@@ -1,4 +1,4 @@
-# Publishes this folder to GitHub Pages on every push to main.
+# Publishes the website files to GitHub Pages on every push to main.
 name: Deploy site
 on:
   push:
@@ -22,8 +22,13 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      # Only the website itself goes public. Tests, notes, scripts and SQL stay in the repo only.
+      - name: Collect the website files
+        run: |
+          mkdir _site
+          cp -R index.html sw.js manifest.webmanifest builds.json og.png icon.svg icon-*.png css js _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

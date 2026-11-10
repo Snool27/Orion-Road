@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><iframe id="a" src="/index.html?b" style="width:1000px;height:900px;border:0"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m); const wait=ms=>new Promise(r=>setTimeout(r,ms)); const errs=[];
+const f=document.getElementById("a"); setInterval(()=>{ try{ const w=f.contentWindow; if(w&&!w.__h){ w.__h=1; w.addEventListener("error",e=>errs.push(e.message)); } }catch(e){} },1);
+f.addEventListener("load",()=>setTimeout(async()=>{ try{ const w=f.contentWindow, d=w.document, E=x=>w.eval(x);
+  const st=(g,p)=>`({mil:8,max:true,pr:0,sp:[true,true,true],gold:${g},plat:${p},hb:false,tok:false})`;
+  E(`S.goal.l="div"; S.modes={mp:true}; S.skip={}; S.weapons={}; WEAPONS.filter(w=>w.cls==="SMG").forEach((w,i)=>S.weapons[w.id]=i<2?${st(true,true)}:${st(true,false)}); S.tab="ALL"; S.open=null; render();`); await wait(1000);
+  const h=d.querySelector("#haul"); ok(!h||w.getComputedStyle(h).display==="none","no 'this session' tally");
+  const tab=d.querySelector('#ctabs [data-c="SMG"]'), fill=tab.querySelector(".fill");
+  ok(tab.classList.contains("cam-gold")&&fill&&fill.classList.contains("cam-plat")&&/%/.test(fill.style.width),"Gold SMG tab shows a Platinum band along the bottom ("+(fill&&fill.style.width)+")");
+  const ar=d.querySelector('#ctabs [data-c="AR"]'); ok(!ar.querySelector(".fill"),"tabs below Gold stay plain");
+  ok(d.querySelector('.gun[data-gun="vel-46"] .gbar i'),"every gun has a progress bar");
+  const arrow=w.getComputedStyle(d.querySelector('.gun[data-gun="vel-46"] .side'),"::after"); ok(parseInt(arrow.width)>=24,"expand arrow is a clear round button ("+arrow.width+")");
+  const g=()=>d.querySelector('.gun[data-gun="han-86"]'); const before=parseInt(g().querySelector(".side .gp").textContent);
+  g().querySelector('.qb[data-q="max"]').click(); await wait(120); const mid=parseInt(g().querySelector(".side .gp").textContent);
+  ok(mid>before&&mid<57,"% counts up ("+before+"% → "+mid+"% mid-way)"); await wait(900);
+  ok(/%/.test(g().querySelector(".gbar i").style.width)&&parseInt(g().querySelector(".gbar i").style.width)>0,"bar slid to "+g().querySelector(".gbar i").style.width);
+  E('FRIENDS=[{id:"00000000-0000-0000-0000-000000000001",name:"Bo"}]; renderSquad();'); await wait(100);
+  const vb=d.querySelector('#sqlist .fr .vw'); ok(vb&&vb.dataset.view&&/Progress/.test(vb.textContent),"Squad: Progress button beside the name");
+ }catch(e){ R.push("ERROR "+e.stack.split("\n").slice(0,2).join(" ")); }
+ R.push("page errors: "+(errs.length?errs.join(" | "):"none")); fetch("/result",{method:"POST",body:R.join("\n")}); },1500));
+</script>

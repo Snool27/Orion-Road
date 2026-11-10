@@ -1,0 +1,21 @@
+<!doctype html><meta charset="utf-8"><iframe id="a" src="/index.html?b" style="width:390px;height:844px;border:0"></iframe>
+<script>
+const R=[]; const ok=(c,m)=>R.push((c?"PASS ":"FAIL ")+m); const wait=ms=>new Promise(r=>setTimeout(r,ms)); const errs=[];
+const f=document.getElementById("a"); setInterval(()=>{ try{ const w=f.contentWindow; if(w&&!w.__h){ w.__h=1; w.addEventListener("error",e=>errs.push(e.message)); } }catch(e){} },1);
+f.addEventListener("load",()=>setTimeout(async()=>{ try{ const w=f.contentWindow, d=w.document, E=x=>w.eval(x);
+  const set=(g,p)=>E(`S.weapons={}; WEAPONS.filter(w=>!w.season).forEach((w,i)=>S.weapons[w.id]={mil:8,max:true,pr:0,sp:[true,true,true],gold:i<${g},plat:i<${p},hb:false,tok:false}); render();`);
+  E('S.goal.l="div"; S.modes={mp:true}; S.skip={}; S.tab="ALL"; S.filt=""; S.open=null;'); set(5,0); await wait(1200);
+  const tile=k=>d.querySelector(`#stats .stat[data-k="${k}"]`);
+  ok(tile("gold")&&/lv0/.test(tile("gold").className)&&/4 to 9/.test(tile("gold").textContent),"5 Gold: base level, says '4 to 9'");
+  ok(tile("gold").querySelector(".sbar i").style.width==="15%","progress bar fills to 5/33");
+  ok(/lv4/.test(tile("max").className)&&/Complete/.test(tile("max").textContent),"33 maxed: Max tile says Complete");
+  set(9,0); await wait(300);
+  ok(/lv1/.test(tile("gold").className)&&/spop/.test(tile("gold").className),"hitting 9 Gold steps up a level and pops");
+  ok(!/Gold: 9 guns/.test((d.querySelector(".toast")||{}).textContent||""),"no extra toast for quarter steps (calmer)");
+  set(16,0); await wait(300); ok(/lv1/.test(tile("gold").className)&&/1 to 17/.test(tile("gold").textContent),"16 Gold: says 1 to 17");
+  set(26,0); await wait(300); ok(/lv3/.test(tile("gold").className)&&!/spop/.test(tile("gold").className)||/lv3/.test(tile("gold").className),"26 Gold: three-quarter level");
+  set(33,33); await wait(300); ok(/lv4/.test(tile("gold").className)&&/lv4/.test(tile("plat").className),"33/33: Gold and Platinum tiles full camo");
+  ok(/lv0/.test(tile("hb").className)&&/9/.test(tile("hb").querySelector(".nx").textContent),"HB tile starts its own climb");
+ }catch(e){ R.push("ERROR "+e.stack.split("\n").slice(0,2).join(" ")); }
+ R.push("page errors: "+(errs.length?errs.join(" | "):"none")); fetch("/result",{method:"POST",body:R.join("\n")}); },1500));
+</script>
